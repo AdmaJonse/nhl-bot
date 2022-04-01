@@ -19,9 +19,6 @@ takeaway_event        = "Takeaway"
 
 class Printer:
 
-    
-
-
     def __init__(self, data):
         self.home_location = data["teams"]["home"]["locationName"]
         self.home_team = data["teams"]["home"]["teamName"]
@@ -79,6 +76,17 @@ class Printer:
             period_string = "Period " + str(period)
 
         return period_string
+
+
+    def get_team_string(self, data):
+        team = data["team"]["name"]
+        if team == self.home_full_name:
+            team_string = self.home_location
+        elif team == self.away_full_name:
+            team_string = self.away_location
+        else:
+            raise("error - unknown team")
+        return team_string
 
 
     #################################################################
@@ -142,7 +150,12 @@ class Printer:
 
 
     def get_penalty_string(self, data):
-        return ""
+        team_string = self.get_team_string(data)
+        penalty_name = data["result"]["secondaryType"]
+        player_name = data["players"][0]["player"]["fullName"]
+        penalty_minutes = data["result"]["penaltyMinutes"]
+        penalty_severity = data["result"]["penaltySeverity"]
+        return "There is a penalty on " + team_string + ".\n\n" + player_name + "\n" + str(penalty_minutes) + " minute " + penalty_severity.lower() + " for " + penalty_name.lower() + "."
 
 
     def get_period_ready_string(self, data):
@@ -165,13 +178,16 @@ class Printer:
 
 
     def get_goal_string(self, data):
+        team_string = self.get_team_string(data)
         score_string = self.get_score_string(data)
-        goal_string = "GOAL! " + data["result"]["description"] + "\n\n" + score_string
+        goal_string = team_string + " goal! \n\n" + data["result"]["description"] + "\n\n" + score_string
         return goal_string
 
 
     def get_official_challenge_string(self, data):
-        return ""
+        team_string = self.get_team_string(data)
+        challenge_string = team_string + " is challenging the ruling on the play."
+        return challenge_string
 
 
     def get_event_string(self, data):
@@ -217,7 +233,7 @@ class Printer:
         else:
             # TODO: Are there any missing events? These should be handled.
             # TODO: I'm guessing there might be special events for shootouts/OT
-            print("unhandled event")
+            raise("error - unhandled event")
         
         return event_string
 
@@ -232,4 +248,4 @@ class Printer:
             if len(tweet_text) <= 240:
                 print(tweet_text)
             else:
-                print("ERROR - the tweet is too long!")
+                raise("error - the tweet is too long!")
