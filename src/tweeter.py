@@ -4,7 +4,7 @@ import tweepy
 from os.path import join, dirname, abspath
 from dotenv import load_dotenv
 
-class bot:
+class Tweeter:
 
     def read_config(self):
 
@@ -21,13 +21,16 @@ class bot:
         self.access_token = os.getenv("ACCESS_TOKEN")
         self.access_token_secret = os.getenv("ACCESS_TOKEN_SECRET")
 
+
     def __init__(self):
         self.read_config()
         auth = tweepy.OAuth1UserHandler(self.consumer_key, self.consumer_secret, self.access_token, self.access_token_secret)
         self.api = tweepy.API(auth)
 
+
     def tweet(self, text):
         self.api.update_status(text)
 
-b = bot()
-#b.tweet("testing 1 2 3...")
+
+t = Tweeter()
+#t.tweet("testing 1 2 3...")
