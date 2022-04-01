@@ -1,11 +1,20 @@
 import os
 import tweepy
+
+from os.path import join, dirname, abspath
 from dotenv import load_dotenv
 
 class bot:
 
     def read_config(self):
-        load_dotenv()
+
+        # load constants from .env
+        parent_dir = dirname(dirname(abspath(__file__)))
+        config_dir = join(parent_dir, "config")
+        dotenv_file = join(config_dir, '.env')
+        load_dotenv(dotenv_file)
+
+        # read the authentication keys
         self.bearer_token = os.getenv("BEARER_TOKEN")
         self.consumer_key = os.getenv("CONSUMER_KEY")
         self.consumer_secret = os.getenv("CONSUMER_SECRET")
@@ -20,5 +29,5 @@ class bot:
     def tweet(self, text):
         self.api.update_status(text)
 
-# b = bot()
-# b.tweet("testing, testing...")
+b = bot()
+#b.tweet("testing 1 2 3...")
