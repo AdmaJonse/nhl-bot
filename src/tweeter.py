@@ -30,7 +30,3 @@ class Tweeter:
 
     def tweet(self, text):
         self.api.update_status(text)
-
-
-t = Tweeter()
-#t.tweet("testing 1 2 3...")
