@@ -74,6 +74,6 @@ class Parser:
     def parse(self):
         for event in self.new_records:
             self.printer.update_line_score(self.data["liveData"]["linescore"])
-            self.printer.print_event(event)
+            self.printer.handle_event(event)
             self.last_event = get_event_id(event)
             self.check_for_game_over(event)

@@ -1,5 +1,5 @@
 import tweeter
-from tweet_format import *
+from templates import *
 
 blocked_shot_event    = "Blocked Shot"
 challenge_event       = "Official Challenge"
@@ -19,6 +19,8 @@ period_start_event    = "Period Start"
 shot_event            = "Shot"
 stoppage_event        = "Stoppage" 
 takeaway_event        = "Takeaway"
+
+MAX_LENGTH = 240
 
 
 def get_timestamp(data):
@@ -164,7 +166,7 @@ class Printer:
             "away_goals": get_away_goals(data),
             "hashtags":   self.game_hashtag
         }
-        return game_end_string.format(**vars)
+        return game_end_template.format(**vars)
 
 
     def get_game_official_string(self, data):
@@ -191,7 +193,7 @@ class Printer:
             "away_shots":  get_away_shots(self.line_score),
             "hashtags":    self.game_hashtag
         }
-        return shot_string.format(**vars)
+        return shot_template.format(**vars)
 
 
     def get_hit_string(self, data):
@@ -223,7 +225,7 @@ class Printer:
             "severity": data["result"]["penaltySeverity"].lower(),
             "hashtags": self.game_hashtag
         }
-        return penalty_string.format(**vars)
+        return penalty_template.format(**vars)
 
 
     def get_period_ready_string(self, data):
@@ -236,7 +238,7 @@ class Printer:
             "venue":    self.get_team_string(data),
             "hashtags": self.game_hashtag
         }
-        return period_start_string.format(**vars)
+        return period_start_template.format(**vars)
 
 
     def get_period_end_string(self, data):
@@ -251,7 +253,7 @@ class Printer:
             "away_shots": get_away_shots(self.line_score),
             "hashtags":   self.game_hashtag
         }
-        return period_end_string.format(**vars)
+        return period_end_template.format(**vars)
 
 
     def get_period_official_string(self, data):
@@ -275,7 +277,7 @@ class Printer:
             "away_goals": get_away_goals(data),
             "hashtags":   self.game_hashtag
         }
-        return goal_string.format(**vars)
+        return goal_template.format(**vars)
 
 
     def get_official_challenge_string(self, data):
@@ -283,7 +285,7 @@ class Printer:
             "team":     self.get_period_string(data),
             "hashtags": self.game_hashtag
         }
-        return challenge_string.format(**vars)
+        return challenge_template.format(**vars)
 
 
     def get_event_string(self, data):
@@ -334,14 +336,8 @@ class Printer:
         return event_string
 
 
-    def print_event(self, data):
-        event_string = self.get_event_string(data)
-        if event_string != "":
-            text = event_string #+ "\n\n" + self.game_hashtag + "\n"
-
-            # Send the tweet
-            if len(text) <= 240:
-                print(text)
-                #self.tweeter.tweet(text)
-            else:
-                raise("error - the tweet is too long!")
+    def handle_event(self, data):
+        text = self.get_event_string(data)
+        if 0 < len(text) <= MAX_LENGTH:
+            print(text)
+            #self.tweeter.tweet(text)
