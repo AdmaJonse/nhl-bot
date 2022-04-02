@@ -1,4 +1,5 @@
 import tweeter
+from tweet_format import *
 
 blocked_shot_event    = "Blocked Shot"
 challenge_event       = "Official Challenge"
@@ -155,19 +156,15 @@ class Printer:
 
     
     def get_game_end_string(self, data):
-
-        home_goals = get_home_goals(data)
-        away_goals = get_away_goals(data)
-
-        if home_goals > away_goals: 
-            winner_string = self.home_location
-        elif away_goals > home_goals:
-            winner_string = self.away_location
-        else:
-            raise("error - no winnner")
-
-        score_string = self.get_score_string(data)
-        return "The game is over. " + winner_string + " wins." "\n\nFinal Score \n" + score_string
+        vars = { 
+            "winner":     self.home_location if get_home_goals(data) > get_away_goals(data) else self.away_location,
+            "home_team":  self.home_location, 
+            "away_team":  self.away_location,
+            "home_goals": get_home_goals(data),
+            "away_goals": get_away_goals(data),
+            "hashtags":   self.game_hashtag
+        }
+        return game_end_string.format(**vars)
 
 
     def get_game_official_string(self, data):
@@ -185,10 +182,16 @@ class Printer:
     def get_shot_string(self, data):
         # TODO: These are too spammy for primetime. These should be converted to a null event
         #       eventually. For now they're helpful for testing.
-        # team_string = self.get_team_string(data)
-        # shots_string = self.get_shots_string()
-        # return "Shot on goal by " + team_string + ". \n\n" + get_description(data) + "\n\n" + shots_string
-        return ""
+        vars = { 
+            "team":        self.get_team_string(data),
+            "description": get_description(data), 
+            "home_team":   self.home_location, 
+            "away_team":   self.away_location,
+            "home_shots":  get_home_shots(self.line_score),
+            "away_shots":  get_away_shots(self.line_score),
+            "hashtags":    self.game_hashtag
+        }
+        return shot_string.format(**vars)
 
 
     def get_hit_string(self, data):
@@ -212,12 +215,15 @@ class Printer:
 
 
     def get_penalty_string(self, data):
-        team_string = self.get_team_string(data)
-        penalty_name = data["result"]["secondaryType"]
-        player_name = data["players"][0]["player"]["fullName"]
-        penalty_minutes = data["result"]["penaltyMinutes"]
-        penalty_severity = data["result"]["penaltySeverity"]
-        return "There is a penalty on " + team_string + ".\n\n" + player_name + "\n" + str(penalty_minutes) + " minute " + penalty_severity.lower() + " for " + penalty_name.lower() + "."
+        vars = { 
+            "team":     self.get_team_string(data),
+            "penalty":  data["result"]["secondaryType"].lower(),
+            "player":   data["players"][0]["player"]["fullName"],
+            "minutes":  data["result"]["penaltyMinutes"],
+            "severity": data["result"]["penaltySeverity"].lower(),
+            "hashtags": self.game_hashtag
+        }
+        return penalty_string.format(**vars)
 
 
     def get_period_ready_string(self, data):
@@ -225,15 +231,27 @@ class Printer:
 
 
     def get_period_start_string(self, data):
-        period_string = self.get_period_string(data)
-        return period_string + " is starting at " + self.venue + "."
+        vars = { 
+            "period":   self.get_period_string(data),
+            "venue":    self.get_team_string(data),
+            "hashtags": self.game_hashtag
+        }
+        return period_start_string.format(**vars)
 
 
     def get_period_end_string(self, data):
-        period_string = self.get_period_string(data)
-        score_string = self.get_score_string(data)
-        shots_string = self.get_shots_string()
-        return period_string + " is over at " + self.venue + "." + "\n\nGoals\n" + score_string + "\n\n" + shots_string
+        vars = { 
+            "period":     self.get_period_string(data),
+            "venue":      self.get_team_string(data),
+            "home_team":  self.home_location, 
+            "away_team":  self.away_location,
+            "home_goals": get_home_goals(data),
+            "away_goals": get_away_goals(data),
+            "home_shots": get_home_shots(self.line_score),
+            "away_shots": get_away_shots(self.line_score),
+            "hashtags":   self.game_hashtag
+        }
+        return period_end_string.format(**vars)
 
 
     def get_period_official_string(self, data):
@@ -246,17 +264,26 @@ class Printer:
         #       We may need to post the goal scorer only first and then update (reply to the tweet)
         #       with the assists.
 
-        team_string = self.get_team_string(data)
-        player_name = get_player_name(data)
-        score_string = self.get_score_string(data)
-        goal_string = team_string + " goal! Scored by " + player_name + ".\n\n" + score_string
-        return goal_string
+        vars = { 
+            "team":       self.get_period_string(data),
+            "player":     self.get_team_string(data),
+            "time":       data["about"]["periodTimeRemaining"],
+            "period":     data["about"]["ordinalNum"],
+            "home_team":  self.home_location, 
+            "away_team":  self.away_location,
+            "home_goals": get_home_goals(data),
+            "away_goals": get_away_goals(data),
+            "hashtags":   self.game_hashtag
+        }
+        return goal_string.format(**vars)
 
 
     def get_official_challenge_string(self, data):
-        team_string = self.get_team_string(data)
-        challenge_string = team_string + " is challenging the ruling on the play."
-        return challenge_string
+        vars = { 
+            "team":     self.get_period_string(data),
+            "hashtags": self.game_hashtag
+        }
+        return challenge_string.format(**vars)
 
 
     def get_event_string(self, data):
@@ -315,6 +342,6 @@ class Printer:
             # Send the tweet
             if len(text) <= 240:
                 print(text)
-                self.tweeter.tweet(text)
+                #self.tweeter.tweet(text)
             else:
                 raise("error - the tweet is too long!")
