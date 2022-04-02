@@ -11,8 +11,7 @@ time_format = "%Y-%m-%dT%H:%M:%SZ"
 
 
 def get_schedule_json():
-    #date = datetime.today()
-    date = datetime.today() - timedelta(days=1)
+    date = datetime.today()
     url = schedule_api + "?teamId=" + str(team_id) + "&date=" + date.strftime("%Y-%m-%d")
     params = ""
     r = requests.get(url, params)
