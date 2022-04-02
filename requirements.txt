@@ -1,0 +1,5 @@
+python-dotenv == 0.19.2
+pause == 0.3
+pytz == 2022.1
+requests == 2.27.1
+tweepy == 4.8.0
