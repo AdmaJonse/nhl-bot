@@ -1,6 +1,8 @@
 import requests
+
+from src import logger
+
 from datetime import datetime
-from datetime import timedelta
 from datetime import timezone
 
 # Colorado Avalanche team ID in the NHL API
@@ -24,7 +26,7 @@ def get_game_id():
         id = data["dates"][0]["games"][0]["gamePk"]
         return id
     except:
-        print("Could not find game.")
+        logger.log_info("Could not find game.")
         return -1
 
 
@@ -34,5 +36,5 @@ def get_start_time():
         start_time = datetime.strptime(data["dates"][0]["games"][0]["gameDate"], time_format)
         return start_time.replace(tzinfo=timezone.utc)
     except:
-        print("Could not find game.")
+        logger.log_info("Could not find game.")
         return -1

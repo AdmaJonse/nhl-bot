@@ -2,3 +2,4 @@ config/.env
 config/keys.txt
 src/__pycache__
 data.json
+job.log
