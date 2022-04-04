@@ -50,9 +50,22 @@ def get_period(data):
     return data["about"]["goals"]["away"]
 
 
-def get_player_name(data):
-    # TODO: Player 0 is not always the goal scorer
-    return data["players"][0]["player"]["fullName"]
+def get_player_name(data, player_type):
+
+    for player in data["players"]:
+        if player["playerType"] == player_type:
+            return player["player"]["fullName"]
+
+    logger.log_error("error - could not find player of type: " + player_type)
+    return "unknown player"
+
+
+def get_goal_scorer(data):
+    return get_player_name(data, "Scorer")
+
+
+def get_penalty_taker(data):
+    return get_player_name(data, "penaltyOn")
 
 
 class Printer:
@@ -202,7 +215,7 @@ class Printer:
         vars = { 
             "team":     self.get_team_string(data),
             "penalty":  data["result"]["secondaryType"].lower(),
-            "player":   get_player_name(data),
+            "player":   get_penalty_taker(data),
             "minutes":  data["result"]["penaltyMinutes"],
             "severity": data["result"]["penaltySeverity"].lower(),
             "hashtags": self.game_hashtag
@@ -250,7 +263,7 @@ class Printer:
 
         vars = { 
             "team":       self.get_team_string(data),
-            "player":     get_player_name(data),
+            "player":     get_goal_scorer(data),
             "time":       data["about"]["periodTimeRemaining"],
             "period":     data["about"]["ordinalNum"],
             "home_team":  self.home_location, 
