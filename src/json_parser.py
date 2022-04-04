@@ -1,6 +1,8 @@
 import json
-import printer
 import requests
+
+from src import printer
+from src import logger
 
 from datetime import datetime
 from datetime import timedelta
@@ -35,6 +37,9 @@ class Parser:
         return wrapper
 
 
+    # TODO: Need a way to check for updated records in previously parsed events.
+    #       IE: if they add assists to a goal.
+
     def get_new_records(self):
 
         # Filter out all play data that didn't occur in the previous minute
@@ -44,7 +49,11 @@ class Parser:
             time_format = "%Y-%m-%dT%H:%M:%SZ"
             current_time = datetime.now(timezone.utc)
             event_time = datetime.strptime(e["about"]["dateTime"], time_format).replace(tzinfo=timezone.utc)
-            is_time_current = timedelta(0) < (current_time - event_time) < timedelta(minutes=5)
+            is_time_current = timedelta(0) < (current_time - event_time) < timedelta(minutes=3)
+            
+            # TODO: Get rid of the time-based checking. This only causes problems.
+            #       If we set last_event correctly during startup, there's no need
+            #       for time-based checking
             
             # Event ID is greater than the last record parsed
             event_code = get_event_id(e)
@@ -64,10 +73,10 @@ class Parser:
 
 
     def check_for_game_over(self, data):
-        event_type = data["result"]["event"]
+        event_type = data["result"]["event"] 
         self.is_game_over = event_type == "Game End"
         if self.is_game_over:
-            print("Game Over.")
+            logger.log_info("Game Over.")
 
 
     @get_latest_data
@@ -77,3 +86,7 @@ class Parser:
             self.printer.handle_event(event)
             self.last_event = get_event_id(event)
             self.check_for_game_over(event)
+
+
+# TODO: When the script first runs, parse any in-progress game but don't post any events.
+#       We want to set last_event, so that only new events are parsed.

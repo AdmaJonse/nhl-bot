@@ -1,5 +1,6 @@
-import tweeter
-from templates import *
+from src import logger
+from src import tweeter
+from src import templates
 
 blocked_shot_event    = "Blocked Shot"
 challenge_event       = "Official Challenge"
@@ -19,8 +20,6 @@ period_start_event    = "Period Start"
 shot_event            = "Shot"
 stoppage_event        = "Stoppage" 
 takeaway_event        = "Takeaway"
-
-MAX_LENGTH = 240
 
 
 def get_timestamp(data):
@@ -52,25 +51,26 @@ def get_period(data):
 
 
 def get_player_name(data):
-    return data["players"][0]["fullName"]
+    # TODO: Player 0 is not always the goal scorer
+    return data["players"][0]["player"]["fullName"]
 
 
 class Printer:
 
     def get_game_data(self, data):
-        self.home_location = data["teams"]["home"]["locationName"]
-        self.home_team = data["teams"]["home"]["teamName"]
+        self.home_location     = data["teams"]["home"]["locationName"]
+        self.home_team         = data["teams"]["home"]["teamName"]
         self.home_abbreviation = data["teams"]["home"]["abbreviation"]
-        self.home_full_name = data["teams"]["home"]["name"]
-        self.away_location = data["teams"]["away"]["locationName"]
-        self.away_team = data["teams"]["away"]["teamName"]
+        self.home_full_name    = data["teams"]["home"]["name"]
+        self.away_location     = data["teams"]["away"]["locationName"]
+        self.away_team         = data["teams"]["away"]["teamName"]
         self.away_abbreviation = data["teams"]["away"]["abbreviation"]
-        self.away_full_name = data["teams"]["away"]["name"]
-        self.date = data["datetime"]["dateTime"]
-        self.venue = data["teams"]["home"]["venue"]["name"]
-        self.is_home = self.home_location == "Colorado"
-        self.team_hashtag = "#GoAvsGo"
-        self.game_hashtag = "#" + self.away_abbreviation + "vs" + self.home_abbreviation
+        self.away_full_name    = data["teams"]["away"]["name"]
+        self.date              = data["datetime"]["dateTime"]
+        self.venue             = data["teams"]["home"]["venue"]["name"]
+        self.is_home           = self.home_location == "Colorado"
+        self.team_hashtag      = "#GoAvsGo"
+        self.game_hashtag      = "#" + self.away_abbreviation + "vs" + self.home_abbreviation
 
 
     def update_line_score(self, line_score):
@@ -106,24 +106,6 @@ class Printer:
         print("\n")
 
 
-    def get_score_string(self, data):
-        home_goals = get_home_goals(data)
-        away_goals = get_away_goals(data)
-        home_string = self.home_location + ": " + str(home_goals)
-        away_string = self.away_location + ": " + str(away_goals)
-        score_string = home_string + "\n" + away_string
-        return score_string
-
-
-    def get_shots_string(self):
-        home_shots = get_home_shots(self.line_score)
-        away_shots = get_away_shots(self.line_score)
-        home_string = self.home_location + ": " + str(home_shots)
-        away_string = self.away_location + ": " + str(away_shots)
-        shots_string = "Shots On Goal\n" + home_string + "\n" + away_string
-        return shots_string
-
-    
     def get_period_string(self, data):
         period = data["about"]["period"]
         if period == 1:
@@ -133,7 +115,7 @@ class Printer:
         elif period == 3:
             period_string = "The third period"
         else:
-            period_string = "Period " + str(period)
+            period_string = "The OT period"
 
         return period_string
 
@@ -145,7 +127,7 @@ class Printer:
         elif team == self.away_full_name:
             team_string = self.away_location
         else:
-            raise("error - unknown team")
+            logger.log_error("error - unknown team")
         return team_string
 
 
@@ -166,7 +148,7 @@ class Printer:
             "away_goals": get_away_goals(data),
             "hashtags":   self.game_hashtag
         }
-        return game_end_template.format(**vars)
+        return templates.game_end_template.format(**vars)
 
 
     def get_game_official_string(self, data):
@@ -184,17 +166,17 @@ class Printer:
     def get_shot_string(self, data):
         # TODO: These are too spammy for primetime. These should be converted to a null event
         #       eventually. For now they're helpful for testing.
-        vars = { 
-            "team":        self.get_team_string(data),
-            "description": get_description(data), 
-            "home_team":   self.home_location, 
-            "away_team":   self.away_location,
-            "home_shots":  get_home_shots(self.line_score),
-            "away_shots":  get_away_shots(self.line_score),
-            "hashtags":    self.game_hashtag
-        }
-        return shot_template.format(**vars)
-
+        # vars = { 
+        #     "team":        self.get_team_string(data),
+        #     "description": get_description(data), 
+        #     "home_team":   self.home_location, 
+        #     "away_team":   self.away_location,
+        #     "home_shots":  get_home_shots(self.line_score),
+        #     "away_shots":  get_away_shots(self.line_score),
+        #     "hashtags":    self.game_hashtag
+        # }
+        # return templates.shot_template.format(**vars)
+        return ""
 
     def get_hit_string(self, data):
         return ""
@@ -220,12 +202,12 @@ class Printer:
         vars = { 
             "team":     self.get_team_string(data),
             "penalty":  data["result"]["secondaryType"].lower(),
-            "player":   data["players"][0]["player"]["fullName"],
+            "player":   get_player_name(data),
             "minutes":  data["result"]["penaltyMinutes"],
             "severity": data["result"]["penaltySeverity"].lower(),
             "hashtags": self.game_hashtag
         }
-        return penalty_template.format(**vars)
+        return templates.penalty_template.format(**vars)
 
 
     def get_period_ready_string(self, data):
@@ -235,16 +217,16 @@ class Printer:
     def get_period_start_string(self, data):
         vars = { 
             "period":   self.get_period_string(data),
-            "venue":    self.get_team_string(data),
+            "venue":    self.venue,
             "hashtags": self.game_hashtag
         }
-        return period_start_template.format(**vars)
+        return templates.period_start_template.format(**vars)
 
 
     def get_period_end_string(self, data):
         vars = { 
             "period":     self.get_period_string(data),
-            "venue":      self.get_team_string(data),
+            "venue":      self.venue,
             "home_team":  self.home_location, 
             "away_team":  self.away_location,
             "home_goals": get_home_goals(data),
@@ -253,7 +235,7 @@ class Printer:
             "away_shots": get_away_shots(self.line_score),
             "hashtags":   self.game_hashtag
         }
-        return period_end_template.format(**vars)
+        return templates.period_end_template.format(**vars)
 
 
     def get_period_official_string(self, data):
@@ -262,13 +244,13 @@ class Printer:
 
     def get_goal_string(self, data):
 
-        # TODO: The goal description isn't necessarily complete when sit first appears.
+        # TODO: The goal description isn't necessarily complete when it first appears.
         #       We may need to post the goal scorer only first and then update (reply to the tweet)
         #       with the assists.
 
         vars = { 
-            "team":       self.get_period_string(data),
-            "player":     self.get_team_string(data),
+            "team":       self.get_team_string(data),
+            "player":     get_player_name(data),
             "time":       data["about"]["periodTimeRemaining"],
             "period":     data["about"]["ordinalNum"],
             "home_team":  self.home_location, 
@@ -277,7 +259,7 @@ class Printer:
             "away_goals": get_away_goals(data),
             "hashtags":   self.game_hashtag
         }
-        return goal_template.format(**vars)
+        return templates.goal_template.format(**vars)
 
 
     def get_official_challenge_string(self, data):
@@ -285,7 +267,7 @@ class Printer:
             "team":     self.get_period_string(data),
             "hashtags": self.game_hashtag
         }
-        return challenge_template.format(**vars)
+        return templates.challenge_template.format(**vars)
 
 
     def get_event_string(self, data):
@@ -331,13 +313,11 @@ class Printer:
         else:
             # TODO: Are there any missing events? These should be handled.
             # TODO: I'm guessing there might be special events for shootouts/OT
-            raise("error - unhandled event")
+            logger.log_error("error - unhandled event: " + event_string)
         
         return event_string
 
 
     def handle_event(self, data):
         text = self.get_event_string(data)
-        if 0 < len(text) <= MAX_LENGTH:
-            print(text)
-            #self.tweeter.tweet(text)
+        self.tweeter.tweet(text)

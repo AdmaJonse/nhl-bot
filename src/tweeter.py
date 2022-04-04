@@ -4,6 +4,11 @@ import tweepy
 from os.path import join, dirname, abspath
 from dotenv import load_dotenv
 
+from src import logger
+
+# maximum tweet length in characters
+max_length = 240 # characters
+
 class Tweeter:
 
     def read_config(self):
@@ -29,4 +34,8 @@ class Tweeter:
 
 
     def tweet(self, text):
-        self.api.update_status(text)
+        logger.log_info("Tweet:\n" + text)
+        if 0 < len(text) <= max_length:
+            self.api.update_status(text)
+        else:
+            logger.log_error("error - tweet is longer than " + str(max_length) + " characters.")

@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/custom.css')}}">
+    <title>Colorado Avalanche Bot</title>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        var output = document.getElementById('output');
+        var log = new XMLHttpRequest();
+        log.open('GET', '{{ url_for('stream') }}', true);
+        log.send();
+        setInterval(function() {
+          output.textContent = log.responseText;
+        }, 500);
+      });
+    </script>
+  </head>
+  <body id="main">
+    <div class="row">
+      <h2 align="center">Debug Logs:</h2>
+      <div class="logging_window">
+        <pre id="output"></pre>
+      </div>
+    </div>
+  </body>
+</html>
