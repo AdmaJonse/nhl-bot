@@ -18,7 +18,7 @@ Final Score:
 #################################################
 
 period_start_template = """
-{period} is starting at {venue}.
+{period} is starting at {venue} in {city}.
 
 {hashtags}
 """

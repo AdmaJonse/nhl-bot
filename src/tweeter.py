@@ -34,8 +34,9 @@ class Tweeter:
 
 
     def tweet(self, text):
-        logger.log_info("Tweet:\n" + text)
         if 0 < len(text) <= max_length:
-            self.api.update_status(text)
-        else:
-            logger.log_error("error - tweet is longer than " + str(max_length) + " characters.")
+            logger.log_info("Tweet:\n" + text)
+            try:
+                self.api.update_status(text)
+            except:
+                logger.log_error("error - could not send tweet.")

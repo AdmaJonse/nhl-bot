@@ -53,7 +53,8 @@ def get_period(data):
 def get_player_name(data, player_type):
 
     for player in data["players"]:
-        if player["playerType"] == player_type:
+        logger.log_info("searching players - type: " + player["playerType"])
+        if player["playerType"].lower() == player_type.lower():
             return player["player"]["fullName"]
 
     logger.log_error("error - could not find player of type: " + player_type)
@@ -231,6 +232,7 @@ class Printer:
         vars = { 
             "period":   self.get_period_string(data),
             "venue":    self.venue,
+            "city":     self.home_location,
             "hashtags": self.game_hashtag
         }
         return templates.period_start_template.format(**vars)
