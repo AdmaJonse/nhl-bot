@@ -90,6 +90,8 @@ class Printer:
     def update_line_score(self, line_score):
         self.line_score = line_score
 
+        # TODO: Handle line score events, like the goalie being pulled
+
 
     def __init__(self, data):
         self.tweeter = tweeter.Tweeter()
@@ -178,18 +180,6 @@ class Printer:
 
 
     def get_shot_string(self, data):
-        # TODO: These are too spammy for primetime. These should be converted to a null event
-        #       eventually. For now they're helpful for testing.
-        # vars = { 
-        #     "team":        self.get_team_string(data),
-        #     "description": get_description(data), 
-        #     "home_team":   self.home_location, 
-        #     "away_team":   self.away_location,
-        #     "home_shots":  get_home_shots(self.line_score),
-        #     "away_shots":  get_away_shots(self.line_score),
-        #     "hashtags":    self.game_hashtag
-        # }
-        # return templates.shot_template.format(**vars)
         return ""
 
     def get_hit_string(self, data):
@@ -213,15 +203,32 @@ class Printer:
 
 
     def get_penalty_string(self, data):
-        vars = { 
-            "team":     self.get_team_string(data),
-            "penalty":  data["result"]["secondaryType"].lower(),
-            "player":   get_penalty_taker(data),
-            "minutes":  data["result"]["penaltyMinutes"],
-            "severity": data["result"]["penaltySeverity"].lower(),
-            "hashtags": self.game_hashtag
-        }
-        return templates.penalty_template.format(**vars)
+
+        # TODO: Should mention if there are any existing penalties
+        #       and what the strength is post-penalty.
+        severity = data["result"]["penaltySeverity"].lower()
+
+        if severity == "penalty shot":
+
+            vars = { 
+                "team":     self.home_location if self.get_team_string(data) == self.away_location else self.away_location,
+                "penalty":  data["result"]["secondaryType"].lower(),
+                "player":   get_penalty_taker(data),
+                "hashtags": self.game_hashtag + " " + self.team_hashtag
+            }
+            return templates.penalty_shot_template.format(**vars)
+
+        else:
+
+            vars = { 
+                "team":     self.get_team_string(data),
+                "penalty":  data["result"]["secondaryType"].lower(),
+                "player":   get_penalty_taker(data),
+                "minutes":  data["result"]["penaltyMinutes"],
+                "severity": severity,
+                "hashtags": self.game_hashtag + " " + self.team_hashtag
+            }
+            return templates.penalty_template.format(**vars)
 
 
     def get_period_ready_string(self, data):
@@ -233,7 +240,7 @@ class Printer:
             "period":   self.get_period_string(data),
             "venue":    self.venue,
             "city":     self.home_location,
-            "hashtags": self.game_hashtag
+            "hashtags": self.game_hashtag + " " + self.team_hashtag
         }
         return templates.period_start_template.format(**vars)
 
@@ -248,7 +255,7 @@ class Printer:
             "away_goals": get_away_goals(data),
             "home_shots": get_home_shots(self.line_score),
             "away_shots": get_away_shots(self.line_score),
-            "hashtags":   self.game_hashtag
+            "hashtags":   self.game_hashtag + " " + self.team_hashtag
         }
         return templates.period_end_template.format(**vars)
 
@@ -259,9 +266,7 @@ class Printer:
 
     def get_goal_string(self, data):
 
-        # TODO: The goal description isn't necessarily complete when it first appears.
-        #       We may need to post the goal scorer only first and then update (reply to the tweet)
-        #       with the assists.
+        # TODO: Should mention if this is a powerplay or shorthanded goal.
 
         vars = { 
             "team":       self.get_team_string(data),
@@ -272,7 +277,7 @@ class Printer:
             "away_team":  self.away_location,
             "home_goals": get_home_goals(data),
             "away_goals": get_away_goals(data),
-            "hashtags":   self.game_hashtag
+            "hashtags":   self.game_hashtag + " " + self.team_hashtag
         }
         return templates.goal_template.format(**vars)
 
@@ -280,7 +285,7 @@ class Printer:
     def get_official_challenge_string(self, data):
         vars = { 
             "team":     self.get_period_string(data),
-            "hashtags": self.game_hashtag
+            "hashtags": self.game_hashtag + " " + self.team_hashtag
         }
         return templates.challenge_template.format(**vars)
 
@@ -328,11 +333,162 @@ class Printer:
         else:
             # TODO: Are there any missing events? These should be handled.
             # TODO: I'm guessing there might be special events for shootouts/OT
-            logger.log_error("error - unhandled event: " + event_string)
+            logger.log_error("error - unhandled event: " + event_type)
         
         return event_string
 
+    #################################################################
+    #  Reply Strings
+    #################################################################
 
-    def handle_event(self, data):
+    def get_game_scheduled_reply(self, data):
+        return ""
+
+    
+    def get_game_end_reply(self, data):
+        return ""
+
+    def get_game_official_reply(self, data):
+        return ""
+
+
+    def get_faceoff_reply(self, data):
+        return ""
+
+
+    def get_stoppage_reply(self, data):
+        return ""
+
+
+    def get_shot_reply(self, data):
+        return ""
+
+    def get_hit_reply(self, data):
+        return ""
+
+
+    def get_blocked_shot_reply(self, data):
+        return ""
+
+
+    def get_giveaway_reply(self, data):
+        return ""
+
+
+    def get_takeaway_reply(self, data):
+        return ""
+
+
+    def get_missed_shot_reply(self, data):
+        return ""
+
+
+    def get_penalty_reply(self, data):
+        vars = { 
+            "team":     self.get_team_string(data),
+            "penalty":  data["result"]["secondaryType"].lower(),
+            "player":   get_penalty_taker(data),
+            "minutes":  data["result"]["penaltyMinutes"],
+            "severity": data["result"]["penaltySeverity"].lower(),
+            "hashtags": self.game_hashtag + " " + self.team_hashtag
+        }
+        return templates.penalty_reply_template.format(**vars)
+
+
+    def get_period_ready_reply(self, data):
+        return ""
+
+
+    def get_period_start_reply(self, data):
+        return ""
+
+
+    def get_period_end_reply(self, data):
+        return ""
+
+
+    def get_period_official_reply(self, data):
+        return ""
+
+
+    def get_goal_reply(self, data):
+        vars = { 
+            "team":        self.get_team_string(data),
+            "time":        data["about"]["periodTimeRemaining"],
+            "period":      data["about"]["ordinalNum"],
+            "description": data["result"]["description"],
+            "hashtags":    self.game_hashtag + " " + self.team_hashtag
+        }
+        return templates.goal_reply_template.format(**vars)
+
+
+    def get_official_challenge_reply(self, data):
+        return ""
+
+
+    def get_reply_string(self, data):
+
+        event_type = data["result"]["event"]
+
+        if event_type == blocked_shot_event:
+            reply = self.get_blocked_shot_reply(data)
+        elif event_type == challenge_event:
+            reply = self.get_official_challenge_reply(data)
+        elif event_type == faceoff_event:
+            reply = self.get_faceoff_reply(data)
+        elif event_type == game_end_event:
+            reply = self.get_game_end_reply(data)
+        elif event_type == game_official_event:
+            reply = self.get_game_official_reply(data)
+        elif event_type == game_scheduled_event:
+            reply = self.get_game_scheduled_reply(data)
+        elif event_type == giveaway_event: 
+            reply = self.get_giveaway_reply(data)
+        elif event_type == goal_event:       
+            reply = self.get_goal_reply(data)
+        elif event_type == hit_event:           
+            reply = self.get_hit_reply(data)
+        elif event_type == missed_shot_event:
+            reply = self.get_missed_shot_reply(data)
+        elif event_type == penalty_event:    
+            reply = self.get_penalty_reply(data)
+        elif event_type == period_end_event:
+            reply = self.get_period_end_reply(data)
+        elif event_type == period_official_event:
+            reply = self.get_period_official_reply(data)
+        elif event_type == period_ready_event:
+            reply = self.get_period_ready_reply(data)
+        elif event_type == period_start_event:
+            reply = self.get_period_start_reply(data)
+        elif event_type == shot_event:   
+            reply = self.get_shot_reply(data)
+        elif event_type == stoppage_event:
+            reply = self.get_stoppage_reply(data)
+        elif event_type == takeaway_event:
+            reply = self.get_takeaway_reply(data)
+        else:
+            # TODO: Are there any missing events? These should be handled.
+            # TODO: I'm guessing there might be special events for shootouts/OT
+            logger.log_error("error - unhandled event for reply: " + event_type)
+        
+        return reply
+
+
+    #################################################################
+    #  Generators
+    #################################################################
+
+    def generate_tweet(self, data):
+        tweet_id = 0
         text = self.get_event_string(data)
-        self.tweeter.tweet(text)
+        if len(text) > 0:
+            tweet_id = self.tweeter.tweet(text)
+        return tweet_id
+
+    
+    def generate_reply(self, data, id):
+        tweet_id = 0
+        text = self.get_reply_string(data)
+        if len(text) > 0:
+            tweet_id = self.tweeter.reply(text, id)
+        return tweet_id

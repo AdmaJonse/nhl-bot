@@ -3,7 +3,7 @@
 #################################################
 
 game_end_template = """
-The game is over. {winner} wins.
+The game is over. {winner} wins!
 
 Final Score:
 {home_team}: {home_goals}
@@ -71,6 +71,23 @@ There is a penalty on {team}.
 {hashtags}
 """
 
+penalty_shot_template = """
+That's a penalty shot for {team}!
+
+The infraction is against {player} for {penalty}.
+
+{hashtags}
+"""
+
+penalty_reply_template = """
+There has been an update to the penalty on {team}.
+
+{player}
+{minutes} minute {severity} for {penalty}
+
+{hashtags}
+"""
+
 
 #################################################
 # Goal
@@ -79,11 +96,18 @@ There is a penalty on {team}.
 goal_template = """
 {team} goal! 
 
-Scored by {player} with {time} remaing in the {period} period.
+Scored by {player} with {time} remaining in the {period} period.
 
-Goals
 {home_team}: {home_goals}
 {away_team}: {away_goals}
+
+{hashtags}
+"""
+
+goal_reply_template = """
+There has been update to the {team} goal scored with {time} remaining in the {period} period.
+
+{description}
 
 {hashtags}
 """
