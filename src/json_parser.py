@@ -83,17 +83,11 @@ class Parser:
     def parse(self):
         for event in self.new_records:
 
-            print(event)
+            logger.log_verbose("Event: \n" + event)
 
             tweet_id  = 0
             event_id  = get_event_id(event)
             parent_id = self.tweets.get(event_id, 0)
-
-            print("event id: " + str(event_id))
-            print("parent id: " + str(parent_id))
-
-            if parent_id == None:
-                print(self.tweets)
             
             # update any records stored by the printer
             self.printer.update_line_score(self.data["liveData"]["linescore"])

@@ -29,6 +29,10 @@ class Logger:
         self.logger.error(msg)
 
 
+    def verbose(self, msg):
+        self.logger.debug(msg)
+
+
 log = Logger()
 
 
@@ -38,3 +42,7 @@ def log_info(msg):
 
 def log_error(msg):
     log.error(msg)
+
+
+def log_verbose(msg):
+    log.verbose(msg)
