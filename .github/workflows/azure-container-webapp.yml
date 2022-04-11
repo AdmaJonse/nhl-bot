@@ -18,6 +18,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Create env file
+        run: |
+          touch config/.env
+          echo BEARER_TOKEN=${{ secrets.BEARER_TOKEN }} >> config/.env
+          echo CONSUMER_KEY=${{ secrets.CONSUMER_KEY }} >> config/.env
+          echo CONSUMER_SECRET=${{ secrets.CONSUMER_SECRET }} >> config/.env
+          echo ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }} >> config/.env
+          echo ACCESS_TOKEN_SECRET=${{ secrets.ACCESS_TOKEN_SECRET }} >> config/.env
+
       - name: Install Python 3
         uses: actions/setup-python@v1
         with:
