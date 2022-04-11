@@ -94,7 +94,7 @@ There has been an update to the penalty on {team}.
 #################################################
 
 goal_template = """
-{team} goal! 
+{team} goal!
 
 Scored by {player} with {time} remaining in the {period} period.
 

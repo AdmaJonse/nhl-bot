@@ -1,5 +1,6 @@
 config/.env
 config/keys.txt
 src/__pycache__
+test/__pycache__
 data.json
 job.log

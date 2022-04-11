@@ -53,7 +53,6 @@ def get_period(data):
 def get_player_name(data, player_type):
 
     for player in data["players"]:
-        logger.log_info("searching players - type: " + player["playerType"])
         if player["playerType"].lower() == player_type.lower():
             return player["player"]["fullName"]
 
@@ -162,7 +161,7 @@ class Printer:
             "away_team":  self.away_location,
             "home_goals": get_home_goals(data),
             "away_goals": get_away_goals(data),
-            "hashtags":   self.game_hashtag
+            "hashtags":   self.game_hashtag + " " + self.team_hashtag
         }
         return templates.game_end_template.format(**vars)
 
@@ -284,7 +283,7 @@ class Printer:
 
     def get_official_challenge_string(self, data):
         vars = { 
-            "team":     self.get_period_string(data),
+            "team":     self.get_team_string(data),
             "hashtags": self.game_hashtag + " " + self.team_hashtag
         }
         return templates.challenge_template.format(**vars)
