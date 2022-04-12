@@ -1,5 +1,6 @@
 import os
 
+from datetime import datetime
 from flask import Flask, render_template
 from multiprocessing import Process
 from src import bot
@@ -27,6 +28,8 @@ def stream():
 
 
 if __name__ == "__main__":
+
+    logger.log_info("Application deployed at: " + str(datetime.now()))
 
     open('job.log', 'w').close()
 
