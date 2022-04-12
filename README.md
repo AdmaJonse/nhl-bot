@@ -1,5 +1,5 @@
 # nhl-bot
-[![build](https://github.com/AdmaJonse/nhl-bot/actions/workflows/azure-container-webapp.yml/badge.svg?branch=main)](https://github.com/AdmaJonse/nhl-bot/actions/workflows/azure-container-webapp.yml)
+[![Build](https://github.com/AdmaJonse/nhl-bot/actions/workflows/azure-container-webapp.yml/badge.svg?branch=main)](https://github.com/AdmaJonse/nhl-bot/actions/workflows/azure-container-webapp.yml)
 
 A Twitter bot that posts when events occur in Colorado Avalanche games.
 
