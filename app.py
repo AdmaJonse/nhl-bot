@@ -35,4 +35,4 @@ if __name__ == "__main__":
     logger.log_info("Application deployed at: " + str(datetime.now()))
     Process(target=bot.check_for_updates).start()    
     port = int(os.environ.get('PORT', 5000))
-    serve(app, host="0.0.0.0", port=port)
+    serve(app, host="0.0.0.0", port=port, threads=6)
