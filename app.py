@@ -2,6 +2,7 @@ import os
 
 from datetime import datetime
 from flask import Flask, render_template
+from waitress import serve
 from multiprocessing import Process
 from src import bot
 from src import logger
@@ -28,11 +29,10 @@ def stream():
 
 
 if __name__ == "__main__":
-    
+
     open('job.log', 'w').close()
 
-    Process(target=bot.check_for_updates).start()
-
     logger.log_info("Application deployed at: " + str(datetime.now()))
+    Process(target=bot.check_for_updates).start()    
     port = int(os.environ.get('PORT', 5000))
-    app.run(host="0.0.0.0", port=port, threaded=True)
+    serve(app, host="0.0.0.0", port=port)
