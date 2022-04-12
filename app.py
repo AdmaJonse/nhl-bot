@@ -28,13 +28,11 @@ def stream():
 
 
 if __name__ == "__main__":
-
-    logger.log_info("Application deployed at: " + str(datetime.now()))
-
+    
     open('job.log', 'w').close()
 
     Process(target=bot.check_for_updates).start()
 
-    logger.log_info("Starting web application...")
+    logger.log_info("Application deployed at: " + str(datetime.now()))
     port = int(os.environ.get('PORT', 5000))
     app.run(host="0.0.0.0", port=port, threaded=True)
