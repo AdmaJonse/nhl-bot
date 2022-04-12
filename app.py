@@ -26,11 +26,6 @@ def stream():
     return app.response_class(generate(), mimetype='text/plain')
 
 
-@app.route('/twitter')
-def show_tweets():
-    return render_template('twitter.html')
-
-
 if __name__ == "__main__":
 
     open('job.log', 'w').close()

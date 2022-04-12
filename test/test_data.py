@@ -1,3 +1,7 @@
+#################################################
+# Game Data
+#################################################
+
 game_data = {
     "gameData": {
         "datetime": {
@@ -61,6 +65,10 @@ game_data = {
         }
     }
 }
+
+#################################################
+# Game Events
+#################################################
 
 game_scheduled_data = {
     "result": {
@@ -797,4 +805,94 @@ challenge_data = {
       "link" : "/api/v1/teams/28",
       "triCode" : "BOS"
     }
+}
+
+#################################################
+# Schedule Data
+#################################################
+
+valid_schedule_data = {
+    "copyright" : "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+    "totalItems" : 1,
+    "totalEvents" : 0,
+    "totalGames" : 1,
+    "totalMatches" : 0,
+    "metaData" : {
+        "timeStamp" : "20220412_013822"
+    },
+    "wait" : 10,
+    "dates" : [ {
+        "date" : "2022-04-11",
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "games" : [ {
+        "gamePk" : 2021021162,
+        "link" : "/api/v1/game/2021021162/feed/live",
+        "gameType" : "R",
+        "season" : "20212022",
+        "gameDate" : "2022-04-11T23:00:00Z",
+        "status" : {
+            "abstractGameState" : "Final",
+            "codedGameState" : "6",
+            "detailedState" : "Final",
+            "statusCode" : "6",
+            "startTimeTBD" : False
+        },
+        "teams" : {
+            "away" : {
+            "leagueRecord" : {
+                "wins" : 35,
+                "losses" : 28,
+                "ot" : 11,
+                "type" : "league"
+            },
+            "score" : 4,
+            "team" : {
+                "id" : 52,
+                "name" : "Winnipeg Jets",
+                "link" : "/api/v1/teams/52"
+            }
+            },
+            "home" : {
+            "leagueRecord" : {
+                "wins" : 20,
+                "losses" : 42,
+                "ot" : 11,
+                "type" : "league"
+            },
+            "score" : 2,
+            "team" : {
+                "id" : 8,
+                "name" : "Montréal Canadiens",
+                "link" : "/api/v1/teams/8"
+            }
+            }
+        },
+        "venue" : {
+            "name" : "Centre Bell",
+            "link" : "/api/v1/venues/null"
+        },
+        "content" : {
+            "link" : "/api/v1/game/2021021162/content"
+        }
+        } ],
+        "events" : [ ],
+        "matches" : [ ]
+    } ]
+}
+
+
+invalid_schedule_data = {
+    "copyright" : "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+    "totalItems" : 0,
+    "totalEvents" : 0,
+    "totalGames" : 0,
+    "totalMatches" : 0,
+    "metaData" : {
+        "timeStamp" : "20220412_013745"
+    },
+    "wait" : 10,
+    "dates" : [ ]
 }

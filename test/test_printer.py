@@ -10,6 +10,10 @@ class TestPrinter(unittest.TestCase):
         self.printer = printer.Printer(test_data.game_data)
 
 
+    #################################################
+    # Event Posts
+    #################################################
+
     def test_game_scheduled(self):
         actual   = self.printer.get_game_scheduled_string(test_data.game_scheduled_data)
         expected = ""
@@ -121,4 +125,116 @@ class TestPrinter(unittest.TestCase):
     def test_challenge(self):
         actual   = self.printer.get_official_challenge_string(test_data.challenge_data)
         expected = "\nBoston is challenging the ruling on the play.\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    #################################################
+    # Event Replies
+    #################################################
+
+    def test_game_scheduled_reply(self):
+        actual   = self.printer.get_game_scheduled_reply(test_data.game_scheduled_data)
+        expected = ""
+        self.assertEqual(expected, actual)
+
+    
+    def test_game_end_reply(self):
+        actual   = self.printer.get_game_end_reply(test_data.game_end_data)
+        expected = ""
+        self.assertEqual(expected, actual)
+
+
+    def test_game_official_reply(self):
+        actual   = self.printer.get_game_official_reply(test_data.game_official_data)
+        expected = ""
+        self.assertEqual(expected, actual)
+
+
+    def test_faceoff_reply(self):
+        actual   = self.printer.get_faceoff_reply(test_data.faceoff_data)
+        expected = ""
+        self.assertEqual(expected, actual)
+
+
+    def test_stoppage_reply(self):
+        actual   = self.printer.get_stoppage_reply(test_data.stoppage_data)
+        expected = ""
+        self.assertEqual(expected, actual)
+
+
+    def test_shot_reply(self):
+        actual   = self.printer.get_shot_reply(test_data.shot_data)
+        expected = ""
+        self.assertEqual(expected, actual)
+
+
+    def test_hit_reply(self):
+        actual   = self.printer.get_hit_reply(test_data.hit_data)
+        expected = ""
+        self.assertEqual(expected, actual)
+
+
+    def test_blocked_shot_reply(self):
+        actual   = self.printer.get_blocked_shot_reply(test_data.blocked_shot_data)
+        expected = ""
+        self.assertEqual(expected, actual)
+
+
+    def test_giveaway_reply(self):
+        actual   = self.printer.get_giveaway_reply(test_data.giveaway_data)
+        expected = ""
+        self.assertEqual(expected, actual)
+
+
+    def test_takeaway_reply(self):
+        actual   = self.printer.get_takeaway_reply(test_data.takeaway_data)
+        expected = ""
+        self.assertEqual(expected, actual)
+
+
+    def test_missed_shot_reply(self):
+        actual   = self.printer.get_missed_shot_reply(test_data.missed_shot_data)
+        expected = ""
+        self.assertEqual(expected, actual)
+
+
+    def test_penalty_reply(self):
+        actual   = self.printer.get_penalty_reply(test_data.penalty_data)
+        expected = "\nThere has been an update to the penalty on Washington.\n\nNic Dowd\n2 minute minor for hi-sticking\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_period_ready_reply(self):
+        actual   = self.printer.get_period_ready_reply(test_data.period_ready_data)
+        expected = ""
+        self.assertEqual(expected, actual)
+
+
+    def test_period_start_reply(self):
+        actual   = self.printer.get_period_start_reply(test_data.period_start_data)
+        expected = ""
+        self.assertEqual(expected, actual)
+
+
+    def test_period_end_reply(self):
+        actual   = self.printer.get_period_end_reply(test_data.period_end_data)
+        expected = ""
+        self.assertEqual(expected, actual)
+
+
+    def test_period_official_reply(self):
+        actual   = self.printer.get_period_official_reply(test_data.period_official_data)
+        expected = ""
+        self.assertEqual(expected, actual)
+
+    
+    def test_goal_reply(self):
+        actual   = self.printer.get_goal_reply(test_data.goal_data)
+        expected = "\nThere has been update to the Washington goal scored with 15:49 remaining in the 2nd period.\n\nJohn Carlson (14) Slap Shot, assists: Conor Sheary (20)\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_challenge_reply(self):
+        actual   = self.printer.get_official_challenge_reply(test_data.challenge_data)
+        expected = ""
         self.assertEqual(expected, actual)

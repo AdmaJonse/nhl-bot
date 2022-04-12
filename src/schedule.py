@@ -22,8 +22,7 @@ def get_schedule_json():
     return r.json()
 
 
-def get_game_id():
-    data = get_schedule_json()
+def get_game_id(data=get_schedule_json()):
     logger.log_info("getting game ID from schedule data")
     try:
         id = data["dates"][0]["games"][0]["gamePk"]
@@ -33,8 +32,7 @@ def get_game_id():
         return -1
 
 
-def get_start_time():
-    data = get_schedule_json()
+def get_start_time(data=get_schedule_json()):
     logger.log_info("getting start time from schedule data")
     try:
         start_time = datetime.strptime(data["dates"][0]["games"][0]["gameDate"], time_format)
