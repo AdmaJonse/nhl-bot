@@ -200,7 +200,7 @@ class TestPrinter(unittest.TestCase):
 
     def test_penalty_reply(self):
         actual   = self.printer.get_penalty_reply(test_data.penalty_data)
-        expected = "\nThere has been an update to the penalty on Washington.\n\nNic Dowd\n2 minute minor for hi-sticking\n\n#BOSvsWSH #GoAvsGo\n"
+        expected = ""
         self.assertEqual(expected, actual)
 
 
@@ -230,7 +230,7 @@ class TestPrinter(unittest.TestCase):
     
     def test_goal_reply(self):
         actual   = self.printer.get_goal_reply(test_data.goal_data)
-        expected = "\nThere has been update to the Washington goal scored with 15:49 remaining in the 2nd period.\n\nJohn Carlson (14) Slap Shot, assists: Conor Sheary (20)\n\n#BOSvsWSH #GoAvsGo\n"
+        expected = ""
         self.assertEqual(expected, actual)
 
 
