@@ -383,15 +383,7 @@ class Printer:
 
 
     def get_penalty_reply(self, data):
-        vars = { 
-            "team":     self.get_team_string(data),
-            "penalty":  data["result"]["secondaryType"].lower(),
-            "player":   get_penalty_taker(data),
-            "minutes":  data["result"]["penaltyMinutes"],
-            "severity": data["result"]["penaltySeverity"].lower(),
-            "hashtags": self.game_hashtag + " " + self.team_hashtag
-        }
-        return templates.penalty_reply_template.format(**vars)
+        return ""
 
 
     def get_period_ready_reply(self, data):
@@ -411,14 +403,18 @@ class Printer:
 
 
     def get_goal_reply(self, data):
-        vars = { 
-            "team":        self.get_team_string(data),
-            "time":        data["about"]["periodTimeRemaining"],
-            "period":      data["about"]["ordinalNum"],
-            "description": data["result"]["description"],
-            "hashtags":    self.game_hashtag + " " + self.team_hashtag
-        }
-        return templates.goal_reply_template.format(**vars)
+        return ""
+
+        # TODO: The goal events are updated too frequently to post every time.
+        #       They sometimes seem to flip the player's goal/assist totals
+        #       back and forth between zero and the actual number.
+        # 
+        #       What we really want here is to post when the assists have been
+        #       finalized. If there's an update later that changes the goal 
+        #       scorer or the players with assists, we would want to tweet 
+        #       that too. However, we can't just count on a delta between
+        #       the JSON events indicating that something meaningful has
+        #       changed.
 
 
     def get_official_challenge_reply(self, data):

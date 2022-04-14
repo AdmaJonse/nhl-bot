@@ -3,6 +3,7 @@ import requests
 from src import logger
 
 from datetime import datetime
+from datetime import timedelta
 from datetime import timezone
 
 # Colorado Avalanche team ID in the NHL API
@@ -13,7 +14,7 @@ time_format = "%Y-%m-%dT%H:%M:%SZ"
 
 
 def get_schedule_json():
-    date = datetime.today()
+    date = datetime.today() - timedelta(hours=1)
     url = schedule_api + "?teamId=" + str(team_id) + "&date=" + date.strftime("%Y-%m-%d")
     params = ""
     r = requests.get(url, params)

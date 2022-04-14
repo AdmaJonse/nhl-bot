@@ -83,7 +83,7 @@ class Parser:
     def parse(self):
         for event in self.new_records:
 
-            logger.log_verbose("Event: \n" + event)
+            logger.log_info("Event: \n" + str(event))
 
             tweet_id  = 0
             event_id  = get_event_id(event)
