@@ -7,6 +7,7 @@ from multiprocessing import Process
 from src import bot
 from src import logger
 from time import sleep
+from werkzeug.serving import WSGIRequestHandler
 
 
 app = Flask(__name__, static_folder="app/static/", template_folder="app/static/")
@@ -36,4 +37,5 @@ if __name__ == "__main__":
     Process(target=bot.check_for_updates).start()    
     port = int(os.environ.get('PORT', 5000))
     #serve(app, host="0.0.0.0", port=port, threads=12)
+    WSGIRequestHandler.protocol_version = "HTTP/1.1"
     app.run(host="0.0.0.0", port=port)
