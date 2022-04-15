@@ -1,5 +1,5 @@
 # nhl-bot
-[![Build](https://github.com/AdmaJonse/nhl-bot/actions/workflows/azure-container-webapp.yml/badge.svg?branch=main)](https://github.com/AdmaJonse/nhl-bot/actions/workflows/azure-container-webapp.yml)
+[![Build and deploy Docker container to Azure](https://github.com/AdmaJonse/nhl-bot/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/AdmaJonse/nhl-bot/actions/workflows/main.yml)
 
 [avalanchebot.azurewebsites.net](https://avalanchebot.azurewebsites.net/)
 
