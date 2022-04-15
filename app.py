@@ -5,4 +5,4 @@ from src import logger
 
 if __name__ == "__main__":
     logger.log_info("Application deployed at: " + str(datetime.now()))
-    bot.check_for_updates
+    bot.check_for_updates()
