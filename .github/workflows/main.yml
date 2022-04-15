@@ -43,6 +43,16 @@ jobs:
           uses: azure/login@v1
           with:
             creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+        - name: Create env file
+          run: |
+            mkdir config
+            touch config/.env
+            echo BEARER_TOKEN=${{ secrets.BEARER_TOKEN }} >> config/.env
+            echo CONSUMER_KEY=${{ secrets.CONSUMER_KEY }} >> config/.env
+            echo CONSUMER_SECRET=${{ secrets.CONSUMER_SECRET }} >> config/.env
+            echo ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }} >> config/.env
+            echo ACCESS_TOKEN_SECRET=${{ secrets.ACCESS_TOKEN_SECRET }} >> config/.env
         
         - name: 'Build image'
           uses: azure/docker-login@v1
