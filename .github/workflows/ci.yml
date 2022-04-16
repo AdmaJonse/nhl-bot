@@ -1,5 +1,5 @@
 on: [push]
-name: Build and deploy Docker container to Azure
+name: CI
 
 jobs:
     test:
