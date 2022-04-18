@@ -1,3 +1,4 @@
+from msilib.schema import EventMapping
 from src import logger
 from src import tweeter
 from src import templates
@@ -57,7 +58,7 @@ def get_player_name(data, player_type):
             return player["player"]["fullName"]
 
     logger.log_error("error - could not find player of type: " + player_type)
-    return "unknown player"
+    return ""
 
 
 def get_goal_scorer(data):
@@ -205,14 +206,20 @@ class Printer:
 
         # TODO: Should mention if there are any existing penalties
         #       and what the strength is post-penalty.
+
         severity = data["result"]["penaltySeverity"].lower()
+        penalty_taker =  get_penalty_taker(data)
+
+        # Don't tweet until the penalty taker is present
+        if penalty_taker == "":
+            return ""
 
         if severity == "penalty shot":
 
             vars = { 
                 "team":     self.home_location if self.get_team_string(data) == self.away_location else self.away_location,
                 "penalty":  data["result"]["secondaryType"].lower(),
-                "player":   get_penalty_taker(data),
+                "player":   penalty_taker,
                 "hashtags": self.game_hashtag + " " + self.team_hashtag
             }
             return templates.penalty_shot_template.format(**vars)
@@ -222,7 +229,7 @@ class Printer:
             vars = { 
                 "team":     self.get_team_string(data),
                 "penalty":  data["result"]["secondaryType"].lower(),
-                "player":   get_penalty_taker(data),
+                "player":   penalty_taker,
                 "minutes":  data["result"]["penaltyMinutes"],
                 "severity": severity,
                 "hashtags": self.game_hashtag + " " + self.team_hashtag
@@ -267,9 +274,15 @@ class Printer:
 
         # TODO: Should mention if this is a powerplay or shorthanded goal.
 
+        scorer = get_goal_scorer(data)
+
+        # Don't tweet until the scorer is present
+        if scorer == "":
+            return ""
+
         vars = { 
             "team":       self.get_team_string(data),
-            "player":     get_goal_scorer(data),
+            "player":     scorer,
             "time":       data["about"]["periodTimeRemaining"],
             "period":     data["about"]["ordinalNum"],
             "home_team":  self.home_location, 
@@ -282,6 +295,13 @@ class Printer:
 
 
     def get_official_challenge_string(self, data):
+
+        # TODO: We should really include why they're challenging the play.
+        #       The problem is that this information seems to be in the
+        #       stoppage event that occurs prior to this one. Getting
+        #       data from multiple events is going to be difficult with
+        #       the current setup.
+
         vars = { 
             "team":     self.get_team_string(data),
             "hashtags": self.game_hashtag + " " + self.team_hashtag
@@ -340,69 +360,69 @@ class Printer:
     #  Reply Strings
     #################################################################
 
-    def get_game_scheduled_reply(self, data):
+    def get_game_scheduled_reply(self, previous_data, current_data):
         return ""
 
     
-    def get_game_end_reply(self, data):
+    def get_game_end_reply(self, previous_data, current_data):
         return ""
 
-    def get_game_official_reply(self, data):
-        return ""
-
-
-    def get_faceoff_reply(self, data):
+    def get_game_official_reply(self, previous_data, current_data):
         return ""
 
 
-    def get_stoppage_reply(self, data):
+    def get_faceoff_reply(self, previous_data, current_data):
         return ""
 
 
-    def get_shot_reply(self, data):
-        return ""
-
-    def get_hit_reply(self, data):
+    def get_stoppage_reply(self, previous_data, current_data):
         return ""
 
 
-    def get_blocked_shot_reply(self, data):
+    def get_shot_reply(self, previous_data, current_data):
+        return ""
+
+    def get_hit_reply(self, previous_data, current_data):
         return ""
 
 
-    def get_giveaway_reply(self, data):
+    def get_blocked_shot_reply(self, previous_data, current_data):
         return ""
 
 
-    def get_takeaway_reply(self, data):
+    def get_giveaway_reply(self, previous_data, current_data):
         return ""
 
 
-    def get_missed_shot_reply(self, data):
+    def get_takeaway_reply(self, previous_data, current_data):
         return ""
 
 
-    def get_penalty_reply(self, data):
+    def get_missed_shot_reply(self, previous_data, current_data):
         return ""
 
 
-    def get_period_ready_reply(self, data):
+    def get_penalty_reply(self, previous_data, current_data):
         return ""
 
 
-    def get_period_start_reply(self, data):
+    def get_period_ready_reply(self, previous_data, current_data):
         return ""
 
 
-    def get_period_end_reply(self, data):
+    def get_period_start_reply(self, previous_data, current_data):
         return ""
 
 
-    def get_period_official_reply(self, data):
+    def get_period_end_reply(self, previous_data, current_data):
         return ""
 
 
-    def get_goal_reply(self, data):
+    def get_period_official_reply(self, previous_data, current_data):
+        return ""
+
+
+    def get_goal_reply(self, previous_data, current_data):
         return ""
 
         # TODO: The goal events are updated too frequently to post every time.
@@ -417,50 +437,50 @@ class Printer:
         #       changed.
 
 
-    def get_official_challenge_reply(self, data):
+    def get_official_challenge_reply(self, previous_data, current_data):
         return ""
 
 
-    def get_reply_string(self, data):
+    def get_reply_string(self, previous_data, current_data):
 
-        event_type = data["result"]["event"]
+        event_type = current_data["result"]["event"]
 
         if event_type == blocked_shot_event:
-            reply = self.get_blocked_shot_reply(data)
+            reply = self.get_blocked_shot_reply(previous_data, current_data)
         elif event_type == challenge_event:
-            reply = self.get_official_challenge_reply(data)
+            reply = self.get_official_challenge_reply(previous_data, current_data)
         elif event_type == faceoff_event:
-            reply = self.get_faceoff_reply(data)
+            reply = self.get_faceoff_reply(previous_data, current_data)
         elif event_type == game_end_event:
-            reply = self.get_game_end_reply(data)
+            reply = self.get_game_end_reply(previous_data, current_data)
         elif event_type == game_official_event:
-            reply = self.get_game_official_reply(data)
+            reply = self.get_game_official_reply(previous_data, current_data)
         elif event_type == game_scheduled_event:
-            reply = self.get_game_scheduled_reply(data)
+            reply = self.get_game_scheduled_reply(previous_data, current_data)
         elif event_type == giveaway_event: 
-            reply = self.get_giveaway_reply(data)
+            reply = self.get_giveaway_reply(previous_data, current_data)
         elif event_type == goal_event:       
-            reply = self.get_goal_reply(data)
+            reply = self.get_goal_reply(previous_data, current_data)
         elif event_type == hit_event:           
-            reply = self.get_hit_reply(data)
+            reply = self.get_hit_reply(previous_data, current_data)
         elif event_type == missed_shot_event:
-            reply = self.get_missed_shot_reply(data)
+            reply = self.get_missed_shot_reply(previous_data, current_data)
         elif event_type == penalty_event:    
-            reply = self.get_penalty_reply(data)
+            reply = self.get_penalty_reply(previous_data, current_data)
         elif event_type == period_end_event:
-            reply = self.get_period_end_reply(data)
+            reply = self.get_period_end_reply(previous_data, current_data)
         elif event_type == period_official_event:
-            reply = self.get_period_official_reply(data)
+            reply = self.get_period_official_reply(previous_data, current_data)
         elif event_type == period_ready_event:
-            reply = self.get_period_ready_reply(data)
+            reply = self.get_period_ready_reply(previous_data, current_data)
         elif event_type == period_start_event:
-            reply = self.get_period_start_reply(data)
+            reply = self.get_period_start_reply(previous_data, current_data)
         elif event_type == shot_event:   
-            reply = self.get_shot_reply(data)
+            reply = self.get_shot_reply(previous_data, current_data)
         elif event_type == stoppage_event:
-            reply = self.get_stoppage_reply(data)
+            reply = self.get_stoppage_reply(previous_data, current_data)
         elif event_type == takeaway_event:
-            reply = self.get_takeaway_reply(data)
+            reply = self.get_takeaway_reply(previous_data, current_data)
         else:
             # TODO: Are there any missing events? These should be handled.
             # TODO: I'm guessing there might be special events for shootouts/OT
@@ -473,6 +493,20 @@ class Printer:
     #  Generators
     #################################################################
 
+    def to_event_record(self, data):
+        event_record = {
+            "tweet_id": 0,
+            "delay": False,
+            "event": data
+        }
+        return event_record
+
+
+    # TODO: This class being responsible for sending the tweets seems
+    #       unnecessary. I think this class could probably just return
+    #       the text of the tweets and replies and the tweeting could
+    #       be done somewhere else. This dependency feels strange.
+
     def generate_tweet(self, data):
         tweet_id = 0
         text = self.get_event_string(data)
@@ -481,9 +515,9 @@ class Printer:
         return tweet_id
 
     
-    def generate_reply(self, data, id):
+    def generate_reply(self, previous_data, current_data, id):
         tweet_id = 0
-        text = self.get_reply_string(data)
+        text = self.get_reply_string(previous_data, current_data)
         if len(text) > 0:
             tweet_id = self.tweeter.reply(text, id)
         return tweet_id

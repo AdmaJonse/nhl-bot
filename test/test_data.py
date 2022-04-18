@@ -562,6 +562,52 @@ penalty_data = {
     }
 }
 
+penalty_data_no_taker = {
+    "players": [
+        {
+            "player": {
+                "id": 8477384,
+                "fullName": "Josh Brown",
+                "link": "/api/v1/people/8477384"
+            },
+            "playerType": "DrewBy"
+        }
+    ],
+    "result": {
+        "event": "Penalty",
+        "eventCode": "WSH86",
+        "eventTypeId": "PENALTY",
+        "description": "Nic Dowd Hi-sticking against Josh Brown",
+        "secondaryType": "Hi-sticking",
+        "penaltySeverity": "Minor",
+        "penaltyMinutes": 2
+    },
+    "about": {
+        "eventIdx": 77,
+        "eventId": 86,
+        "period": 1,
+        "periodType": "REGULAR",
+        "ordinalNum": "1st",
+        "periodTime": "11:47",
+        "periodTimeRemaining": "08:13",
+        "dateTime": "2022-04-10T17:57:07Z",
+        "goals": {
+            "away": 0,
+            "home": 0
+        }
+    },
+    "coordinates": {
+        "x": -97.0,
+        "y": 19.0
+    },
+    "team": {
+        "id": 15,
+        "name": "Washington Capitals",
+        "link": "/api/v1/teams/15",
+        "triCode": "WSH"
+    }
+}
+
 penalty_shot_data = {
     "players" : [ {
       "player" : {
@@ -720,6 +766,65 @@ goal_data = {
             "playerType": "Scorer",
             "seasonTotal": 14
         },
+        {
+            "player": {
+                "id": 8477839,
+                "fullName": "Conor Sheary",
+                "link": "/api/v1/people/8477839"
+            },
+            "playerType": "Assist",
+            "seasonTotal": 20
+        },
+        {
+            "player": {
+                "id": 8476999,
+                "fullName": "Linus Ullmark",
+                "link": "/api/v1/people/8476999"
+            },
+            "playerType": "Goalie"
+        }
+    ],
+    "result": {
+        "event": "Goal",
+        "eventCode": "WSH278",
+        "eventTypeId": "GOAL",
+        "description": "John Carlson (14) Slap Shot, assists: Conor Sheary (20)",
+        "secondaryType": "Slap Shot",
+        "strength": {
+            "code": "EVEN",
+            "name": "Even"
+        },
+        "gameWinningGoal": False,
+        "emptyNet": False
+    },
+    "about": {
+        "eventIdx": 155,
+        "eventId": 278,
+        "period": 2,
+        "periodType": "REGULAR",
+        "ordinalNum": "2nd",
+        "periodTime": "04:11",
+        "periodTimeRemaining": "15:49",
+        "dateTime": "2022-04-10T18:36:23Z",
+        "goals": {
+            "away": 0,
+            "home": 1
+        }
+    },
+    "coordinates": {
+        "x": 45.0,
+        "y": -25.0
+    },
+    "team": {
+        "id": 15,
+        "name": "Washington Capitals",
+        "link": "/api/v1/teams/15",
+        "triCode": "WSH"
+    }
+}
+
+goal_data_no_scorer = {
+    "players": [
         {
             "player": {
                 "id": 8477839,

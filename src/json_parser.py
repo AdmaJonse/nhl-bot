@@ -76,7 +76,7 @@ class Parser:
         event_type = data["result"]["event"] 
         self.is_game_over = event_type == "Game End"
         if self.is_game_over:
-            logger.log_info("Game Over.")        
+            logger.log_info("Game Over.")
 
 
     @get_latest_data
@@ -95,7 +95,7 @@ class Parser:
             if parent_id <= 0:
                 tweet_id = self.printer.generate_tweet(event)
             else:
-                tweet_id = self.printer.generate_reply(event, parent_id)
+                tweet_id = self.printer.generate_reply(self.events[event_id], event, parent_id)
 
             self.tweets[event_id] = tweet_id
             self.events[event_id] = event
