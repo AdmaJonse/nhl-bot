@@ -4,3 +4,4 @@ src/__pycache__
 test/__pycache__
 data.json
 job.log
+.vscode

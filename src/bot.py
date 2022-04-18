@@ -1,19 +1,29 @@
-import datetime
-import pause
-import time
-
-from src import logger
-from src import json_parser
-from src import schedule
+"""
+Description:
+    This module handles the main logic to check for game updates.
+"""
 
 from datetime import datetime
 from datetime import timedelta
 from datetime import timezone
 
+import time
+import pause
+
+from src import logger
+from src import json_parser
+from src import schedule
+
 # How frequently we check for game updates (in seconds)
-frequency = 10  # seconds
+FREQUENCY = 5  # seconds
 
 def check_for_updates():
+    """
+    Description:
+        This method will check for a game on the current date. If a game is
+        found, it will trigger game event parsing at game time. If no game is
+        found, it will pause until tomorrow.
+    """
 
     while True:
 
@@ -34,15 +44,16 @@ def check_for_updates():
                 pause.until(game_time)
 
             parser = json_parser.Parser(game_id)
-            
-            while (not parser.is_game_over):
+
+            while not parser.is_game_over:
                 parser.parse()
-                time.sleep(frequency)
+                time.sleep(FREQUENCY)
 
         else:
             logger.log_info("There is no game today.")
-            
+
         # Pause until tomorrow at 12:00 UTC
-        tomorrow = datetime.today().replace(hour=12, minute=0, second=0, microsecond=0) + timedelta(days=1)
+        today    = datetime.today()
+        tomorrow = today.replace(hour=12, minute=0, second=0, microsecond=0) + timedelta(days=1)
         logger.log_info("Pausing until: " + str(tomorrow))
         pause.until(tomorrow)

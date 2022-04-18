@@ -2,6 +2,10 @@
 test:
 	python -m unittest
 
+.PHONY: lint
+lint:
+	python -m pylint src/
+
 .PHONY: build
 build:
 	docker build . -t avalanchebot

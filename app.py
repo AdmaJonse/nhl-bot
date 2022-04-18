@@ -1,3 +1,8 @@
+"""
+Description:
+    The main process for the NHL twitter bot application.
+"""
+
 from datetime import datetime
 from src import bot
 from src import logger

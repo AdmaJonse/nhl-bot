@@ -1,8 +1,15 @@
+"""
+Description:
+    This module defines templates for game event tweets. These templates
+    contain placeholders for variables that will be defined in the calling
+    code.
+"""
+
 #################################################
 # Game End
 #################################################
 
-game_end_template = """
+GAME_END_TEMPLATE = """
 The game is over. {winner} wins!
 
 Final Score:
@@ -17,7 +24,7 @@ Final Score:
 # Period Start
 #################################################
 
-period_start_template = """
+PERIOD_START_TEMPLATE = """
 {period} is starting at {venue} in {city}.
 
 {hashtags}
@@ -28,7 +35,7 @@ period_start_template = """
 # Period End
 #################################################
 
-period_end_template = """
+PERIOD_END_TEMPLATE = """
 {period} is over at {venue}.
 
 Goals
@@ -46,7 +53,7 @@ Shots on Goal
 #################################################
 # Shot on Goal
 #################################################
-shot_template = """
+SHOT_TEMPLATE = """
 Shot on goal by {team}.
 
 {description}
@@ -62,7 +69,7 @@ Shots On Goal:
 #################################################
 # Penalty
 #################################################
-penalty_template = """
+PENALTY_TEMPLATE = """
 There is a penalty on {team}.
 
 {player}
@@ -71,7 +78,7 @@ There is a penalty on {team}.
 {hashtags}
 """
 
-penalty_shot_template = """
+PENALTY_SHOT_TEMPLATE = """
 That's a penalty shot for {team}!
 
 The infraction is against {player} for {penalty}.
@@ -79,7 +86,7 @@ The infraction is against {player} for {penalty}.
 {hashtags}
 """
 
-penalty_reply_template = """
+PENALTY_REPLY_TEMPLATE = """
 There has been an update to the penalty on {team}.
 
 {player}
@@ -93,7 +100,7 @@ There has been an update to the penalty on {team}.
 # Goal
 #################################################
 
-goal_template = """
+GOAL_TEMPLATE = """
 {team} goal!
 
 Scored by {player} with {time} remaining in the {period} period.
@@ -104,7 +111,7 @@ Scored by {player} with {time} remaining in the {period} period.
 {hashtags}
 """
 
-goal_reply_template = """
+GOAL_REPLY_TEMPLATE = """
 There has been update to the {team} goal scored with {time} remaining in the {period} period.
 
 {description}
@@ -117,9 +124,8 @@ There has been update to the {team} goal scored with {time} remaining in the {pe
 # Coach's Challenge
 #################################################
 
-challenge_template = """
+CHALLENGE_TEMPLATE = """
 {team} is challenging the ruling on the play.
 
 {hashtags}
 """
-

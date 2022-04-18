@@ -94,7 +94,7 @@ class TestPrinter(unittest.TestCase):
 
     def test_penalty_shot(self):
         actual   = self.printer.get_penalty_string(test_data.penalty_shot_data)
-        expected = "\nThat's a penalty shot for Washington!\n\nThe infraction is against Brenden Dillon for ps - hooking on breakaway.\n\n#BOSvsWSH #GoAvsGo\n"
+        expected = "\nThat's a penalty shot for Washington!\n\nThe infraction is against Brenden Dillon for hooking on breakaway.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
 
 
