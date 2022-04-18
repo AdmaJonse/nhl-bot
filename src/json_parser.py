@@ -59,8 +59,8 @@ class Parser:
         request = requests.get(url, params)
         self.data = request.json()
 
-
-    def get_latest_events(self, function):
+    @staticmethod
+    def get_latest_events(function):
         """
         Description:
             This is a decorator that is used to ensure we're viewing the latest

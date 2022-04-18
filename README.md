@@ -12,6 +12,12 @@ This seemed like a fun way to learn about the Twitter and NHL APIs. The bot is s
 > make test
 ```
 
+## How to lint source files
+
+```
+> make lint
+```
+
 ## How to build the docker container
 
 ```
