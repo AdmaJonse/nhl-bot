@@ -1,4 +1,3 @@
-from msilib.schema import EventMapping
 from src import logger
 from src import tweeter
 from src import templates
