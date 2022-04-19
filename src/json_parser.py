@@ -128,8 +128,10 @@ class Parser:
 
             tweet_id  = 0
             event_id  = get_event_id(event)
+
             try:
-                parent_id = self.events[event_id]["tweet_id"]
+                parent_id      = self.events[event_id]["tweet_id"]
+                previous_event = self.events[event_id]["event"]
             except IndexError:
                 parent_id = 0
 
@@ -139,7 +141,7 @@ class Parser:
             if parent_id <= 0:
                 tweet_id = self.printer.generate_tweet(event)
             else:
-                tweet_id = self.printer.generate_reply(self.events[event_id]["event"], event, parent_id)
+                tweet_id = self.printer.generate_reply(previous_event, event, parent_id)
 
             self.events[event_id] = {"tweet_id": tweet_id, "event": event}
             self.last_event = event_id
