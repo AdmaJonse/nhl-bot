@@ -51,7 +51,7 @@ jobs:
           run: python -m pylint src/
 
     build:
-        needs: test, lint
+        needs: [test, lint]
         runs-on: ubuntu-latest
         steps:
 
