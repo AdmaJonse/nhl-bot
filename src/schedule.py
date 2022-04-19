@@ -35,7 +35,7 @@ def get_game_id(data=get_schedule_json()):
     try:
         game_id = data["dates"][0]["games"][0]["gamePk"]
         return game_id
-    except IndexError:
+    except KeyError:
         return -1
 
 
@@ -47,5 +47,5 @@ def get_start_time(data=get_schedule_json()):
     try:
         start_time = datetime.strptime(data["dates"][0]["games"][0]["gameDate"], TIME_FORMAT)
         return start_time.replace(tzinfo=timezone.utc)
-    except IndexError:
+    except KeyError:
         return -1

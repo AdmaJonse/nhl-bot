@@ -567,7 +567,7 @@ class Printer:
         event_type = event["result"]["event"]
         try:
             event_string = event_lookup[event_type](event)
-        except IndexError:
+        except KeyError:
             logger.log_error("error - unhandled event: " + event_type)
 
         return event_string
@@ -768,7 +768,7 @@ class Printer:
         event_type = current_event["result"]["event"]
         try:
             reply = event_lookup[event_type](previous_event, current_event)
-        except IndexError:
+        except KeyError:
             logger.log_error("error - unhandled event: " + event_type)
 
         return reply

@@ -31,7 +31,7 @@ class Parser:
         self.data = []
         self.new_records = []
         self.last_event = 0
-        self.events = []
+        self.events = {}
 
         # load initial data
         self.get_new_records()
@@ -86,7 +86,7 @@ class Parser:
             is_new_event = event_id > self.last_event
             try:
                 is_updated_event = self.events[event_id]["event"] != event
-            except IndexError:
+            except KeyError:
                 is_updated_event = False
             return is_new_event or is_updated_event
 
@@ -132,7 +132,7 @@ class Parser:
             try:
                 parent_id      = self.events[event_id]["tweet_id"]
                 previous_event = self.events[event_id]["event"]
-            except IndexError:
+            except KeyError:
                 parent_id = 0
 
             # update any records stored by the printer

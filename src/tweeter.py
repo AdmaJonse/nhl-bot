@@ -59,11 +59,11 @@ class Tweeter:
 
         if len(text) <= MAX_LENGTH:
             logger.log_info("Tweet:\n" + text)
-            # try:
-            #     status = self.api.update_status(text)
-            #     tweet_id = status.id
-            # except tweepy.TweepyException:
-            #     logger.log_error("error - could not send tweet.")
+            try:
+                status = self.api.update_status(text)
+                tweet_id = status.id
+            except tweepy.TweepyException:
+                logger.log_error("error - could not send tweet.")
         else:
             logger.log_error("error - tweet is longer than the maximum length")
 
@@ -81,11 +81,11 @@ class Tweeter:
         if parent_id > 0:
             if len(text) <= MAX_LENGTH:
                 logger.log_info("Reply to tweet " + str(parent_id) + ":\n" + text)
-                # try:
-                #     status = self.api.update_status(status=text, in_reply_to_status_id=parent_id)
-                #     reply_id = status.id
-                # except tweepy.TweepyException:
-                #     logger.log_error("error - could not send reply")
+                try:
+                    status = self.api.update_status(status=text, in_reply_to_status_id=parent_id)
+                    reply_id = status.id
+                except tweepy.TweepyException:
+                    logger.log_error("error - could not send reply")
             else:
                 logger.log_error("error - tweet is longer than the maximum length")
         else:
