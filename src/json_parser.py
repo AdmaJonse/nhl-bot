@@ -31,7 +31,7 @@ class Parser:
         self.data = []
         self.new_records = []
         self.last_event = 0
-        self.events = {}
+        self.events = []
 
         # load initial data
         self.get_new_records()
@@ -85,7 +85,7 @@ class Parser:
             event_id = get_event_id(event)
             is_new_event = event_id > self.last_event
             try:
-                is_updated_event = self.events[event_id] != event
+                is_updated_event = self.events[event_id]["event"] != event
             except IndexError:
                 is_updated_event = False
             return is_new_event or is_updated_event
@@ -128,9 +128,8 @@ class Parser:
 
             tweet_id  = 0
             event_id  = get_event_id(event)
-            event     = self.events.get(event_id)
             try:
-                parent_id = event.get("tweet_id", 0)
+                parent_id = self.events[event_id]["tweet_id"]
             except IndexError:
                 parent_id = 0
 
@@ -140,7 +139,7 @@ class Parser:
             if parent_id <= 0:
                 tweet_id = self.printer.generate_tweet(event)
             else:
-                tweet_id = self.printer.generate_reply(self.events[event_id], event, parent_id)
+                tweet_id = self.printer.generate_reply(self.events[event_id]["event"], event, parent_id)
 
             self.events[event_id] = {"tweet_id": tweet_id, "event": event}
             self.last_event = event_id

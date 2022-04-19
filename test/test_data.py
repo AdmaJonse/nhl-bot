@@ -1,6 +1,7 @@
-#################################################
-# Game Data
-#################################################
+"""
+Description:
+    Test data for unit tests.
+"""
 
 game_data = {
     "gameData": {
@@ -917,7 +918,7 @@ challenge_data = {
 #################################################
 
 valid_schedule_data = {
-    "copyright" : "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+    "copyright" : "",
     "totalItems" : 1,
     "totalEvents" : 0,
     "totalGames" : 1,
@@ -946,34 +947,6 @@ valid_schedule_data = {
             "startTimeTBD" : False
         },
         "teams" : {
-            "away" : {
-            "leagueRecord" : {
-                "wins" : 35,
-                "losses" : 28,
-                "ot" : 11,
-                "type" : "league"
-            },
-            "score" : 4,
-            "team" : {
-                "id" : 52,
-                "name" : "Winnipeg Jets",
-                "link" : "/api/v1/teams/52"
-            }
-            },
-            "home" : {
-            "leagueRecord" : {
-                "wins" : 20,
-                "losses" : 42,
-                "ot" : 11,
-                "type" : "league"
-            },
-            "score" : 2,
-            "team" : {
-                "id" : 8,
-                "name" : "Montréal Canadiens",
-                "link" : "/api/v1/teams/8"
-            }
-            }
         },
         "venue" : {
             "name" : "Centre Bell",
@@ -990,7 +963,7 @@ valid_schedule_data = {
 
 
 invalid_schedule_data = {
-    "copyright" : "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+    "copyright" : "",
     "totalItems" : 0,
     "totalEvents" : 0,
     "totalGames" : 0,

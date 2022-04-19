@@ -3,6 +3,7 @@ Description:
     This module is used to generate tweet text based on a given event.
 """
 
+# Prevents the too many public functions warning. We should fix this.
 # pylint: disable=R0904
 
 from src import logger
