@@ -59,19 +59,6 @@ class Parser:
         request = requests.get(url, params)
         self.data = request.json()
 
-    @staticmethod
-    def get_latest_events(function):
-        """
-        Description:
-            This is a decorator that is used to ensure we're viewing the latest
-            event data. It should be used to decorate methods that parse event
-            data.
-        """
-        def wrapper(self, *args, **kwargs):
-            self.get_new_records()
-            return function(self, *args, **kwargs)
-        return wrapper
-
 
     def get_new_records(self):
         """
@@ -116,12 +103,12 @@ class Parser:
             logger.log_info("Game Over.")
 
 
-    @get_latest_events
     def parse(self):
         """
         Description:
             Parse new event records from the game data and handle any new events.
         """
+        self.get_new_records()
         for event in self.new_records:
 
             logger.log_info("Event: \n" + str(event))

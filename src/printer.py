@@ -128,6 +128,23 @@ def get_penalty_taker(event):
     return get_player_name(event, "penaltyOn")
 
 
+def get_period_string(event):
+    """
+    Description:
+        Return a string represenation of the period from the given event.
+    """
+    period = event["about"]["period"]
+    if period == 1:
+        period_string = "The first period"
+    elif period == 2:
+        period_string = "The second period"
+    elif period == 3:
+        period_string = "The third period"
+    else:
+        period_string = "The OT period"
+    return period_string
+
+
 class Printer:
     """
     Description:
@@ -189,24 +206,6 @@ class Printer:
         logger.log_info("Date/Time:         " + self.game_data.get("date", ""))
         logger.log_info("Venue:             " + self.game_data.get("venue", ""))
         logger.log_info("Hashtags:          " + self.get_hashtags())
-
-    @staticmethod
-    def get_period_string(event):
-        """
-        Description:
-            Return a string represenation of the period from the given event.
-        """
-        period = event["about"]["period"]
-        if period == 1:
-            period_string = "The first period"
-        elif period == 2:
-            period_string = "The second period"
-        elif period == 3:
-            period_string = "The third period"
-        else:
-            period_string = "The OT period"
-
-        return period_string
 
 
     def get_team_string(self, event):
@@ -290,15 +289,22 @@ class Printer:
 
     #################################################################
     #  Event Strings
-    #################################################################
+    #################################################################``
 
     @staticmethod
-    def get_game_scheduled_string(_event):
+    def get_null_event_string():
+        """
+        Description:
+            Return the null event string for unhandled events.
+        """
+        return ""
+
+    def get_game_scheduled_string(self, _event):
         """
         Description:
             Return the event string for a game scheduled event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
     def get_game_end_string(self, event):
@@ -317,85 +323,76 @@ class Printer:
         return templates.GAME_END_TEMPLATE.format(**event_values)
 
 
-    @staticmethod
-    def get_game_official_string(_event):
+    def get_game_official_string(self, _event):
         """
         Description:
             Return the event string for a game official event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_faceoff_string(_event):
+    def get_faceoff_string(self, _event):
         """
         Description:
             Return the event string for a faceoff event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_stoppage_string(_event):
+    def get_stoppage_string(self, _event):
         """
         Description:
             Return the event string for a stoppage event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_shot_string(_event):
+    def get_shot_string(self, _event):
         """
         Description:
             Return the event string for a shot event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_hit_string(_event):
+    def get_hit_string(self, _event):
         """
         Description:
             Return the event string for a hit event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_blocked_shot_string(_event):
+    def get_blocked_shot_string(self, _event):
         """
         Description:
             Return the event string for a blocked shot event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_giveaway_string(_event):
+    def get_giveaway_string(self, _event):
         """
         Description:
             Return the event string for a giveaway event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_takeaway_string(_event):
+    def get_takeaway_string(self, _event):
         """
         Description:
             Return the event string for a takeaway event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_missed_shot_string(_event):
+    def get_missed_shot_string(self, _event):
         """
         Description:
             Return the event string for a missed shot event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
     def get_penalty_string(self, event):
@@ -409,7 +406,7 @@ class Printer:
             penalty_taker =  get_penalty_taker(event)
         except UnknownPlayer:
             logger.log_error("Could not determine penalty taker. Delaying tweet.")
-            return ""
+            return self.get_null_event_string()
 
         if severity == "penalty shot":
 
@@ -450,13 +447,12 @@ class Printer:
         return event_string
 
 
-    @staticmethod
-    def get_period_ready_string(_event):
+    def get_period_ready_string(self, _event):
         """
         Description:
             Return the event string for a period ready event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
     def get_period_start_string(self, event):
@@ -465,7 +461,7 @@ class Printer:
             Return the event string for a period start event.
         """
         event_values = {
-            "period":   self.get_period_string(event),
+            "period":   get_period_string(event),
             "venue":    self.game_data.get("venue"),
             "city":     self.get_home_location(),
             "hashtags": self.get_hashtags()
@@ -479,7 +475,7 @@ class Printer:
             Return the event string for a period end event.
         """
         event_values = {
-            "period":     self.get_period_string(event),
+            "period":     get_period_string(event),
             "venue":      self.game_data.get("venue"),
             "home_team":  self.get_home_location(),
             "away_team":  self.get_away_location(),
@@ -492,13 +488,12 @@ class Printer:
         return templates.PERIOD_END_TEMPLATE.format(**event_values)
 
 
-    @staticmethod
-    def get_period_official_string(_event):
+    def get_period_official_string(self, _event):
         """
         Description:
             Return the event string for a period official event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
     def get_goal_string(self, event):
@@ -510,7 +505,7 @@ class Printer:
             scorer = get_goal_scorer(event)
         except UnknownPlayer:
             logger.log_error("Could not determine goal scorer. Delaying tweet.")
-            return ""
+            return self.get_null_event_string()
 
         event_values = {
             "team":       self.get_team_string(event),
@@ -577,166 +572,148 @@ class Printer:
     #  Reply Strings
     #################################################################
 
-    @staticmethod
-    def get_game_scheduled_reply(_previous_event, _current_event):
+    def get_game_scheduled_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a game scheduled event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_game_end_reply(_previous_event, _current_event):
+    def get_game_end_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a game end event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_game_official_reply(_previous_event, _current_event):
+    def get_game_official_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a game scheduled event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_faceoff_reply(_previous_event, _current_event):
+    def get_faceoff_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a faceoff event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_stoppage_reply(_previous_event, _current_event):
+    def get_stoppage_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a stoppage event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_shot_reply(_previous_event, _current_event):
+    def get_shot_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a shot event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_hit_reply(_previous_event, _current_event):
+    def get_hit_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a hit event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_blocked_shot_reply(_previous_event, _current_event):
+    def get_blocked_shot_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a blocked shot event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_giveaway_reply(_previous_event, _current_event):
+    def get_giveaway_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a giveaway event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_takeaway_reply(_previous_event, _current_event):
+    def get_takeaway_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a takeaway event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_missed_shot_reply(_previous_event, _current_event):
+    def get_missed_shot_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a missed shot event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_penalty_reply(_previous_event, _current_event):
+    def get_penalty_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a penalty event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_period_ready_reply(_previous_event, _current_event):
+    def get_period_ready_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a period ready event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_period_start_reply(_previous_event, _current_event):
+    def get_period_start_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a period start event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_period_end_reply(_previous_event, _current_event):
+    def get_period_end_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a period end event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_period_official_reply(_previous_event, _current_event):
+    def get_period_official_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a period official event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_goal_reply(_previous_event, _current_event):
+    def get_goal_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a goal event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
-    @staticmethod
-    def get_official_challenge_reply(_previous_event, _current_event):
+    def get_official_challenge_reply(self, _previous_event, _current_event):
         """
         Description:
             Return the reply string for a challenge event.
         """
-        return ""
+        return self.get_null_event_string()
 
 
     def get_reply_string(self, previous_event, current_event):
