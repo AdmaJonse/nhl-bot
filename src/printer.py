@@ -544,29 +544,29 @@ class Printer:
             Return the event string for an event.
         """
         event_lookup = {
-            BLOCKED_SHOT_EVENT:    self.get_blocked_shot_string(event),
-            CHALLENGE_EVENT:       self.get_official_challenge_string(event),
-            FACEOFF_EVENT:         self.get_faceoff_string(event),
-            GAME_END_EVENT:        self.get_game_end_string(event),
-            GAME_OFFICIAL_EVENT:   self.get_game_official_string(event),
-            GAME_SCHEDULED_EVENT:  self.get_game_scheduled_string(event),
-            GIVEAWAY_EVENT:        self.get_giveaway_string(event),
-            GOAL_EVENT:            self.get_goal_string(event),
-            HIT_EVENT:             self.get_hit_string(event),
-            MISSED_SHOT_EVENT:     self.get_missed_shot_string(event),
-            PENALTY_EVENT:         self.get_penalty_string(event),
-            PERIOD_END_EVENT:      self.get_period_end_string(event),
-            PERIOD_OFFICIAL_EVENT: self.get_period_official_string(event),
-            PERIOD_READY_EVENT:    self.get_period_ready_string(event),
-            PERIOD_START_EVENT:    self.get_period_start_string(event),
-            SHOT_EVENT:            self.get_shot_string(event),
-            STOPPAGE_EVENT:        self.get_stoppage_string(event),
-            TAKEAWAY_EVENT:        self.get_takeaway_string(event)
+            BLOCKED_SHOT_EVENT:    self.get_blocked_shot_string,
+            CHALLENGE_EVENT:       self.get_official_challenge_string,
+            FACEOFF_EVENT:         self.get_faceoff_string,
+            GAME_END_EVENT:        self.get_game_end_string,
+            GAME_OFFICIAL_EVENT:   self.get_game_official_string,
+            GAME_SCHEDULED_EVENT:  self.get_game_scheduled_string,
+            GIVEAWAY_EVENT:        self.get_giveaway_string,
+            GOAL_EVENT:            self.get_goal_string,
+            HIT_EVENT:             self.get_hit_string,
+            MISSED_SHOT_EVENT:     self.get_missed_shot_string,
+            PENALTY_EVENT:         self.get_penalty_string,
+            PERIOD_END_EVENT:      self.get_period_end_string,
+            PERIOD_OFFICIAL_EVENT: self.get_period_official_string,
+            PERIOD_READY_EVENT:    self.get_period_ready_string,
+            PERIOD_START_EVENT:    self.get_period_start_string,
+            SHOT_EVENT:            self.get_shot_string,
+            STOPPAGE_EVENT:        self.get_stoppage_string,
+            TAKEAWAY_EVENT:        self.get_takeaway_string
         }
 
         event_type = event["result"]["event"]
         try:
-            event_string = event_lookup[event_type]
+            event_string = event_lookup[event_type](event)
         except IndexError:
             logger.log_error("error - unhandled event: " + event_type)
 
@@ -745,29 +745,29 @@ class Printer:
             Return the reply string for an event.
         """
         event_lookup = {
-            BLOCKED_SHOT_EVENT:    self.get_blocked_shot_reply(previous_event, current_event),
-            CHALLENGE_EVENT:       self.get_official_challenge_reply(previous_event, current_event),
-            FACEOFF_EVENT:         self.get_faceoff_reply(previous_event, current_event),
-            GAME_END_EVENT:        self.get_game_end_reply(previous_event, current_event),
-            GAME_OFFICIAL_EVENT:   self.get_game_official_reply(previous_event, current_event),
-            GAME_SCHEDULED_EVENT:  self.get_game_scheduled_reply(previous_event, current_event),
-            GIVEAWAY_EVENT:        self.get_giveaway_reply(previous_event, current_event),
-            GOAL_EVENT:            self.get_goal_reply(previous_event, current_event),
-            HIT_EVENT:             self.get_hit_reply(previous_event, current_event),
-            MISSED_SHOT_EVENT:     self.get_missed_shot_reply(previous_event, current_event),
-            PENALTY_EVENT:         self.get_penalty_reply(previous_event, current_event),
-            PERIOD_END_EVENT:      self.get_period_end_reply(previous_event, current_event),
-            PERIOD_OFFICIAL_EVENT: self.get_period_official_reply(previous_event, current_event),
-            PERIOD_READY_EVENT:    self.get_period_ready_reply(previous_event, current_event),
-            PERIOD_START_EVENT:    self.get_period_start_reply(previous_event, current_event),
-            SHOT_EVENT:            self.get_shot_reply(previous_event, current_event),
-            STOPPAGE_EVENT:        self.get_stoppage_reply(previous_event, current_event),
-            TAKEAWAY_EVENT:        self.get_takeaway_reply(previous_event, current_event)
+            BLOCKED_SHOT_EVENT:    self.get_blocked_shot_reply,
+            CHALLENGE_EVENT:       self.get_official_challenge_reply,
+            FACEOFF_EVENT:         self.get_faceoff_reply,
+            GAME_END_EVENT:        self.get_game_end_reply,
+            GAME_OFFICIAL_EVENT:   self.get_game_official_reply,
+            GAME_SCHEDULED_EVENT:  self.get_game_scheduled_reply,
+            GIVEAWAY_EVENT:        self.get_giveaway_reply,
+            GOAL_EVENT:            self.get_goal_reply,
+            HIT_EVENT:             self.get_hit_reply,
+            MISSED_SHOT_EVENT:     self.get_missed_shot_reply,
+            PENALTY_EVENT:         self.get_penalty_reply,
+            PERIOD_END_EVENT:      self.get_period_end_reply,
+            PERIOD_OFFICIAL_EVENT: self.get_period_official_reply,
+            PERIOD_READY_EVENT:    self.get_period_ready_reply,
+            PERIOD_START_EVENT:    self.get_period_start_reply,
+            SHOT_EVENT:            self.get_shot_reply,
+            STOPPAGE_EVENT:        self.get_stoppage_reply,
+            TAKEAWAY_EVENT:        self.get_takeaway_reply
         }
 
         event_type = current_event["result"]["event"]
         try:
-            reply = event_lookup[event_type]
+            reply = event_lookup[event_type](previous_event, current_event)
         except IndexError:
             logger.log_error("error - unhandled event: " + event_type)
 
