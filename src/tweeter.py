@@ -92,3 +92,20 @@ class Tweeter:
             logger.log_error("error - could not reply to tweet with invalid ID: " + str(parent_id))
 
         return reply_id
+
+tweeter = Tweeter()
+
+def tweet(text):
+    """
+    Description:
+        Public function that will send a tweet with the specified text.
+    """
+    return tweeter.tweet(text)
+
+def reply(text, parent_id):
+    """
+    Description:
+        Public function that will send a reply with the specified text to the
+        tweet with the given parent_id.
+    """
+    return tweeter.reply(text, parent_id)
