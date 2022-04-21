@@ -28,6 +28,7 @@ def check_for_updates():
     while True:
 
         logger.log_info("Checking for a game today...")
+        today = datetime.today()
 
         # Determine if there is a game today.
         game_id = schedule.get_game_id()
@@ -53,7 +54,6 @@ def check_for_updates():
             logger.log_info("There is no game today.")
 
         # Pause until tomorrow at 12:00 UTC
-        today    = datetime.today()
         tomorrow = today.replace(hour=12, minute=0, second=0, microsecond=0) + timedelta(days=1)
         logger.log_info("Pausing until: " + str(tomorrow))
         pause.until(tomorrow)
