@@ -2,6 +2,7 @@ config/.env
 config/keys.txt
 src/__pycache__
 test/__pycache__
+test/test_data/__pycache__
 data.json
 job.log
 .vscode

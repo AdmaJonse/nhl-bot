@@ -119,6 +119,39 @@ There has been update to the {team} goal scored with {time} remaining in the {pe
 {hashtags}
 """
 
+POWER_PLAY_GOAL_TEMPLATE = """
+Power play goal for {team}!
+
+Scored by {player} with {time} remaining in the {period} period.
+
+{home_team}: {home_goals}
+{away_team}: {away_goals}
+
+{hashtags}
+"""
+
+SHORT_HANDED_GOAL_TEMPLATE = """
+Short-handed goal for {team}!
+
+Scored by {player} with {time} remaining in the {period} period.
+
+{home_team}: {home_goals}
+{away_team}: {away_goals}
+
+{hashtags}
+"""
+
+EMPTY_NET_GOAL_TEMPLATE = """
+Empty net goal for {team}!
+
+Scored by {player} with {time} remaining in the {period} period.
+
+{home_team}: {home_goals}
+{away_team}: {away_goals}
+
+{hashtags}
+"""
+
 
 #################################################
 # Coach's Challenge

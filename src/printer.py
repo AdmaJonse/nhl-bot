@@ -507,6 +507,9 @@ class Printer:
             logger.log_error("Could not determine goal scorer. Delaying tweet.")
             return self.get_null_event_string()
 
+        strength = event["result"]["strength"]["code"]
+        empty_net = event["result"]["emptyNet"]
+
         event_values = {
             "team":       self.get_team_string(event),
             "player":     scorer,
@@ -518,7 +521,17 @@ class Printer:
             "away_goals": get_away_goals(event),
             "hashtags":   self.get_hashtags()
         }
-        return templates.GOAL_TEMPLATE.format(**event_values)
+
+        if empty_net:
+            goal_string = templates.EMPTY_NET_GOAL_TEMPLATE.format(**event_values)
+        elif strength == "PPG":
+            goal_string = templates.POWER_PLAY_GOAL_TEMPLATE.format(**event_values)
+        elif strength == "SHG":
+            goal_string = templates.SHORT_HANDED_GOAL_TEMPLATE.format(**event_values)
+        else:
+            goal_string = templates.GOAL_TEMPLATE.format(**event_values)
+
+        return goal_string
 
 
     def get_official_challenge_string(self, event):
