@@ -762,32 +762,3 @@ class Printer:
             logger.log_error("error - unhandled event: " + event_type)
 
         return reply
-
-
-    #################################################################
-    #  Generators
-    #################################################################
-
-    def generate_tweet(self, event):
-        """
-        Description:
-            Create and send a tweet based on the given event.
-        """
-        tweet_id = 0
-        text = self.get_event_string(event)
-        if len(text) > 0:
-            tweet_id = self.tweeter.tweet(text)
-        return tweet_id
-
-
-    def generate_reply(self, previous_event, current_event, parent_id):
-        """
-        Description:
-            Create and send a reply to the given tweet based on the
-            deltas between the previous and current events.
-        """
-        tweet_id = 0
-        text = self.get_reply_string(previous_event, current_event)
-        if len(text) > 0:
-            tweet_id = self.tweeter.reply(text, parent_id)
-        return tweet_id

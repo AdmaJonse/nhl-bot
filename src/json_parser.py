@@ -7,8 +7,8 @@ import json
 import requests
 
 from src import printer
+from src import tweeter
 from src import logger
-
 
 def get_event_id(event):
     """
@@ -54,9 +54,9 @@ class Parser:
             This function retrieves the latest JSON data record for the current
             game from the NHL website.
         """
-        url     = "https://statsapi.web.nhl.com/api/v1/game/" + str(self.game_id) + "/feed/live"
-        params  = ""
-        request = requests.get(url, params)
+        url       = "https://statsapi.web.nhl.com/api/v1/game/" + str(self.game_id) + "/feed/live"
+        params    = ""
+        request   = requests.get(url, params)
         self.data = request.json()
 
 
@@ -103,6 +103,31 @@ class Parser:
             logger.log_info("Game Over.")
 
 
+    def generate_tweet(self, event):
+        """
+        Description:
+            Create and send a tweet based on the given event.
+        """
+        tweet_id = 0
+        text = self.printer.get_event_string(event)
+        if len(text) > 0:
+            tweet_id = tweeter.tweet(text)
+        return tweet_id
+
+
+    def generate_reply(self, previous_event, current_event, parent_id):
+        """
+        Description:
+            Create and send a reply to the given tweet based on the
+            deltas between the previous and current events.
+        """
+        tweet_id = 0
+        text = self.printer.get_reply_string(previous_event, current_event)
+        if len(text) > 0:
+            tweet_id = tweeter.reply(text, parent_id)
+        return tweet_id
+
+
     def parse(self):
         """
         Description:
@@ -126,9 +151,9 @@ class Parser:
             self.printer.update_line_score(self.data["liveData"]["linescore"])
 
             if parent_id <= 0:
-                tweet_id = self.printer.generate_tweet(event)
+                tweet_id = self.generate_tweet(event)
             else:
-                tweet_id = self.printer.generate_reply(previous_event, event, parent_id)
+                tweet_id = self.generate_reply(previous_event, event, parent_id)
 
             self.events[event_id] = {"tweet_id": tweet_id, "event": event}
             self.last_event = event_id
