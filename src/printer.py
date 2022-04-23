@@ -408,6 +408,11 @@ class Printer:
             logger.log_error("Could not determine penalty taker. Delaying tweet.")
             return self.get_null_event_string()
 
+        secondary_type = event["result"]["secondaryType"].lower()
+        if secondary_type == severity:
+            logger.log_error("Could not determine penalty. Delaying tweet.")
+            return self.get_null_event_string()
+
         if severity == "penalty shot":
 
             try:
@@ -415,7 +420,7 @@ class Printer:
 
                 event_values = {
                     "team":     self.get_opposition(team),
-                    "penalty":  event["result"]["secondaryType"].lower().replace("ps - ", ""),
+                    "penalty":  secondary_type.replace("ps - ", ""),
                     "player":   penalty_taker,
                     "hashtags": self.get_hashtags()
                 }
@@ -432,7 +437,7 @@ class Printer:
 
                 event_values = {
                     "team":     team,
-                    "penalty":  event["result"]["secondaryType"].lower(),
+                    "penalty":  secondary_type,
                     "player":   penalty_taker,
                     "minutes":  event["result"]["penaltyMinutes"],
                     "severity": severity,
