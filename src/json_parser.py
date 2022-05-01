@@ -43,6 +43,7 @@ class Parser:
         # to find the last event in the list so that we can start
         # processing only new events from this point.
         for event in self.new_records:
+            self.check_for_game_over(event)
             self.last_event = get_event_id(event)
 
         logger.log_info("starting event processing from ID: " + str(self.last_event))

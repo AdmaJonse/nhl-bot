@@ -6,9 +6,12 @@ Description:
 import unittest
 
 from datetime import datetime
-from datetime import timezone
 from test.test_data import schedule_events
 from src import schedule
+
+import pytz
+
+TIME_ZONE = pytz.timezone("US/Eastern")
 
 class TestSchedule(unittest.TestCase):
     """
@@ -45,7 +48,8 @@ class TestSchedule(unittest.TestCase):
             start time is valid.
         """
         actual   = schedule.get_start_time(schedule_events.valid_schedule_data)
-        expected = datetime(2022, 4, 11, 23, 0, tzinfo=timezone.utc)
+        expected = datetime(2022, 4, 11, 23, 0)
+        TIME_ZONE.localize(expected)
         self.assertEqual(expected, actual)
 
 
