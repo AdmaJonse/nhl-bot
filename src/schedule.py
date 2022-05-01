@@ -12,7 +12,11 @@ from src import logger
 
 # Colorado Avalanche team ID in the NHL API
 TEAM_ID      = 21
+
+# NHL API URL
 SCHEDULE_API = "https://statsapi.web.nhl.com/api/v1/schedule"
+
+# Date and Time formats
 TIME_FORMAT  = "%Y-%m-%dT%H:%M:%SZ"
 DATE_FORMAT  = "%Y-%m-%d"
 TIME_ZONE    = pytz.timezone("US/Eastern")
@@ -67,12 +71,13 @@ def get_tomorrow():
     return tomorrow
 
 
-def get_schedule_json(date=get_current_date()):
+def get_schedule_json():
     """
     Description:
         Return the JSON record describing the team's games that are
         scheduled today.
     """
+    date    = get_current_date()
     url     = SCHEDULE_API + "?teamId=" + str(TEAM_ID) + "&date=" + date_to_string(date)
     params  = ""
     logger.log_info("getting schedule JSON from: " + url)
@@ -80,12 +85,13 @@ def get_schedule_json(date=get_current_date()):
     return request.json()
 
 
-def get_game_id(data=get_schedule_json()):
+def get_game_id():
     """
     Description:
         Return the game ID from the given JSON schedule record.
     """
     try:
+        data    = get_schedule_json()
         game_id = data["dates"][0]["games"][0]["gamePk"]
         logger.log_info("game id: " + str(game_id))
         return game_id
@@ -95,12 +101,13 @@ def get_game_id(data=get_schedule_json()):
         return -1
 
 
-def get_start_time(data=get_schedule_json()):
+def get_start_time():
     """
     Description:
         Return the game start time from the given JSON schedule record.
     """
     try:
+        data       = get_schedule_json()
         start_time = datetime.strptime(data["dates"][0]["games"][0]["gameDate"], TIME_FORMAT)
         TIME_ZONE.localize(start_time)
         logger.log_info("game start time: " + str(start_time))
