@@ -90,10 +90,8 @@ def get_game_id(data=get_schedule_json()):
         logger.log_info("game id: " + str(game_id))
         return game_id
     except IndexError:
-        logger.log_error("error - index error occurred while retrieving game id")
         return -1
     except KeyError:
-        logger.log_error("error - key error occurred while retrieving game id")
         return -1
 
 
@@ -108,8 +106,6 @@ def get_start_time(data=get_schedule_json()):
         logger.log_info("game start time: " + str(start_time))
         return start_time
     except IndexError:
-        logger.log_error("error - index error occurred while retrieving game start time")
         return -1
     except KeyError:
-        logger.log_error("error - key error occurred while retrieving game start time")
         return -1
