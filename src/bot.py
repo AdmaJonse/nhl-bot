@@ -21,7 +21,7 @@ def wait_until_game_start():
     game_time    = schedule.get_start_time()
     current_time = schedule.get_current_time()
     if game_time > current_time:
-        logger.log_info("Waiting until game start: " + str(game_time))
+        logger.log_info("Waiting until game start: " + schedule.time_to_string(game_time))
         pause.until(game_time)
 
 
@@ -32,7 +32,7 @@ def wait_until_tomorrow():
     """
     tomorrow = schedule.get_tomorrow()
     tomorrow = tomorrow.replace(hour=12)
-    logger.log_info("Pausing until: " + str(tomorrow))
+    logger.log_info("Pausing until: " + schedule.date_to_string(tomorrow))
     pause.until(tomorrow)
 
 
