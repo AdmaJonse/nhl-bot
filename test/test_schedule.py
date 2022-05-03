@@ -88,8 +88,7 @@ class TestSchedule(unittest.TestCase):
         with patch('src.schedule.get_schedule_json') as mock_schedule:
             mock_schedule.return_value = schedule_events.valid_schedule_data
             actual   = schedule.get_start_time()
-            expected = datetime(2022, 4, 11, 23, 0)
-            TIME_ZONE.localize(expected)
+            expected = datetime(2022, 4, 11, 23, 0, tzinfo=pytz.utc)
             self.assertEqual(expected, actual)
 
 

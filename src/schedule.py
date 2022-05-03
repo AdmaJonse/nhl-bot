@@ -5,6 +5,7 @@ Description:
 
 from datetime import datetime
 from datetime import timedelta
+from dateutil import parser
 import pytz
 import requests
 
@@ -17,9 +18,10 @@ TEAM_ID      = 21
 SCHEDULE_API = "https://statsapi.web.nhl.com/api/v1/schedule"
 
 # Date and Time formats
-TIME_FORMAT  = "%Y-%m-%dT%H:%M:%SZ"
-DATE_FORMAT  = "%Y-%m-%d"
-TIME_ZONE    = pytz.timezone("US/Eastern")
+NHL_TIME_FORMAT  = "%Y-%m-%dT%H:%M:%SZ"
+TIME_FORMAT      = "%Y-%m-%d %H:%M:%S %Z%z"
+DATE_FORMAT      = "%Y-%m-%d"
+TIME_ZONE        = pytz.timezone("US/Eastern")
 
 
 def time_to_string(time):
@@ -28,7 +30,7 @@ def time_to_string(time):
         Return the given datetime object as a time string formatted
         using the time format constant.
     """
-    return time.strftime(TIME_FORMAT)
+    return time.astimezone(TIME_ZONE).strftime(TIME_FORMAT)
 
 
 def date_to_string(date):
@@ -46,7 +48,7 @@ def get_current_time():
         Return the current time localized using the time zone constant.
     """
     current_time = datetime.now(TIME_ZONE)
-    logger.log_info("current time: " + time_to_string(current_time))
+    logger.log_verbose("current time: " + time_to_string(current_time))
     return current_time
 
 
@@ -56,7 +58,7 @@ def get_current_date():
         Return the current date localized using the time zone constant.
     """
     current_date = datetime.now(TIME_ZONE).replace(hour=0, minute=0, second=0, microsecond=0)
-    logger.log_info("current date: " + date_to_string(current_date))
+    logger.log_verbose("current date: " + date_to_string(current_date))
     return current_date
 
 
@@ -67,7 +69,7 @@ def get_tomorrow():
     """
     current_date = get_current_date()
     tomorrow     = current_date + timedelta(days=1)
-    logger.log_info("tomorrow's date: " + date_to_string(tomorrow))
+    logger.log_verbose("tomorrow's date: " + date_to_string(tomorrow))
     return tomorrow
 
 
@@ -80,7 +82,7 @@ def get_schedule_json():
     date    = get_current_date()
     url     = SCHEDULE_API + "?teamId=" + str(TEAM_ID) + "&date=" + date_to_string(date)
     params  = ""
-    logger.log_info("getting schedule JSON from: " + url)
+    logger.log_verbose("getting schedule JSON from: " + url)
     request = requests.get(url, params)
     return request.json()
 
@@ -93,7 +95,7 @@ def get_game_id():
     try:
         data    = get_schedule_json()
         game_id = data["dates"][0]["games"][0]["gamePk"]
-        logger.log_info("game id: " + str(game_id))
+        logger.log_verbose("game id: " + str(game_id))
         return game_id
     except IndexError:
         return -1
@@ -108,9 +110,8 @@ def get_start_time():
     """
     try:
         data       = get_schedule_json()
-        start_time = datetime.strptime(data["dates"][0]["games"][0]["gameDate"], TIME_FORMAT)
-        TIME_ZONE.localize(start_time)
-        logger.log_info("game start time: " + str(start_time))
+        start_time = parser.parse(data["dates"][0]["games"][0]["gameDate"])
+        logger.log_verbose("game start time: " + time_to_string(start_time))
         return start_time
     except IndexError:
         return -1
