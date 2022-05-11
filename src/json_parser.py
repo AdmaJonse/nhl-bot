@@ -6,16 +6,10 @@ Description:
 import json
 import requests
 
+from src import events
 from src import printer
 from src import tweeter
 from src import logger
-
-def get_event_id(event):
-    """
-    Description:
-        Return the event ID for the given event.
-    """
-    return event["about"]["eventIdx"]
 
 class Parser:
     """
@@ -42,9 +36,10 @@ class Parser:
         # Silently process all events prior to intialization. We want
         # to find the last event in the list so that we can start
         # processing only new events from this point.
-        for event in self.new_records:
+        for record in self.new_records:
+            event = events.to_event(record)
             self.check_for_game_over(event)
-            self.last_event = get_event_id(event)
+            self.last_event = event.event_id
 
         logger.log_info("starting event processing from ID: " + str(self.last_event))
 
@@ -69,18 +64,18 @@ class Parser:
         """
 
         # Filter out all play data that has already been processed
-        def filter_events(event):
-            event_id = get_event_id(event)
-            is_new_event = event_id > self.last_event
+        def filter_events(data):
+            event = events.to_event(data)
+            is_new_event = event.event_id > self.last_event
             try:
-                is_updated_event = self.events[event_id]["event"] != event
+                is_updated_event = self.events[event.event_id]["event"] != event
             except KeyError:
                 is_updated_event = False
             return is_new_event or is_updated_event
 
         self.get_data()
         all_plays = self.data["liveData"]["plays"]["allPlays"]
-        self.new_records = [event for event in all_plays if filter_events(event)]
+        self.new_records = [data for data in all_plays if filter_events(data)]
 
 
     def write_data(self):
@@ -98,8 +93,7 @@ class Parser:
         Description:
             Determine whether the given event indicates that the game is over.
         """
-        event_type = event["result"]["event"]
-        self.is_game_over = event_type == "Game End"
+        self.is_game_over = event.__class__ == events.GameEnd
         if self.is_game_over:
             logger.log_info("Game Over.")
 
@@ -135,16 +129,15 @@ class Parser:
             Parse new event records from the game data and handle any new events.
         """
         self.get_new_records()
-        for event in self.new_records:
-
-            logger.log_info("Event: \n" + str(event))
+        for record in self.new_records:
 
             tweet_id  = 0
-            event_id  = get_event_id(event)
+            event = events.to_event(record)
+            logger.log_info(str(event))
 
             try:
-                parent_id      = self.events[event_id]["tweet_id"]
-                previous_event = self.events[event_id]["event"]
+                parent_id      = self.events[event.event_id]["tweet_id"]
+                previous_event = self.events[event.event_id]["event"]
             except KeyError:
                 parent_id = 0
 
@@ -154,8 +147,9 @@ class Parser:
             if parent_id <= 0:
                 tweet_id = self.generate_tweet(event)
             else:
+                logger.log_info("=====> event updated: " + str(parent_id))
                 tweet_id = self.generate_reply(previous_event, event, parent_id)
 
-            self.events[event_id] = {"tweet_id": tweet_id, "event": event}
-            self.last_event = event_id
+            self.events[event.event_id] = {"tweet_id": tweet_id, "event": event}
+            self.last_event = event.event_id
             self.check_for_game_over(event)

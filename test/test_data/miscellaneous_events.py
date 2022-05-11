@@ -3,6 +3,21 @@ Description:
     Test data for unit tests describing miscellaneous game events.
 """
 
+null_event = {
+    "result": {
+        "description": "Lars Eller faceoff won against Charlie Coyle"
+    },
+    "about": {
+        "eventIdx": 3,
+        "period": 1,
+        "periodTimeRemaining": "20:00",
+        "goals": {
+            "away": 0,
+            "home": 0
+        }
+    }
+}
+
 faceoff_data = {
     "players": [
         {

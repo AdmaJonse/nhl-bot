@@ -6,3 +6,4 @@ test/test_data/__pycache__
 data.json
 job.log
 .vscode
+team_ids.txt
