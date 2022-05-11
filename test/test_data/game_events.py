@@ -5,6 +5,80 @@ Description:
 
 game_data = {
     "gameData": {
+        "game": {
+            "pk": 2021030164,
+            "season": "20212022",
+            "type": "R"
+        },
+        "datetime": {
+            "dateTime": "2022-04-10T17:30:00Z",
+            "endDateTime": "2022-04-10T20:12:25Z"
+        },
+        "about": {
+            "periodTimeRemaining": "20:00",
+            "ordinalNum": "1st"
+        },
+        "teams": {
+            "away": {
+                "name": "Boston Bruins",
+                "abbreviation": "BOS",
+                "teamName": "Bruins",
+                "locationName": "Boston"
+            },
+            "home": {
+                "name": "Washington Capitals",
+                "venue": {
+                    "name": "Capital One Arena"
+                },
+                "abbreviation": "WSH",
+                "teamName": "Capitals",
+                "locationName": "Washington"
+            }
+        }
+    },
+    "liveData": {
+        "linescore": {
+            "teams": {
+                "home": {
+                    "team": {
+                        "id": 15,
+                        "name": "Washington Capitals",
+                        "link": "/api/v1/teams/15",
+                        "abbreviation": "WSH",
+                        "triCode": "WSH"
+                    },
+                    "goals": 4,
+                    "shotsOnGoal": 33,
+                    "goaliePulled": False,
+                    "numSkaters": 5,
+                    "powerPlay": False
+                },
+                "away": {
+                    "team": {
+                        "id": 6,
+                        "name": "Boston Bruins",
+                        "link": "/api/v1/teams/6",
+                        "abbreviation": "BOS",
+                        "triCode": "BOS"
+                    },
+                    "goals": 2,
+                    "shotsOnGoal": 30,
+                    "goaliePulled": False,
+                    "numSkaters": 5,
+                    "powerPlay": False
+                }
+            }
+        }
+    }
+}
+
+playoff_game_data = {
+    "gameData": {
+        "game": {
+            "pk": 2021030164,
+            "season": "20212022",
+            "type": "P"
+        },
         "datetime": {
             "dateTime": "2022-04-10T17:30:00Z",
             "endDateTime": "2022-04-10T20:12:25Z"

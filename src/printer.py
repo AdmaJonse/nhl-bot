@@ -6,126 +6,28 @@ Description:
 # Prevents the too many public functions warning. We should fix this.
 # pylint: disable=R0904
 
+from src import events
 from src import logger
 from src import tweeter
 from src import templates
 
-BLOCKED_SHOT_EVENT    = "Blocked Shot"
-CHALLENGE_EVENT       = "Official Challenge"
-FACEOFF_EVENT         = "Faceoff"
-GAME_END_EVENT        = "Game End"
-GAME_OFFICIAL_EVENT   = "Game Official"
-GAME_SCHEDULED_EVENT  = "Game Scheduled"
-GIVEAWAY_EVENT        = "Giveaway"
-GOAL_EVENT            = "Goal"
-HIT_EVENT             = "Hit"
-MISSED_SHOT_EVENT     = "Missed Shot"
-PENALTY_EVENT         = "Penalty"
-PERIOD_END_EVENT      = "Period End"
-PERIOD_OFFICIAL_EVENT = "Period Official"
-PERIOD_READY_EVENT    = "Period Ready"
-PERIOD_START_EVENT    = "Period Start"
-SHOT_EVENT            = "Shot"
-STOPPAGE_EVENT        = "Stoppage"
-TAKEAWAY_EVENT        = "Takeaway"
+TEAM_HASHTAG    = "#GoAvsGo"
+PLAYOFF_HASHTAG = "#FindAWay"
 
-
-class UnknownTeam(Exception):
+def get_home_shots(data):
     """
     Description:
-        An exception indicating that no team was found in an event.
+        Return the number of shots by the home team in the current line score.
     """
-
-class UnknownPlayer(Exception):
-    """
-    Description:
-        An exception indicating that no player was found in an event.
-    """
+    return data["teams"]["home"]["shotsOnGoal"]
 
 
-def get_timestamp(event):
+def get_away_shots(data):
     """
     Description:
-        Return the timestamp of the given event.
+        Return the number of shots by the away team in the current line score.
     """
-    return event["about"]["dateTime"]
-
-
-def get_description(event):
-    """
-    Description:
-        Return the description from the given event.
-    """
-    return event["result"]["description"]
-
-
-def get_home_goals(event):
-    """
-    Description:
-        Return the number of goals by the home team in the given event.
-    """
-    return event["about"]["goals"]["home"]
-
-
-def get_away_goals(event):
-    """
-    Description:
-        Return the number of goals by the away team in the given event.
-    """
-    return event["about"]["goals"]["away"]
-
-
-def get_home_shots(event):
-    """
-    Description:
-        Return the number of shots by the home team in the given event.
-    """
-    return event["teams"]["home"]["shotsOnGoal"]
-
-
-def get_away_shots(event):
-    """
-    Description:
-        Return the number of shots by the away team in the given event.
-    """
-    return event["teams"]["away"]["shotsOnGoal"]
-
-
-def get_period(event):
-    """
-    Description:
-        Return the period from the given event.
-    """
-    return event["about"]["goals"]["away"]
-
-
-def get_player_name(event, player_type):
-    """
-    Description:
-        Return the name of the player with the given type from the event.
-    """
-
-    for player in event["players"]:
-        if player["playerType"].lower() == player_type.lower():
-            return player["player"]["fullName"]
-
-    raise UnknownPlayer("Could not find player of type: " + player_type)
-
-
-def get_goal_scorer(event):
-    """
-    Description:
-        Return the goal scorer's name from the given event.
-    """
-    return get_player_name(event, "Scorer")
-
-
-def get_penalty_taker(event):
-    """
-    Description:
-        Return the penalty taker's name from the given event.
-    """
-    return get_player_name(event, "penaltyOn")
+    return data["teams"]["away"]["shotsOnGoal"]
 
 
 def get_period_string(event):
@@ -133,15 +35,37 @@ def get_period_string(event):
     Description:
         Return a string represenation of the period from the given event.
     """
-    period = event["about"]["period"]
-    if period == 1:
+    if event.period == 1:
         period_string = "The first period"
-    elif period == 2:
+    elif event.period == 2:
         period_string = "The second period"
-    elif period == 3:
+    elif event.period == 3:
         period_string = "The third period"
     else:
         period_string = "The OT period"
+    return period_string
+
+def get_ordinal_period_string(event):
+    """
+    Description:
+        Return an ordinal string represenation of the period from the given event.
+    """
+    if event.period == 1:
+        period_string = "1st"
+    elif event.period == 2:
+        period_string = "2nd"
+    elif event.period == 3:
+        period_string = "3rd"
+    elif event.period == 4:
+        period_string = "OT"
+    elif event.period == 5:
+        period_string = "2OT"
+    elif event.period == 6:
+        period_string = "3OT"
+    elif event.period == 7:
+        period_string = "4OT"
+    else:
+        period_string = "OT"
     return period_string
 
 
@@ -167,7 +91,8 @@ class Printer:
             "away_abbreviation": data["teams"]["away"]["abbreviation"],
             "away_full_name":    data["teams"]["away"]["name"],
             "date":              data["datetime"]["dateTime"],
-            "venue":             data["teams"]["home"]["venue"]["name"]
+            "venue":             data["teams"]["home"]["venue"]["name"],
+            "is_playoffs":       data["game"]["type"] == "P"
         }
 
 
@@ -205,21 +130,21 @@ class Printer:
         logger.log_info("Away Full Name:    " + self.game_data.get("away_full_name", ""))
         logger.log_info("Date/Time:         " + self.game_data.get("date", ""))
         logger.log_info("Venue:             " + self.game_data.get("venue", ""))
+        logger.log_info("Is Playoffs:       " + str(self.game_data.get("is_playoffs", False)))
         logger.log_info("Hashtags:          " + self.get_hashtags())
 
 
-    def get_team_string(self, event):
+    def get_team_string(self, team):
         """
         Description:
             Return the name of the team from this event as a location name.
         """
-        team = event["team"]["name"]
         if team == self.game_data.get("home_full_name"):
             team_string = self.get_home_location()
         elif team == self.game_data.get("away_full_name"):
             team_string = self.get_away_location()
         else:
-            raise UnknownTeam()
+            logger.log_error("unknown team: " + team)
         return team_string
 
 
@@ -260,9 +185,13 @@ class Printer:
         Description:
             Return the opposing team's location name.
         """
-        home = self.get_home_location()
-        away = self.get_away_location()
-        return home if team == away else away
+        if team == self.game_data.get("home_full_name"):
+            team_string = self.get_away_location()
+        elif team == self.game_data.get("away_full_name"):
+            team_string = self.get_home_location()
+        else:
+            logger.log_error("unknown team: " + team)
+        return team_string
 
 
     def get_goal_leader(self, event):
@@ -272,7 +201,7 @@ class Printer:
         """
         home = self.get_home_location()
         away = self.get_away_location()
-        return home if get_home_goals(event) > get_away_goals(event) else away
+        return home if event.home_goals > event.away_goals else away
 
 
     def get_hashtags(self):
@@ -280,11 +209,12 @@ class Printer:
         Description:
             Return the hashtags to append to all tweets.
         """
-        home = self.get_home_abbreviation()
-        away = self.get_away_abbreviation()
-        game_hashtag = "#" + away + "vs" + home
-        team_hashtag = "#GoAvsGo"
-        return game_hashtag + " " + team_hashtag
+        hashtags = []
+        hashtags.append("#" + self.get_away_abbreviation() + "vs" + self.get_home_abbreviation())
+        hashtags.append(TEAM_HASHTAG)
+        if self.game_data["is_playoffs"]:
+            hashtags.append(PLAYOFF_HASHTAG)
+        return " ".join(hashtags)
 
 
     #################################################################
@@ -316,8 +246,8 @@ class Printer:
             "winner":     self.get_goal_leader(event),
             "home_team":  self.get_home_location(),
             "away_team":  self.get_away_location(),
-            "home_goals": get_home_goals(event),
-            "away_goals": get_away_goals(event),
+            "home_goals": event.home_goals,
+            "away_goals": event.away_goals,
             "hashtags":   self.get_hashtags()
         }
         return templates.GAME_END_TEMPLATE.format(**event_values)
@@ -401,53 +331,56 @@ class Printer:
             Return the event string for a penalty or penalty shot event.
         """
 
-        severity = event["result"]["penaltySeverity"].lower()
-        try:
-            penalty_taker =  get_penalty_taker(event)
-        except UnknownPlayer:
+        if event.taker is None:
             logger.log_error("Could not determine penalty taker. Delaying tweet.")
             return self.get_null_event_string()
 
-        secondary_type = event["result"]["secondaryType"].lower()
-        if secondary_type == severity:
+        if event.reason is None:
             logger.log_error("Could not determine penalty. Delaying tweet.")
             return self.get_null_event_string()
 
-        if severity == "penalty shot":
+        if event.team is None:
+            logger.log_error("Could not determine penalized team. Delaying tweet.")
+            return self.get_null_event_string()
 
-            try:
-                team = self.get_team_string(event)
+        event_values = {
+            "team":     self.get_team_string(event.team),
+            "penalty":  event.reason,
+            "player":   event.taker,
+            "minutes":  event.minutes,
+            "severity": event.severity,
+            "hashtags": self.get_hashtags()
+        }
+        event_string = templates.PENALTY_TEMPLATE.format(**event_values)
 
-                event_values = {
-                    "team":     self.get_opposition(team),
-                    "penalty":  secondary_type.replace("ps - ", ""),
-                    "player":   penalty_taker,
-                    "hashtags": self.get_hashtags()
-                }
-                event_string = templates.PENALTY_SHOT_TEMPLATE.format(**event_values)
+        return event_string
 
-            except UnknownTeam:
-                logger.log_error("Could not determine penalized team. Delaying tweet.")
-                event_string = ""
 
-        else:
+    def get_penalty_shot_string(self, event):
+        """
+        Description:
+            Return the event string for a penalty or penalty shot event.
+        """
 
-            try:
-                team = self.get_team_string(event)
+        if event.taker is None:
+            logger.log_error("Could not determine penalty taker. Delaying tweet.")
+            return self.get_null_event_string()
 
-                event_values = {
-                    "team":     team,
-                    "penalty":  secondary_type,
-                    "player":   penalty_taker,
-                    "minutes":  event["result"]["penaltyMinutes"],
-                    "severity": severity,
-                    "hashtags": self.get_hashtags()
-                }
-                event_string = templates.PENALTY_TEMPLATE.format(**event_values)
+        if event.reason is None:
+            logger.log_error("Could not determine penalty. Delaying tweet.")
+            return self.get_null_event_string()
 
-            except UnknownTeam:
-                logger.log_error("Could not determine penalized team. Delaying tweet.")
-                event_string = ""
+        if event.team is None:
+            logger.log_error("Could not determine penalized team. Delaying tweet.")
+            return self.get_null_event_string()
+
+        event_values = {
+            "team":     self.get_opposition(event.team),
+            "penalty":  event.reason,
+            "player":   event.taker,
+            "hashtags": self.get_hashtags()
+        }
+        event_string = templates.PENALTY_SHOT_TEMPLATE.format(**event_values)
 
         return event_string
 
@@ -484,8 +417,8 @@ class Printer:
             "venue":      self.game_data.get("venue"),
             "home_team":  self.get_home_location(),
             "away_team":  self.get_away_location(),
-            "home_goals": get_home_goals(event),
-            "away_goals": get_away_goals(event),
+            "home_goals": event.home_goals,
+            "away_goals": event.away_goals,
             "home_shots": get_home_shots(self.line_score),
             "away_shots": get_away_shots(self.line_score),
             "hashtags":   self.get_hashtags()
@@ -506,32 +439,30 @@ class Printer:
         Description:
             Return the event string for a goal event.
         """
-        try:
-            scorer = get_goal_scorer(event)
-        except UnknownPlayer:
+        if event.scorer is None:
             logger.log_error("Could not determine goal scorer. Delaying tweet.")
             return self.get_null_event_string()
 
-        strength = event["result"]["strength"]["code"]
-        empty_net = event["result"]["emptyNet"]
-
         event_values = {
-            "team":       self.get_team_string(event),
-            "player":     scorer,
-            "time":       event["about"]["periodTimeRemaining"],
-            "period":     event["about"]["ordinalNum"],
-            "home_team":  self.get_home_location(),
-            "away_team":  self.get_away_location(),
-            "home_goals": get_home_goals(event),
-            "away_goals": get_away_goals(event),
-            "hashtags":   self.get_hashtags()
+            "team":             self.get_team_string(event.team),
+            "scorer":           event.scorer,
+            "primary_assist":   event.primary_assist,
+            "secondary_assist": event.secondary_assist,
+            "description":      event.description,
+            "time":             event.time,
+            "period":           get_ordinal_period_string(event),
+            "home_team":        self.get_home_location(),
+            "away_team":        self.get_away_location(),
+            "home_goals":       event.home_goals,
+            "away_goals":       event.away_goals,
+            "hashtags":         self.get_hashtags()
         }
 
-        if empty_net:
+        if event.is_empty_net:
             goal_string = templates.EMPTY_NET_GOAL_TEMPLATE.format(**event_values)
-        elif strength == "PPG":
+        elif event.strength == "PPG":
             goal_string = templates.POWER_PLAY_GOAL_TEMPLATE.format(**event_values)
-        elif strength == "SHG":
+        elif event.strength == "SHG":
             goal_string = templates.SHORT_HANDED_GOAL_TEMPLATE.format(**event_values)
         else:
             goal_string = templates.GOAL_TEMPLATE.format(**event_values)
@@ -545,7 +476,7 @@ class Printer:
             Return the event string for a challenge event.
         """
         event_values = {
-            "team":     self.get_team_string(event),
+            "team":     self.get_team_string(event.team),
             "hashtags": self.get_hashtags()
         }
         return templates.CHALLENGE_TEMPLATE.format(**event_values)
@@ -557,31 +488,31 @@ class Printer:
             Return the event string for an event.
         """
         event_lookup = {
-            BLOCKED_SHOT_EVENT:    self.get_blocked_shot_string,
-            CHALLENGE_EVENT:       self.get_official_challenge_string,
-            FACEOFF_EVENT:         self.get_faceoff_string,
-            GAME_END_EVENT:        self.get_game_end_string,
-            GAME_OFFICIAL_EVENT:   self.get_game_official_string,
-            GAME_SCHEDULED_EVENT:  self.get_game_scheduled_string,
-            GIVEAWAY_EVENT:        self.get_giveaway_string,
-            GOAL_EVENT:            self.get_goal_string,
-            HIT_EVENT:             self.get_hit_string,
-            MISSED_SHOT_EVENT:     self.get_missed_shot_string,
-            PENALTY_EVENT:         self.get_penalty_string,
-            PERIOD_END_EVENT:      self.get_period_end_string,
-            PERIOD_OFFICIAL_EVENT: self.get_period_official_string,
-            PERIOD_READY_EVENT:    self.get_period_ready_string,
-            PERIOD_START_EVENT:    self.get_period_start_string,
-            SHOT_EVENT:            self.get_shot_string,
-            STOPPAGE_EVENT:        self.get_stoppage_string,
-            TAKEAWAY_EVENT:        self.get_takeaway_string
+            events.BlockedShot:    self.get_blocked_shot_string,
+            events.Challenge:      self.get_official_challenge_string,
+            events.Faceoff:        self.get_faceoff_string,
+            events.GameEnd:        self.get_game_end_string,
+            events.GameOfficial:   self.get_game_official_string,
+            events.GameScheduled:  self.get_game_scheduled_string,
+            events.Giveaway:       self.get_giveaway_string,
+            events.Goal:           self.get_goal_string,
+            events.Hit:            self.get_hit_string,
+            events.MissedShot:     self.get_missed_shot_string,
+            events.Penalty:        self.get_penalty_string,
+            events.PenaltyShot:    self.get_penalty_shot_string,
+            events.PeriodEnd:      self.get_period_end_string,
+            events.PeriodOfficial: self.get_period_official_string,
+            events.PeriodReady:    self.get_period_ready_string,
+            events.PeriodStart:    self.get_period_start_string,
+            events.Shot:           self.get_shot_string,
+            events.Stoppage:       self.get_stoppage_string,
+            events.Takeaway:       self.get_takeaway_string
         }
 
-        event_type = event["result"]["event"]
         try:
-            event_string = event_lookup[event_type](event)
+            event_string = event_lookup[event.__class__](event)
         except KeyError:
-            logger.log_error("error - unhandled event: " + event_type)
+            logger.log_error("error - unhandled event: " + str(event))
 
         return event_string
 
@@ -686,6 +617,14 @@ class Printer:
         return self.get_null_event_string()
 
 
+    def get_penalty_shot_reply(self, _previous_event, _current_event):
+        """
+        Description:
+            Return the reply string for a penalty shot event.
+        """
+        return self.get_null_event_string()
+
+
     def get_period_ready_reply(self, _previous_event, _current_event):
         """
         Description:
@@ -718,12 +657,83 @@ class Printer:
         return self.get_null_event_string()
 
 
-    def get_goal_reply(self, _previous_event, _current_event):
+    def get_goal_reply(self, previous_event, current_event):
         """
         Description:
             Return the reply string for a goal event.
         """
-        return self.get_null_event_string()
+
+        event_values = {
+            "team":             self.get_team_string(current_event.team),
+            "scorer":           current_event.scorer,
+            "primary_assist":   current_event.primary_assist,
+            "secondary_assist": current_event.secondary_assist,
+            "description":      current_event.description,
+            "time":             current_event.time,
+            "period":           get_ordinal_period_string(current_event),
+            "home_team":        self.get_home_location(),
+            "away_team":        self.get_away_location(),
+            "home_goals":       current_event.home_goals,
+            "away_goals":       current_event.away_goals,
+            "hashtags":         self.get_hashtags()
+        }
+
+        update_count              = 0
+        scorer_modified           = previous_event.scorer != current_event.scorer
+        primary_assist_added      = (
+            previous_event.primary_assist is None and
+            current_event.primary_assist is not None
+        )
+        secondary_assist_added    = (
+            previous_event.secondary_assist is None and
+            current_event.secondary_assist is not None
+        )
+        primary_assist_modified   = (
+            previous_event.primary_assist is not None and
+            previous_event.primary_assist != current_event.primary_assist
+        )
+        secondary_assist_modified = (
+            previous_event.secondary_assist is not None and
+            previous_event.secondary_assist != current_event.secondary_assist
+        )
+
+        # Goal scorer has been changed
+        if scorer_modified:
+            update_count += 1
+            update_text = templates.SCORER_UPDATE_TEMPLATE.format(**event_values)
+
+        # Assists have been added
+        if primary_assist_added and secondary_assist_added:
+            update_count += 1
+            update_text = templates.ASSIST_ADD_BOTH_TEMPLATE.format(**event_values)
+        elif primary_assist_added:
+            update_count += 1
+            update_text = templates.ASSIST_ADD_PRIMARY_TEMPLATE.format(**event_values)
+        elif secondary_assist_added:
+            update_count += 1
+            update_text = templates.ASSIST_ADD_SECONDARY_TEMPLATE.format(**event_values)
+
+        # Assists have been changed
+        if primary_assist_modified and secondary_assist_modified:
+            update_count += 1
+            update_text = templates.ASSIST_UPDATE_TEMPLATE.format(**event_values)
+        elif primary_assist_modified:
+            update_count += 1
+            update_text = templates.PRIMARY_ASSIST_UPDATE_TEMPLATE.format(**event_values)
+        elif secondary_assist_modified:
+            update_count += 1
+            update_text = templates.SECONDARY_ASSIST_UPDATE_TEMPLATE.format(**event_values)
+
+        # Time of goal has been changed
+        if previous_event.time != current_event.time:
+            update_count += 1
+            update_text = templates.GOAL_TIME_UPDATE_TEMPLATE.format(**event_values)
+
+        # More than one update occurred, print a generic update
+        if update_count > 1:
+            update_text = templates.GOAL_REPLY_TEMPLATE.format(**event_values)
+
+        return update_text
 
 
     def get_official_challenge_reply(self, _previous_event, _current_event):
@@ -740,30 +750,29 @@ class Printer:
             Return the reply string for an event.
         """
         event_lookup = {
-            BLOCKED_SHOT_EVENT:    self.get_blocked_shot_reply,
-            CHALLENGE_EVENT:       self.get_official_challenge_reply,
-            FACEOFF_EVENT:         self.get_faceoff_reply,
-            GAME_END_EVENT:        self.get_game_end_reply,
-            GAME_OFFICIAL_EVENT:   self.get_game_official_reply,
-            GAME_SCHEDULED_EVENT:  self.get_game_scheduled_reply,
-            GIVEAWAY_EVENT:        self.get_giveaway_reply,
-            GOAL_EVENT:            self.get_goal_reply,
-            HIT_EVENT:             self.get_hit_reply,
-            MISSED_SHOT_EVENT:     self.get_missed_shot_reply,
-            PENALTY_EVENT:         self.get_penalty_reply,
-            PERIOD_END_EVENT:      self.get_period_end_reply,
-            PERIOD_OFFICIAL_EVENT: self.get_period_official_reply,
-            PERIOD_READY_EVENT:    self.get_period_ready_reply,
-            PERIOD_START_EVENT:    self.get_period_start_reply,
-            SHOT_EVENT:            self.get_shot_reply,
-            STOPPAGE_EVENT:        self.get_stoppage_reply,
-            TAKEAWAY_EVENT:        self.get_takeaway_reply
+            events.BlockedShot:    self.get_blocked_shot_reply,
+            events.Challenge:      self.get_official_challenge_reply,
+            events.Faceoff:        self.get_faceoff_reply,
+            events.GameEnd:        self.get_game_end_reply,
+            events.GameOfficial:   self.get_game_official_reply,
+            events.GameScheduled:  self.get_game_scheduled_reply,
+            events.Giveaway:       self.get_giveaway_reply,
+            events.Goal:           self.get_goal_reply,
+            events.Hit:            self.get_hit_reply,
+            events.MissedShot:     self.get_missed_shot_reply,
+            events.Penalty:        self.get_penalty_reply,
+            events.PenaltyShot:    self.get_penalty_shot_reply,
+            events.PeriodEnd:      self.get_period_end_reply,
+            events.PeriodOfficial: self.get_period_official_reply,
+            events.PeriodReady:    self.get_period_ready_reply,
+            events.PeriodStart:    self.get_period_start_reply,
+            events.Shot:           self.get_shot_reply,
+            events.Stoppage:       self.get_stoppage_reply,
+            events.Takeaway:       self.get_takeaway_reply
         }
-
-        event_type = current_event["result"]["event"]
         try:
-            reply = event_lookup[event_type](previous_event, current_event)
+            reply = event_lookup[current_event.__class__](previous_event, current_event)
         except KeyError:
-            logger.log_error("error - unhandled event: " + event_type)
+            logger.log_error("error - unhandled event: " + current_event.__class__)
 
         return reply
