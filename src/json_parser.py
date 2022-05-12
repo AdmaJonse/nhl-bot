@@ -7,9 +7,9 @@ import json
 import requests
 
 from src import events
-from src import printer
-from src import tweeter
+from src import generator
 from src import logger
+from src import output
 
 class Parser:
     """
@@ -31,7 +31,7 @@ class Parser:
         self.get_new_records()
         self.write_data()
 
-        self.printer = printer.Printer(self.data)
+        self.generator = generator.Generator(self.data)
 
         # Silently process all events prior to intialization. We want
         # to find the last event in the list so that we can start
@@ -104,9 +104,9 @@ class Parser:
             Create and send a tweet based on the given event.
         """
         tweet_id = 0
-        text = self.printer.get_event_string(event)
+        text = self.generator.get_event_string(event)
         if len(text) > 0:
-            tweet_id = tweeter.tweet(text)
+            tweet_id = output.post(text)
         return tweet_id
 
 
@@ -117,9 +117,9 @@ class Parser:
             deltas between the previous and current events.
         """
         tweet_id = 0
-        text = self.printer.get_reply_string(previous_event, current_event)
+        text = self.generator.get_reply_string(previous_event, current_event)
         if len(text) > 0:
-            tweet_id = tweeter.reply(text, parent_id)
+            tweet_id = output.reply(text, parent_id)
         return tweet_id
 
 
@@ -141,8 +141,8 @@ class Parser:
             except KeyError:
                 parent_id = 0
 
-            # update any records stored by the printer
-            self.printer.update_line_score(self.data["liveData"]["linescore"])
+            # update any records stored by the generator
+            self.generator.update_line_score(self.data["liveData"]["linescore"])
 
             if parent_id <= 0:
                 tweet_id = self.generate_tweet(event)
