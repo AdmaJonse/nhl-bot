@@ -4,13 +4,14 @@ Description:
     authenticate, tweet and reply.
 """
 
-from os.path import join, dirname, abspath
 import os
+from os.path import join, dirname, abspath
 from dotenv import load_dotenv
 import tweepy
+
 from src import logger
 
-# maximum tweet length in characters
+# maximum tweet length
 MAX_LENGTH = 240 # characters
 
 class Tweeter:
@@ -49,7 +50,7 @@ class Tweeter:
         self.api = tweepy.API(auth)
 
 
-    def tweet(self, text):
+    def post(self, text):
         """
         Description:
             Send a tweet with the specified text.
@@ -92,20 +93,3 @@ class Tweeter:
             logger.log_error("error - could not reply to tweet with invalid ID: " + str(parent_id))
 
         return reply_id
-
-tweeter = Tweeter()
-
-def tweet(text):
-    """
-    Description:
-        Public function that will send a tweet with the specified text.
-    """
-    return tweeter.tweet(text)
-
-def reply(text, parent_id):
-    """
-    Description:
-        Public function that will send a reply with the specified text to the
-        tweet with the given parent_id.
-    """
-    return tweeter.reply(text, parent_id)

@@ -1,6 +1,6 @@
 """
 Description:
-    Unit tests for the Printer class.
+    Unit tests for the generator class.
 """
 
 import unittest
@@ -12,10 +12,10 @@ from test.test_data import period_events
 from src import events
 
 
-class TestPrinter(unittest.TestCase):
+class Testgenerator(unittest.TestCase):
     """
     Description:
-        Unit tests for the Printer class.
+        Unit tests for the generator class.
     """
 
     def test_game_scheduled(self):
