@@ -31,7 +31,7 @@ class Printer:
         Description:
             Print a reply to the given parent with the specified text.
         """
-        reply_id = 0
+        reply_id = uuid.uuid1().int
         if parent_id > 0:
             logger.log_info("Reply to parent " + str(parent_id) + "\n: " + text)
         return reply_id
