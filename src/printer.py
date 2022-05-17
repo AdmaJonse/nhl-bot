@@ -6,10 +6,11 @@ Description:
 
 import uuid
 from src import logger
+from src.outputter import Outputter
 
 # pylint: disable=R0201
 
-class Printer:
+class Printer(Outputter):
     """
     Description:
         This class provides an interface to Twitter than can be used to

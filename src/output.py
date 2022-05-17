@@ -3,18 +3,21 @@ Description:
     This module defines the output method.
 """
 
+from typing import Optional
+
+from src.outputter import Outputter
 from src.printer import Printer
 from src.tweeter import Tweeter
 
-DRY_RUN = False
+DRY_RUN = True
+
+outputter : Outputter = Tweeter()
 
 if DRY_RUN:
     outputter = Printer()
-else:
-    outputter = Tweeter()
 
 
-def post(text):
+def post(text : str) -> Optional[int]:
     """
     Description:
         Public function that will send a tweet with the specified text.
@@ -22,7 +25,7 @@ def post(text):
     return outputter.post(text)
 
 
-def reply(text, parent_id):
+def reply(text : str, parent_id : int) -> Optional[int]:
     """
     Description:
         Public function that will send a reply with the specified text to the
