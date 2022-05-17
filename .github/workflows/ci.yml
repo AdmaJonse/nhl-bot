@@ -53,24 +53,24 @@ jobs:
     analyze:
         runs-on: ubuntu-latest
 
-      steps:
-        - uses: actions/checkout@v3
+        steps:
+          - uses: actions/checkout@v3
 
-        - name: Install Python 3
-          uses: actions/setup-python@v1
-          with:
-            python-version: 3.6
+          - name: Install Python 3
+            uses: actions/setup-python@v1
+            with:
+              python-version: 3.6
 
-        - name: Install dependencies
-          run: |
-            python -m pip install --upgrade pip
-            pip install -r requirements.txt
+          - name: Install dependencies
+            run: |
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
 
-        - name: Perform static analysis on all src files
-          run: make analyze
+          - name: Perform static analysis on all src files
+            run: make analyze
 
     build:
-        needs: [test, lint]
+        needs: [test, lint, analyze]
         runs-on: ubuntu-latest
         steps:
 

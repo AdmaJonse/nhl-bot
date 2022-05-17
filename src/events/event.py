@@ -10,8 +10,6 @@ Description:
     update processing when minor JSON fields change as opposed to
     relevant event data.
 """
-from __future__ import annotations
-
 from typing import Any, Optional
 
 from src.game_data import GameData
@@ -196,7 +194,7 @@ class Event:
         return self.null_post
 
 
-    def get_reply(self, _game_data : GameData, _previous : Event) -> Optional[str]:
+    def get_reply(self, _game_data : GameData, _previous : 'Event') -> Optional[str]:
         """
         Description:
             The base implementation for returning reply text. This implementation simply
