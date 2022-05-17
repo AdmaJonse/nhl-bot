@@ -9,7 +9,7 @@ from src.outputter import Outputter
 from src.printer import Printer
 from src.tweeter import Tweeter
 
-DRY_RUN = True
+DRY_RUN = False
 
 outputter : Outputter = Tweeter()
 
