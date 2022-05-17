@@ -4,7 +4,11 @@ test:
 
 .PHONY: lint
 lint:
-	python -m pylint src/
+	python -m pylint main.py src/
+
+.PHONY: analyze
+analyze:
+	python -m mypy --ignore-missing-imports main.py src/
 
 .PHONY: build
 build:

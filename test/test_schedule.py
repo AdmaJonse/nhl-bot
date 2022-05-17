@@ -75,7 +75,7 @@ class TestSchedule(unittest.TestCase):
         with patch('src.schedule.get_schedule_json') as mock_schedule:
             mock_schedule.return_value = schedule_events.invalid_schedule_data
             actual   = schedule.get_game_id()
-            expected = -1
+            expected = None
             self.assertEqual(expected, actual)
 
 
@@ -101,5 +101,5 @@ class TestSchedule(unittest.TestCase):
         with patch('src.schedule.get_schedule_json') as mock_schedule:
             mock_schedule.return_value = schedule_events.invalid_schedule_data
             actual   = schedule.get_start_time()
-            expected = -1
+            expected = None
             self.assertEqual(expected, actual)

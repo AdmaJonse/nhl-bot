@@ -4,12 +4,35 @@ Description:
 """
 
 import unittest
+
 from test.test_data import game_events
 from test.test_data import goal_events
 from test.test_data import miscellaneous_events
 from test.test_data import penalty_events
 from test.test_data import period_events
-from src import events
+
+from src import event_factory
+from src.game_data import GameData
+
+from src.events.blocked_shot import BlockedShot
+from src.events.challenge import Challenge
+from src.events.faceoff import Faceoff
+from src.events.game_end import GameEnd
+from src.events.game_official import GameOfficial
+from src.events.game_scheduled import GameScheduled
+from src.events.giveaway import Giveaway
+from src.events.goal import Goal
+from src.events.hit import Hit
+from src.events.missed_shot import MissedShot
+from src.events.penalty import Penalty
+from src.events.penalty_shot import PenaltyShot
+from src.events.period_end import PeriodEnd
+from src.events.period_official import PeriodOfficial
+from src.events.period_ready import PeriodReady
+from src.events.period_start import PeriodStart
+from src.events.shot import Shot
+from src.events.stoppage import Stoppage
+from src.events.takeaway import Takeaway
 
 
 class Testgenerator(unittest.TestCase):
@@ -35,8 +58,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.GameScheduled(data)
-        actual   = events.to_event(game_events.game_scheduled_data)
+        expected = GameScheduled(data)
+        actual   = event_factory.to_event(game_events.game_scheduled_data)
         self.assertEqual(expected, actual)
 
 
@@ -57,8 +80,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.GameEnd(data)
-        actual   = events.to_event(game_events.game_end_data)
+        expected = GameEnd(data)
+        actual   = event_factory.to_event(game_events.game_end_data)
         self.assertEqual(expected, actual)
 
 
@@ -79,8 +102,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.GameOfficial(data)
-        actual   = events.to_event(game_events.game_official_data)
+        expected = GameOfficial(data)
+        actual   = event_factory.to_event(game_events.game_official_data)
         self.assertEqual(expected, actual)
 
 
@@ -107,8 +130,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.Faceoff(data)
-        actual   = events.to_event(miscellaneous_events.faceoff_data)
+        expected = Faceoff(data)
+        actual   = event_factory.to_event(miscellaneous_events.faceoff_data)
         self.assertEqual(expected, actual)
 
 
@@ -129,8 +152,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.Stoppage(data)
-        actual   = events.to_event(miscellaneous_events.stoppage_data)
+        expected = Stoppage(data)
+        actual   = event_factory.to_event(miscellaneous_events.stoppage_data)
         self.assertEqual(expected, actual)
 
 
@@ -157,8 +180,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.Shot(data)
-        actual   = events.to_event(miscellaneous_events.shot_data)
+        expected = Shot(data)
+        actual   = event_factory.to_event(miscellaneous_events.shot_data)
         self.assertEqual(expected, actual)
 
 
@@ -185,8 +208,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.Hit(data)
-        actual   = events.to_event(miscellaneous_events.hit_data)
+        expected = Hit(data)
+        actual   = event_factory.to_event(miscellaneous_events.hit_data)
         self.assertEqual(expected, actual)
 
 
@@ -213,8 +236,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.BlockedShot(data)
-        actual   = events.to_event(miscellaneous_events.blocked_shot_data)
+        expected = BlockedShot(data)
+        actual   = event_factory.to_event(miscellaneous_events.blocked_shot_data)
         self.assertEqual(expected, actual)
 
 
@@ -239,8 +262,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.Giveaway(data)
-        actual   = events.to_event(miscellaneous_events.giveaway_data)
+        expected = Giveaway(data)
+        actual   = event_factory.to_event(miscellaneous_events.giveaway_data)
         self.assertEqual(expected, actual)
 
 
@@ -265,8 +288,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.Takeaway(data)
-        actual   = events.to_event(miscellaneous_events.takeaway_data)
+        expected = Takeaway(data)
+        actual   = event_factory.to_event(miscellaneous_events.takeaway_data)
         self.assertEqual(expected, actual)
 
 
@@ -293,8 +316,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.MissedShot(data)
-        actual   = events.to_event(miscellaneous_events.missed_shot_data)
+        expected = MissedShot(data)
+        actual   = event_factory.to_event(miscellaneous_events.missed_shot_data)
         self.assertEqual(expected, actual)
 
 
@@ -326,8 +349,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.Penalty(data)
-        actual   = events.to_event(penalty_events.penalty_data)
+        expected = Penalty(data)
+        actual   = event_factory.to_event(penalty_events.penalty_data)
         self.assertEqual(expected, actual)
 
 
@@ -359,8 +382,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.PenaltyShot(data)
-        actual   = events.to_event(penalty_events.penalty_shot_data)
+        expected = PenaltyShot(data)
+        actual   = event_factory.to_event(penalty_events.penalty_shot_data)
         self.assertEqual(expected, actual)
 
 
@@ -381,8 +404,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.PeriodReady(data)
-        actual   = events.to_event(period_events.period_ready_data)
+        expected = PeriodReady(data)
+        actual   = event_factory.to_event(period_events.period_ready_data)
         self.assertEqual(expected, actual)
 
 
@@ -403,8 +426,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.PeriodStart(data)
-        actual   = events.to_event(period_events.period_start_data)
+        expected = PeriodStart(data)
+        actual   = event_factory.to_event(period_events.period_start_data)
         self.assertEqual(expected, actual)
 
 
@@ -425,8 +448,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.PeriodEnd(data)
-        actual   = events.to_event(period_events.period_end_data)
+        expected = PeriodEnd(data)
+        actual   = event_factory.to_event(period_events.period_end_data)
         self.assertEqual(expected, actual)
 
 
@@ -447,8 +470,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.PeriodOfficial(data)
-        actual   = events.to_event(period_events.period_official_data)
+        expected = PeriodOfficial(data)
+        actual   = event_factory.to_event(period_events.period_official_data)
         self.assertEqual(expected, actual)
 
 
@@ -479,8 +502,8 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.Goal(data)
-        actual   = events.to_event(goal_events.goal_data_two_assists)
+        expected = Goal(data)
+        actual   = event_factory.to_event(goal_events.goal_data_two_assists)
         self.assertEqual(expected, actual)
 
 
@@ -501,6 +524,299 @@ class Testgenerator(unittest.TestCase):
                 }
             }
         }
-        expected = events.Challenge(data)
-        actual   = events.to_event(miscellaneous_events.challenge_data)
+        expected = Challenge(data)
+        actual   = event_factory.to_event(miscellaneous_events.challenge_data)
+        self.assertEqual(expected, actual)
+
+    #################################################
+    # Event Posts
+    #################################################
+
+    def test_game_scheduled_post(self):
+        """
+        Description:
+            Test the expected output of a game scheduled event.
+        """
+        event     = event_factory.to_event(game_events.game_scheduled_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = None
+        self.assertEqual(expected, actual)
+
+
+    def test_game_end_post(self):
+        """
+        Description:
+            Test the expected output of a game end event.
+        """
+        event     = event_factory.to_event(game_events.game_end_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = "\nThe game is over. Washington wins!\n\nFinal Score:\nWashington: 4\nBoston: 2\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_game_official_post(self):
+        """
+        Description:
+            Test the expected output of a game official event.
+        """
+        event     = event_factory.to_event(game_events.game_official_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = None
+        self.assertEqual(expected, actual)
+
+
+    def test_faceoff_post(self):
+        """
+        Description:
+            Test the expected output of a faceoff event.
+        """
+        event     = event_factory.to_event(miscellaneous_events.faceoff_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = None
+        self.assertEqual(expected, actual)
+
+
+    def test_stoppage_post(self):
+        """
+        Description:
+            Test the expected output of a stoppage event.
+        """
+        event     = event_factory.to_event(miscellaneous_events.stoppage_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = None
+        self.assertEqual(expected, actual)
+
+
+    def test_shot_post(self):
+        """
+        Description:
+            Test the expected output of a shot event.
+        """
+        event     = event_factory.to_event(miscellaneous_events.shot_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = None
+        self.assertEqual(expected, actual)
+
+
+    def test_hit_post(self):
+        """
+        Description:
+            Test the expected output of a hit event.
+        """
+        event     = event_factory.to_event(miscellaneous_events.hit_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = None
+        self.assertEqual(expected, actual)
+
+
+    def test_blocked_shot_post(self):
+        """
+        Description:
+            Test the expected output of a blocked shot event.
+        """
+        event     = event_factory.to_event(miscellaneous_events.blocked_shot_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = None
+        self.assertEqual(expected, actual)
+
+
+    def test_giveaway_post(self):
+        """
+        Description:
+            Test the expected output of a giveaway event.
+        """
+        event     = event_factory.to_event(miscellaneous_events.giveaway_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = None
+        self.assertEqual(expected, actual)
+
+
+    def test_takeaway_post(self):
+        """
+        Description:
+            Test the expected output of a takeaway event.
+        """
+        event     = event_factory.to_event(miscellaneous_events.takeaway_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = None
+        self.assertEqual(expected, actual)
+
+
+    def test_missed_shot_post(self):
+        """
+        Description:
+            Test the expected output of a missed shot event.
+        """
+        event     = event_factory.to_event(miscellaneous_events.missed_shot_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = None
+        self.assertEqual(expected, actual)
+
+
+    def test_penalty_post(self):
+        """
+        Description:
+            Test the expected output of a penalty event.
+        """
+        event     = event_factory.to_event(penalty_events.penalty_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = "\nThere is a penalty on Washington.\n\nNic Dowd\n2 minute minor for hi-sticking\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_penalty_no_taker_post(self):
+        """
+        Description:
+            Test the expected output of a penalty event when no
+            penalty taker is present in the event data.
+        """
+        event     = event_factory.to_event(penalty_events.penalty_data_no_taker)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = None
+        self.assertEqual(expected, actual)
+
+
+    def test_penalty_shot_post(self):
+        """
+        Description:
+            Test the expected output of a penalty shot event.
+        """
+        event     = event_factory.to_event(penalty_events.penalty_shot_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = "\nThat's a penalty shot for Washington!\n\nThe infraction is against Brenden Dillon for hooking on breakaway.\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_period_ready_post(self):
+        """
+        Description:
+            Test the expected output of a period ready event.
+        """
+        event     = event_factory.to_event(period_events.period_ready_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = None
+        self.assertEqual(expected, actual)
+
+
+    def test_period_start_post(self):
+        """
+        Description:
+            Test the expected output of a period start event.
+        """
+        event     = event_factory.to_event(period_events.period_start_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = "\nThe second period is starting at Capital One Arena in Washington.\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_period_end_post(self):
+        """
+        Description:
+            Test the expected output of a period end event.
+        """
+        event     = event_factory.to_event(period_events.period_end_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = "\nThe first period is over at Capital One Arena.\n\nGoals\nWashington: 0\nBoston: 0\n\nShots on Goal\nWashington: 33\nBoston: 30\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_period_official_post(self):
+        """
+        Description:
+            Test the expected output of a period official event.
+        """
+        event     = event_factory.to_event(period_events.period_official_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = None
+        self.assertEqual(expected, actual)
+
+
+    def test_goal_post(self):
+        """
+        Description:
+            Test the expected output of a goal event.
+        """
+        event     = event_factory.to_event(goal_events.goal_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = "\nWashington goal!\n\nScored by John Carlson with 15:49 remaining in the 2nd period.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_goal_no_scorer_post(self):
+        """
+        Description:
+            Test the expected output of a goal event when no scorer is present
+            in the event data.
+        """
+        event     = event_factory.to_event(goal_events.goal_data_no_scorer)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = None
+        self.assertEqual(expected, actual)
+
+
+    def test_power_play_goal_post(self):
+        """
+        Description:
+            Test the expected output of a power play goal event.
+        """
+        event     = event_factory.to_event(goal_events.power_play_goal_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = "\nPower play goal for Boston!\n\nScored by J.T. Miller with 18:05 remaining in the 1st period.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_short_handed_goal_post(self):
+        """
+        Description:
+            Test the expected output of a short-handed goal event.
+        """
+        event     = event_factory.to_event(goal_events.short_handed_goal_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = "\nShort-handed goal for Boston!\n\nScored by J.T. Miller with 18:05 remaining in the 1st period.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_empty_net_goal_post(self):
+        """
+        Description:
+            Test the expected output of an empty net goal event.
+        """
+        event     = event_factory.to_event(goal_events.empty_net_goal_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = "\nEmpty net goal for Boston!\n\nScored by J.T. Miller with 18:05 remaining in the 1st period.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_challenge_post(self):
+        """
+        Description:
+            Test the expected output of a coach's challenge event.
+        """
+        event     = event_factory.to_event(miscellaneous_events.challenge_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = "\nBoston is challenging the ruling on the play.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)

@@ -10,11 +10,12 @@ from dotenv import load_dotenv
 import tweepy
 
 from src import logger
+from src.outputter import Outputter
 
 # maximum tweet length
 MAX_LENGTH = 240 # characters
 
-class Tweeter:
+class Tweeter(Outputter):
     """
     Description:
         This class provides an interface to Twitter than can be used to
