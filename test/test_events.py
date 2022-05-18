@@ -820,3 +820,27 @@ class Testgenerator(unittest.TestCase):
         actual    = event.get_post(game_data)
         expected  = "\nBoston is challenging the ruling on the play.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
+
+
+    def test_goalpost_post(self):
+        """
+        Description:
+            Test the expected output of a ping event.
+        """
+        event     = event_factory.to_event(miscellaneous_events.goalpost_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = "\nPing!\n\nAndrew Cogliano's shot on Jordan Binnington hit the post.\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_crossbar_post(self):
+        """
+        Description:
+            Test the expected output of a ping event.
+        """
+        event     = event_factory.to_event(miscellaneous_events.crossbar_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = "\nPing!\n\nNazem Kadri's shot on Jordan Binnington hit the crossbar.\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)

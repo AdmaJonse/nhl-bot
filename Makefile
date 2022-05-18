@@ -1,6 +1,6 @@
 .PHONY: test
 test:
-	python -m unittest
+	python -m py.test --junitxml results.xml test/
 
 .PHONY: lint
 lint:
@@ -28,4 +28,5 @@ clean:
 	rm -rf src/__pycache__
 	rm -rf test/__pycache__
 	rm data.json
+	rm results.xml
 	docker system prune --all --force

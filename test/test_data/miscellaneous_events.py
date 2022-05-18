@@ -413,3 +413,99 @@ challenge_data = {
       "triCode" : "BOS"
     }
 }
+
+goalpost_data = {
+    "players" : [ {
+        "player" : {
+        "id" : 8471699,
+        "fullName" : "Andrew Cogliano",
+        "link" : "/api/v1/people/8471699"
+        },
+        "playerType" : "Shooter"
+    }, {
+        "player" : {
+        "id" : 8476412,
+        "fullName" : "Jordan Binnington",
+        "link" : "/api/v1/people/8476412"
+        },
+        "playerType" : "Unknown"
+    } ],
+    "result" : {
+        "event" : "Missed Shot",
+        "eventCode" : "COL740",
+        "eventTypeId" : "MISSED_SHOT",
+        "description" : "Andrew Cogliano Goalpost Jordan Binnington"
+    },
+    "about" : {
+        "eventIdx" : 272,
+        "eventId" : 740,
+        "period" : 3,
+        "periodType" : "REGULAR",
+        "ordinalNum" : "3rd",
+        "periodTime" : "08:29",
+        "periodTimeRemaining" : "11:31",
+        "dateTime" : "2022-05-18T03:49:32Z",
+        "goals" : {
+        "away" : 1,
+        "home" : 2
+        }
+    },
+    "coordinates" : {
+        "x" : -80.0,
+        "y" : -1.0
+    },
+    "team" : {
+        "id" : 21,
+        "name" : "Colorado Avalanche",
+        "link" : "/api/v1/teams/21",
+        "triCode" : "COL"
+    }
+}
+
+crossbar_data = {
+    "players" : [ {
+        "player" : {
+        "id" : 8475172,
+        "fullName" : "Nazem Kadri",
+        "link" : "/api/v1/people/8475172"
+        },
+        "playerType" : "Shooter"
+    }, {
+        "player" : {
+        "id" : 8476412,
+        "fullName" : "Jordan Binnington",
+        "link" : "/api/v1/people/8476412"
+        },
+        "playerType" : "Unknown"
+    } ],
+    "result" : {
+        "event" : "Missed Shot",
+        "eventCode" : "COL66",
+        "eventTypeId" : "MISSED_SHOT",
+        "description" : "Nazem Kadri Hit Crossbar Jordan Binnington"
+    },
+    "about" : {
+        "eventIdx" : 25,
+        "eventId" : 66,
+        "period" : 1,
+        "periodType" : "REGULAR",
+        "ordinalNum" : "1st",
+        "periodTime" : "04:21",
+        "periodTimeRemaining" : "15:39",
+        "dateTime" : "2022-05-18T01:55:39Z",
+        "goals" : {
+        "away" : 0,
+        "home" : 0
+        }
+    },
+    "coordinates" : {
+        "x" : -43.0,
+        "y" : -36.0
+    },
+    "team" : {
+        "id" : 21,
+        "name" : "Colorado Avalanche",
+        "link" : "/api/v1/teams/21",
+        "triCode" : "COL"
+    }
+}
