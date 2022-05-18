@@ -147,10 +147,10 @@ class Parser:
         self.get_new_records()
         for record in self.new_records:
 
-            tweet_id       : int   = 0
-            parent_id      : int   = 0
-            event          : Event = event_factory.to_event(record)
-            previous_event : Event = None
+            tweet_id       : int           = 0
+            parent_id      : Optional[int] = None
+            event          : Event         = event_factory.to_event(record)
+            previous_event : Event         = None
 
             logger.log_info(str(event))
 

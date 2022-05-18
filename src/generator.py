@@ -24,7 +24,7 @@ class Generator:
         Description:
             Update the line score.
         """
-        self.game_data.line_score(data)
+        self.game_data.line_score = data
 
 
     def get_event_string(self, event : Event) -> Optional[str]:
