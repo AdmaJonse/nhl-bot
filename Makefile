@@ -1,6 +1,6 @@
 .PHONY: test
 test:
-	python -m py.test --junitxml results.xml test/
+	python -m pytest --junitxml results.xml test/
 
 .PHONY: lint
 lint:
