@@ -30,6 +30,7 @@ class PeriodEnd(Event):
         event_values = {
             "period":     self.get_period_string(),
             "venue":      game_data.venue,
+            "city":       game_data.home.location,
             "home_team":  game_data.home.location,
             "away_team":  game_data.away.location,
             "home_goals": self.home_goals,

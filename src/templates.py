@@ -36,7 +36,7 @@ PERIOD_START_TEMPLATE = """
 #################################################
 
 PERIOD_END_TEMPLATE = """
-{period} is over at {venue}.
+{period} is over at {venue} in {city}.
 
 Goals
 {home_team}: {home_goals}
@@ -61,6 +61,18 @@ Shot on goal by {team}.
 Shots On Goal:
 {home_team}: {home_shots}
 {away_team}: {away_shots}
+
+{hashtags}
+"""
+
+
+#################################################
+# Ping!
+#################################################
+PING_TEMPLATE = """
+Ping!
+
+{shooter}'s shot on {goalie} hit the {goal_post}.
 
 {hashtags}
 """

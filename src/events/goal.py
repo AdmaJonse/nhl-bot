@@ -162,20 +162,26 @@ class Goal(Event):
             "hashtags":         game_data.hashtags
         }
 
+        update_text          : str  = ""
         update_count         : int  = 0
+
         scorer_modified      : bool = previous.scorer != self.scorer
+
         primary_assist_added : bool = (
             previous.primary_assist is None and
             self.primary_assist is not None
         )
+
         secondary_assist_added : bool = (
             previous.secondary_assist is None and
             self.secondary_assist is not None
         )
+
         primary_assist_modified : bool = (
             previous.primary_assist is not None and
             previous.primary_assist != self.primary_assist
         )
+
         secondary_assist_modified : bool = (
             previous.secondary_assist is not None and
             previous.secondary_assist != self.secondary_assist
