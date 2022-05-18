@@ -22,6 +22,7 @@ from src.events.period_end import PeriodEnd
 from src.events.period_official import PeriodOfficial
 from src.events.period_ready import PeriodReady
 from src.events.period_start import PeriodStart
+from src.events.ping import Ping
 from src.events.shot import Shot
 from src.events.stoppage import Stoppage
 from src.events.takeaway import Takeaway
@@ -47,6 +48,7 @@ class Events(Enum):
     PERIOD_OFFICIAL_EVENT = "Period Official"
     PERIOD_READY_EVENT    = "Period Ready"
     PERIOD_START_EVENT    = "Period Start"
+    PING_EVENT            = "Ping"
     SHOT_EVENT            = "Shot"
     STOPPAGE_EVENT        = "Stoppage"
     TAKEAWAY_EVENT        = "Takeaway"
@@ -68,6 +70,7 @@ event_constructors : Dict[Events, Type[Event]] = {
     Events.PERIOD_OFFICIAL_EVENT: PeriodOfficial,
     Events.PERIOD_READY_EVENT:    PeriodReady,
     Events.PERIOD_START_EVENT:    PeriodStart,
+    Events.PING_EVENT:            Ping,
     Events.SHOT_EVENT:            Shot,
     Events.STOPPAGE_EVENT:        Stoppage,
     Events.TAKEAWAY_EVENT:        Takeaway
@@ -80,10 +83,15 @@ def to_event(data) -> Event:
     """
     try:
 
-        is_penalty : bool = data["result"]["event"] == "Penalty"
+        is_penalty     : bool = data["result"]["event"] == "Penalty"
+        is_missed_shot : bool = data["result"]["event"] == "Missed Shot"
 
         if is_penalty and data["result"]["penaltySeverity"] == "Penalty Shot":
             event_type = Events.PENALTY_SHOT_EVENT
+        elif is_missed_shot and "goalpost" in data["result"]["description"].lower():
+            event_type = Events.PING_EVENT
+        elif is_missed_shot and "crossbar" in data["result"]["description"].lower():
+            event_type = Events.PING_EVENT
         else:
             event_type = Events(data["result"]["event"])
 

@@ -232,7 +232,7 @@ class TestGenerator(unittest.TestCase):
         """
         event    = event_factory.to_event(period_events.period_end_data)
         actual   = self.generator.get_event_string(event)
-        expected = "\nThe first period is over at Capital One Arena.\n\nGoals\nWashington: 0\nBoston: 0\n\nShots on Goal\nWashington: 33\nBoston: 30\n\n#BOSvsWSH #GoAvsGo\n"
+        expected = "\nThe first period is over at Capital One Arena in Washington.\n\nGoals\nWashington: 0\nBoston: 0\n\nShots on Goal\nWashington: 33\nBoston: 30\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
 
 
