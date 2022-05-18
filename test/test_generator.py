@@ -281,6 +281,28 @@ class TestGenerator(unittest.TestCase):
         self.assertEqual(expected, actual)
 
 
+    def test_goalpost(self):
+        """
+        Description:
+            Test the expected output of a ping event.
+        """
+        event    = event_factory.to_event(miscellaneous_events.goalpost_data)
+        actual   = self.generator.get_event_string(event)
+        expected = "\nPing!\n\nAndrew Cogliano's shot on Jordan Binnington hit the post.\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_crossbar(self):
+        """
+        Description:
+            Test the expected output of a ping event.
+        """
+        event    = event_factory.to_event(miscellaneous_events.crossbar_data)
+        actual   = self.generator.get_event_string(event)
+        expected = "\nPing!\n\nNazem Kadri's shot on Jordan Binnington hit the crossbar.\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
     #################################################
     # Event Replies
     #################################################

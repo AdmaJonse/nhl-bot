@@ -31,6 +31,12 @@ jobs:
         - name: Run unit tests
           run: make test
 
+        - name: Publish Unit Test Results
+          uses: EnricoMi/publish-unit-test-result-action@v1.36
+          with:
+            files: ./results.xml
+
+
     lint:
       runs-on: ubuntu-latest
 

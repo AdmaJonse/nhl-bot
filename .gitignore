@@ -5,7 +5,9 @@ src/__pycache__
 src/events/__pycache__
 test/__pycache__
 test/test_data/__pycache__
+test/test_data/games
 data.json
 job.log
+results.xml
 .vscode
 team_ids.txt
