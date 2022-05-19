@@ -4,6 +4,7 @@ Description:
     authenticate, tweet and reply.
 """
 
+from typing import Optional
 import os
 from os.path import join, dirname, abspath
 from dotenv import load_dotenv
@@ -29,65 +30,71 @@ class Tweeter(Outputter):
         """
 
         # load constants from .env
-        parent_dir = dirname(dirname(abspath(__file__)))
-        config_dir = join(parent_dir, "config")
-        dotenv_file = join(config_dir, '.env')
+        parent_dir  : str = dirname(dirname(abspath(__file__)))
+        config_dir  : str = join(parent_dir, "config")
+        dotenv_file : str = join(config_dir, '.env')
         load_dotenv(dotenv_file)
 
         # read the authentication keys
-        self.bearer_token        = os.getenv("BEARER_TOKEN")
-        self.consumer_key        = os.getenv("CONSUMER_KEY")
-        self.consumer_secret     = os.getenv("CONSUMER_SECRET")
-        self.access_token        = os.getenv("ACCESS_TOKEN")
-        self.access_token_secret = os.getenv("ACCESS_TOKEN_SECRET")
+        self.bearer_token        : str = os.getenv("BEARER_TOKEN")
+        self.consumer_key        : str = os.getenv("CONSUMER_KEY")
+        self.consumer_secret     : str = os.getenv("CONSUMER_SECRET")
+        self.access_token        : str = os.getenv("ACCESS_TOKEN")
+        self.access_token_secret : str = os.getenv("ACCESS_TOKEN_SECRET")
 
 
     def __init__(self):
         self.read_config()
-        auth = tweepy.OAuth1UserHandler(self.consumer_key,
-                                        self.consumer_secret,
-                                        self.access_token,
-                                        self.access_token_secret)
-        self.api = tweepy.API(auth)
+        auth     : tweepy.OAuth1UserHandler = tweepy.OAuth1UserHandler(self.consumer_key,
+                                                                       self.consumer_secret,
+                                                                       self.access_token,
+                                                                       self.access_token_secret)
+        self.api : tweepy.API = tweepy.API(auth)
 
 
-    def post(self, text):
+    def post(self, text : str) -> Optional[int]:
         """
         Description:
             Send a tweet with the specified text.
         """
 
-        tweet_id = 0
+        tweet_id : Optional[int] = None
 
         if len(text) <= MAX_LENGTH:
+
             logger.log_info("Tweet:\n" + text)
+
             try:
-                status = self.api.update_status(text)
+                status   = self.api.update_status(text)
                 tweet_id = status.id
             except tweepy.TweepyException:
                 logger.log_error("error - could not send tweet.")
+
         else:
             logger.log_error("error - tweet is longer than the maximum length")
 
         return tweet_id
 
 
-    def reply(self, text, parent_id):
+    def reply(self, text : str, parent_id : int) -> Optional[int]:
         """
         Description:
             Send a reply to the given parent tweet with the specified text.
         """
 
-        reply_id = 0
+        reply_id : Optional[int] = None
 
         if parent_id > 0:
             if len(text) <= MAX_LENGTH:
+
                 logger.log_info("Reply to tweet " + str(parent_id) + ":\n" + text)
+
                 try:
-                    status = self.api.update_status(status=text, in_reply_to_status_id=parent_id)
+                    status   = self.api.update_status(status=text, in_reply_to_status_id=parent_id)
                     reply_id = status.id
                 except tweepy.TweepyException:
                     logger.log_error("error - could not send reply")
+
             else:
                 logger.log_error("error - tweet is longer than the maximum length")
         else:
