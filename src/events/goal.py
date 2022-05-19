@@ -112,9 +112,14 @@ class Goal(Event):
         Description:
             Return the event string for a goal event.
         """
+
         if self.scorer is None:
             logger.log_error("Could not determine goal scorer. Delaying tweet.")
             return None
+
+        goal_string   : str = ""
+        assist_string : str = ""
+        footer        : str = ""
 
         event_values = {
             "team":             game_data.get_team_string(self.team),
@@ -140,13 +145,26 @@ class Goal(Event):
         else:
             goal_string = templates.GOAL_TEMPLATE.format(**event_values)
 
-        return goal_string
+        if self.secondary_assist is not None:
+            assist_string = templates.TWO_ASSIST_TEMPLATE.format(**event_values)
+        elif self.primary_assist is not None:
+            assist_string = templates.ONE_ASSIST_TEMPLATE.format(**event_values)
+
+        footer = templates.GOAL_FOOTER_TEMPLATE.format(**event_values)
+
+        return goal_string + assist_string + footer
+
 
     def get_reply(self, game_data : GameData, previous) -> Optional[str]:
         """
         Description:
             Return the reply string for a goal event.
         """
+
+        if previous.__class__ != Goal:
+            logger.log_error("Attempted to call Goal reply with type: " + str(previous.__class__))
+            return None
+
         event_values = {
             "team":             game_data.get_team_string(self.team),
             "scorer":           self.scorer,
@@ -162,10 +180,9 @@ class Goal(Event):
             "hashtags":         game_data.hashtags
         }
 
-        update_text          : str  = ""
-        update_count         : int  = 0
-
-        scorer_modified      : bool = previous.scorer != self.scorer
+        update_text     : Optional[str] = None
+        update_count    : int           = 0
+        scorer_modified : bool          = previous.scorer != self.scorer
 
         primary_assist_added : bool = (
             previous.primary_assist is None and

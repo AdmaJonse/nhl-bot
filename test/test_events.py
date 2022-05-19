@@ -35,7 +35,7 @@ from src.events.stoppage import Stoppage
 from src.events.takeaway import Takeaway
 
 
-class Testgenerator(unittest.TestCase):
+class TestEvents(unittest.TestCase):
     """
     Description:
         Unit tests for the generator class.
@@ -757,7 +757,7 @@ class Testgenerator(unittest.TestCase):
         event     = event_factory.to_event(goal_events.goal_data)
         game_data = GameData(game_events.game_data)
         actual    = event.get_post(game_data)
-        expected  = "\nWashington goal!\n\nScored by John Carlson with 15:49 remaining in the 2nd period.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #GoAvsGo\n"
+        expected  = "\nWashington goal!\n\nScored by John Carlson with 15:49 remaining in the 2nd period.\n\nAssisted by Conor Sheary.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
 
 
@@ -782,7 +782,7 @@ class Testgenerator(unittest.TestCase):
         event     = event_factory.to_event(goal_events.power_play_goal_data)
         game_data = GameData(game_events.game_data)
         actual    = event.get_post(game_data)
-        expected  = "\nPower play goal for Boston!\n\nScored by J.T. Miller with 18:05 remaining in the 1st period.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #GoAvsGo\n"
+        expected  = "\nPower play goal for Boston!\n\nScored by J.T. Miller with 18:05 remaining in the 1st period.\n\nAssisted by Quinn Hughes.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
 
 
@@ -794,7 +794,7 @@ class Testgenerator(unittest.TestCase):
         event     = event_factory.to_event(goal_events.short_handed_goal_data)
         game_data = GameData(game_events.game_data)
         actual    = event.get_post(game_data)
-        expected  = "\nShort-handed goal for Boston!\n\nScored by J.T. Miller with 18:05 remaining in the 1st period.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #GoAvsGo\n"
+        expected  = "\nShort-handed goal for Boston!\n\nScored by J.T. Miller with 18:05 remaining in the 1st period.\n\nAssisted by Quinn Hughes.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
 
 
@@ -806,7 +806,7 @@ class Testgenerator(unittest.TestCase):
         event     = event_factory.to_event(goal_events.empty_net_goal_data)
         game_data = GameData(game_events.game_data)
         actual    = event.get_post(game_data)
-        expected  = "\nEmpty net goal for Boston!\n\nScored by J.T. Miller with 18:05 remaining in the 1st period.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #GoAvsGo\n"
+        expected  = "\nEmpty net goal for Boston!\n\nScored by J.T. Miller with 18:05 remaining in the 1st period.\n\nAssisted by Quinn Hughes.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
 
 

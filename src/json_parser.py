@@ -115,7 +115,7 @@ class Parser:
             Create and send a tweet based on the given event.
         """
 
-        tweet_id : Optional[int] = 0
+        tweet_id : Optional[int] = None
         text     : Optional[str] = self.generator.get_event_string(event)
 
         if text is not None:
@@ -130,7 +130,12 @@ class Parser:
             Create and send a reply to the given tweet based on the
             deltas between the previous and current events.
         """
-        tweet_id : Optional[int] = 0
+
+        if previous.__class__ != current.__class__:
+            logger.log_error("Attempted to generated reply between unlike classes")
+            return None
+
+        tweet_id : Optional[int] = None
         text     : Optional[str] = self.generator.get_reply_string(previous, current)
 
         if text is not None:

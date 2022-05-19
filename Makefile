@@ -26,7 +26,8 @@ run: build
 .PHONY: clean
 clean:
 	rm -rf src/__pycache__
+	rm -rf src/events/__pycache__
 	rm -rf test/__pycache__
-	rm data.json
-	rm results.xml
-	docker system prune --all --force
+	rm -rf test/test_data/__pycache__
+	rm -f data.json~
+	rm -f results.xml~
