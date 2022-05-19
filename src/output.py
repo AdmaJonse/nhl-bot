@@ -16,6 +16,13 @@ outputter : Outputter = Tweeter()
 if DRY_RUN:
     outputter = Printer()
 
+def is_dry_run() -> bool:
+    """
+    Description:
+        Return a boolean indicating whether or not we're in dry run mode.
+    """
+    return DRY_RUN
+
 
 def post(text : str) -> Optional[int]:
     """
