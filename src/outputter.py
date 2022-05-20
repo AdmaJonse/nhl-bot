@@ -14,6 +14,7 @@ class Outputter:
     """
 
     null_output = None
+    has_posted  = False
 
     def post(self, _text : str) -> Optional[int]:
         """
@@ -29,3 +30,11 @@ class Outputter:
             Print a reply to the given parent with the specified text.
         """
         return self.null_output
+
+
+    def has_posted_today(self):
+        """
+        Description:
+            Return a boolean indicating whether or not we've posted today.
+        """
+        return self.has_posted

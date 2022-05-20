@@ -14,7 +14,7 @@ from src import json_parser
 from src import schedule
 
 # How frequently we check for game updates (in seconds)
-FREQUENCY = 5  # seconds
+FREQUENCY = 1  # seconds
 
 def wait_until_game_start():
     """
@@ -38,7 +38,6 @@ def wait_until_tomorrow():
     pause.until(tomorrow)
 
 
-
 def check_for_updates():
     """
     Description:
@@ -56,8 +55,8 @@ def check_for_updates():
         if game_id is not None and game_id >= 0:
 
             logger.log_info("There is a game today: " + str(game_id))
-            wait_until_game_start()
             parser : json_parser.Parser = json_parser.Parser(game_id)
+            wait_until_game_start()
 
             while not parser.is_game_over:
                 parser.parse()

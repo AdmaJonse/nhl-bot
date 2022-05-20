@@ -4,11 +4,13 @@ Description:
     authenticate, tweet and reply.
 """
 
-from typing import Optional
+from datetime import datetime
+from typing import List, Optional
 import os
 from os.path import join, dirname, abspath
 from dotenv import load_dotenv
 import tweepy
+import pytz
 
 from src import logger
 from src.outputter import Outputter
@@ -101,3 +103,28 @@ class Tweeter(Outputter):
             logger.log_error("error - could not reply to tweet with invalid ID: " + str(parent_id))
 
         return reply_id
+
+
+    def get_today_posts(self) -> List[tweepy.Tweet]:
+        """
+        Description:
+            Return a list of tweets that were created today.
+        """
+
+        all_tweets   : List[tweepy.Tweet] = self.api.user_timeline()
+        today_tweets : List[tweepy.Tweet] = []
+
+        for tweet in all_tweets:
+            if (datetime.now(pytz.utc) - tweet.created_at).days < 1:
+                today_tweets.append(tweet)
+
+        return today_tweets
+
+
+    def has_posted_today(self) -> bool:
+        """
+        Description:
+            Return a boolean indicating whether or not a tweet has been sent today.
+        """
+        tweets = self.get_today_posts()
+        return len(tweets) > 0

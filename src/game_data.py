@@ -5,6 +5,9 @@ Description:
 """
 
 from typing import Any
+from datetime import datetime
+from dateutil import parser
+
 from src import logger
 
 TEAM_HASHTAG    = "#GoAvsGo"
@@ -74,12 +77,13 @@ class GameData:
 
     def __init__(self, data):
 
-        self._line_score  : Any  = data["liveData"]["linescore"]
-        self._home        : Team = Team(data["gameData"]["teams"]["home"])
-        self._away        : Team = Team(data["gameData"]["teams"]["away"])
-        self._date        : str  = data["gameData"]["datetime"]["dateTime"]
-        self._venue       : str  = data["gameData"]["teams"]["home"]["venue"]["name"]
-        self._is_playoffs : bool = data["gameData"]["game"]["type"] == "P"
+        self._line_score  : Any       = data["liveData"]["linescore"]
+        self._home        : Team      = Team(data["gameData"]["teams"]["home"])
+        self._away        : Team      = Team(data["gameData"]["teams"]["away"])
+        self._date        : datetime  = parser.parse(data["gameData"]["datetime"]["dateTime"])
+        self._venue       : str       = data["gameData"]["teams"]["home"]["venue"]["name"]
+        self._city        : str       = data["gameData"]["teams"]["home"]["venue"]["city"]
+        self._is_playoffs : bool      = data["gameData"]["game"]["type"] == "P"
 
         self.print_constants()
 
@@ -96,7 +100,7 @@ class GameData:
         logger.log_info("Away Team:         " + self.away.team_name)
         logger.log_info("Away Abbreviation: " + self.away.abbreviation)
         logger.log_info("Away Full Name:    " + self.away.full_name)
-        logger.log_info("Date/Time:         " + self.date)
+        logger.log_info("Date/Time:         " + self.date.strftime("%I:%M %p %Z"))
         logger.log_info("Venue:             " + self.venue)
         logger.log_info("Is Playoffs:       " + str(self.is_playoffs))
         logger.log_info("Hashtags:          " + self.hashtags)
@@ -157,7 +161,7 @@ class GameData:
 
 
     @property
-    def date(self) -> str:
+    def date(self) -> datetime:
         """Getter for the date field."""
         return self._date
 
@@ -166,6 +170,12 @@ class GameData:
     def venue(self) -> str:
         """Getter for the venue field."""
         return self._venue
+
+
+    @property
+    def city(self) -> str:
+        """Getter for the city field."""
+        return self._city
 
 
     @property
