@@ -40,6 +40,8 @@ class Parser:
 
         self.generator : generator.Generator = generator.Generator(self.data)
 
+        self.post_game_day()
+
         # Silently process all events prior to intialization. We want
         # to find the last event in the list so that we can start
         # processing only new events from this point.
@@ -142,6 +144,21 @@ class Parser:
             tweet_id = output.reply(text, parent_id)
 
         return tweet_id
+
+
+    def post_game_day(self):
+        """
+        Description:
+            Create and send a post indicating that today is game day. This should always be the
+            first post of the day. If we have already posted today, it may indicate that we've
+            restarted the application. In this case, we will not post in order to avoid a
+            duplicate.
+        """
+
+        if not output.has_posted_today():
+            text : Optional[str] = self.generator.get_game_day_string()
+            if text is not None:
+                output.post(text)
 
 
     def parse(self):

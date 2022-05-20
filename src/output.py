@@ -39,3 +39,11 @@ def reply(text : str, parent_id : int) -> Optional[int]:
         tweet with the given parent_id.
     """
     return outputter.reply(text, parent_id)
+
+
+def has_posted_today() -> bool:
+    """
+    Description:
+        Return a boolean indicating whether or not we've posted today.
+    """
+    return outputter.has_posted_today()

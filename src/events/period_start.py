@@ -29,7 +29,7 @@ class PeriodStart(Event):
         event_values = {
             "period":   self.get_period_string(),
             "venue":    game_data.venue,
-            "city":     game_data.home.location,
+            "city":     game_data.city,
             "hashtags": game_data.hashtags
         }
         return templates.PERIOD_START_TEMPLATE.format(**event_values)

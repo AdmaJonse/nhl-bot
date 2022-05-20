@@ -28,7 +28,8 @@ game_data = {
             "home": {
                 "name": "Washington Capitals",
                 "venue": {
-                    "name": "Capital One Arena"
+                    "name": "Capital One Arena",
+                    "city" : "Washington"
                 },
                 "abbreviation": "WSH",
                 "teamName": "Capitals",

@@ -6,6 +6,18 @@ Description:
 """
 
 #################################################
+# Game Day
+#################################################
+
+GAME_DAY_TEMPLATE = """
+It's game day!
+
+{home_team} takes on {away_team} at {venue} in {city}. Puck drop is at {time}.
+
+{hashtags}
+"""
+
+#################################################
 # Game End
 #################################################
 
