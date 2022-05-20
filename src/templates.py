@@ -12,7 +12,7 @@ Description:
 GAME_DAY_TEMPLATE = """
 It's game day!
 
-{home_team} takes on {away_team} at {venue} in {city}. Puck drop is at {time}.
+{home_team} takes on {away_team} at {venue} in {city}. The puck drops at {time}.
 
 {hashtags}
 """
