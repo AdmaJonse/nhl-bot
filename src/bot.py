@@ -14,7 +14,7 @@ from src import json_parser
 from src import schedule
 
 # How frequently we check for game updates (in seconds)
-FREQUENCY = 1  # seconds
+FREQUENCY = 5  # seconds
 
 def wait_until_game_start():
     """
