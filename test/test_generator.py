@@ -176,7 +176,7 @@ class TestGenerator(unittest.TestCase):
         """
         event    = event_factory.to_event(penalty_events.penalty_data)
         actual   = self.generator.get_event_string(event)
-        expected = "\nThere is a penalty on Washington.\n\nNic Dowd\n2 minute minor for hi-sticking\n\n#BOSvsWSH #GoAvsGo\n"
+        expected = "\nThere is a penalty on Washington.\n\nNic Dowd will serve a 2 minute minor for hi-sticking.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
 
 
@@ -508,18 +508,6 @@ class TestGenerator(unittest.TestCase):
         event    = event_factory.to_event(period_events.period_official_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
-        self.assertEqual(expected, actual)
-
-
-    def test_goal_reply(self):
-        """
-        Description:
-            Test the expected output of a reply to a goal event.
-        """
-        previous = Goal(miscellaneous_events.null_event)
-        event    = event_factory.to_event(goal_events.goal_data)
-        actual   = self.generator.get_reply_string(previous, event)
-        expected = "\nThere has been update to the Washington goal scored with 15:49 remaining in the 2nd period.\n\nJohn Carlson (14) Slap Shot, assists: Conor Sheary (20)\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
 
 

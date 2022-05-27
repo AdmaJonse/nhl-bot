@@ -1,6 +1,6 @@
 import unittest
 
-from src import output
+from src.output import output
 
 class TestGenerator(unittest.TestCase):
     """
@@ -13,4 +13,4 @@ class TestGenerator(unittest.TestCase):
         Description:
             Prevent a push when dry run is enabled.
         """
-        self.assertFalse(output.is_dry_run())
+        self.assertFalse(output.dry_run)

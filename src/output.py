@@ -9,19 +9,47 @@ from src.outputter import Outputter
 from src.printer import Printer
 from src.tweeter import Tweeter
 
-DRY_RUN = False
-
-outputter : Outputter = Tweeter()
-
-if DRY_RUN:
-    outputter = Printer()
-
-def is_dry_run() -> bool:
+class Output:
     """
     Description:
-        Return a boolean indicating whether or not we're in dry run mode.
+        TODO
     """
-    return DRY_RUN
+
+    def __init__(self):
+        self._dry_run   : bool      = False
+        self._outputter : Outputter = Tweeter()
+
+
+    @property
+    def dry_run(self) -> bool:
+        """
+        Description:
+            Return a boolean indicating whether or not we're in dry run mode.
+        """
+        return self._dry_run
+
+
+    @dry_run.setter
+    def dry_run(self, flag : bool):
+        """
+        Description:
+            Set the dry run flag.
+        """
+        self._dry_run = flag
+
+        self._outputter = Printer()
+
+
+    @property
+    def outputter(self) -> Outputter:
+        """
+        Description:
+            TODO
+        """
+        return self._outputter
+
+
+output = Output()
 
 
 def post(text : str) -> Optional[int]:
@@ -29,16 +57,16 @@ def post(text : str) -> Optional[int]:
     Description:
         Public function that will send a tweet with the specified text.
     """
-    return outputter.post(text)
+    return output.outputter.post(text)
 
 
-def reply(text : str, parent_id : int) -> Optional[int]:
+def reply(text : str, parent_id : Optional[int]) -> Optional[int]:
     """
     Description:
         Public function that will send a reply with the specified text to the
         tweet with the given parent_id.
     """
-    return outputter.reply(text, parent_id)
+    return output.outputter.reply(text, parent_id)
 
 
 def has_posted_today() -> bool:
@@ -46,4 +74,4 @@ def has_posted_today() -> bool:
     Description:
         Return a boolean indicating whether or not we've posted today.
     """
-    return outputter.has_posted_today()
+    return output.outputter.has_posted_today()

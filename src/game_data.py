@@ -4,10 +4,12 @@ Description:
     initialized once for a particular game and will never change over the course of play.
 """
 
-from typing import Any
+from typing import Any, Optional
 from datetime import datetime
 from dateutil import parser
 
+from src import line_score
+from src.line_score import LineScore, PowerPlay
 from src import logger
 
 TEAM_HASHTAG    = "#GoAvsGo"
@@ -77,7 +79,7 @@ class GameData:
 
     def __init__(self, data):
 
-        self._line_score  : Any       = data["liveData"]["linescore"]
+        self._line_score  : LineScore = LineScore(data["liveData"]["linescore"])
         self._home        : Team      = Team(data["gameData"]["teams"]["home"])
         self._away        : Team      = Team(data["gameData"]["teams"]["away"])
         self._date        : datetime  = parser.parse(data["gameData"]["datetime"]["dateTime"])
@@ -196,7 +198,10 @@ class GameData:
         Description:
             Update the line score record with the latest game data.
         """
-        self._line_score = data
+        previous = self._line_score
+        current  = LineScore(data)
+        line_score.check_for_events(previous, current)
+        self._line_score = current
 
 
     @property
@@ -205,7 +210,7 @@ class GameData:
         Description:
             Return the number of shots by the home team in the current line score.
         """
-        return self.line_score["teams"]["home"]["shotsOnGoal"]
+        return self.line_score.home_shots
 
 
     @property
@@ -214,4 +219,13 @@ class GameData:
         Description:
             Return the number of shots by the away team in the current line score.
         """
-        return self.line_score["teams"]["away"]["shotsOnGoal"]
+        return self.line_score.away_shots
+
+
+    @property
+    def power_play(self) -> Optional[PowerPlay]:
+        """
+        Description:
+            Getter for the power play record.
+        """
+        return self.line_score.power_play
