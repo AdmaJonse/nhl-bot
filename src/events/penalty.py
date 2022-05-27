@@ -29,6 +29,7 @@ class Penalty(Event):
         self._severity = None if severity is None else severity.lower()
         self._minutes  = get_value(data, "result", "penaltyMinutes")
         self._team     = get_team(data)
+        self._auto_reply = True
 
         if self._reason == "minor":
             self._reason = None
@@ -125,11 +126,55 @@ class Penalty(Event):
             return None
 
         event_values = {
-            "team":     game_data.get_team_string(self.team),
-            "penalty":  self.reason,
-            "player":   self.taker,
-            "minutes":  self.minutes,
-            "severity": self.severity,
-            "hashtags": game_data.hashtags
+            "penalized_team": game_data.get_team_string(self.team),
+            "penalty":        self.reason,
+            "player":         self.taker,
+            "minutes":        self.minutes,
+            "severity":       self.severity,
+            "hashtags":       game_data.hashtags
         }
         return templates.PENALTY_TEMPLATE.format(**event_values)
+
+
+    def get_auto_reply(self, game_data : GameData) -> Optional[str]:
+        """
+        Description:
+            Return the event string for a penalty or penalty shot event.
+        """
+
+        text : Optional[str] = None
+
+        # Don't send the auto reply until the initial post has been made
+        if not self.has_tweeted:
+            return None
+
+        if self.taker is None:
+            return None
+
+        if self.reason is None:
+            return None
+
+        if self.team is None:
+            return None
+
+        if game_data.power_play is None:
+            return None
+
+        event_values = {
+            "home_team":      game_data.home.location,
+            "away_team":      game_data.away.location,
+            "home_skaters":   game_data.power_play.home_skaters,
+            "away_skaters":   game_data.power_play.away_skaters,
+            "time_remaining": game_data.power_play.time_remaining,
+            "hashtags":       game_data.hashtags
+        }
+
+        if game_data.power_play.team is None:
+            text = templates.EVEN_STRENGTH_TEMPLATE.format(**event_values)
+        elif game_data.power_play.team == "home":
+            text = templates.HOME_POWER_PLAY_TEMPLATE.format(**event_values)
+        elif game_data.power_play.team == "away":
+            text = templates.AWAY_POWER_PLAY_TEMPLATE.format(**event_values)
+        else:
+            text = None
+        return text

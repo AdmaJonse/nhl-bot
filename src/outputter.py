@@ -24,7 +24,7 @@ class Outputter:
         return self.null_output
 
 
-    def reply(self, _text : str, _parent_id : int) -> Optional[int]:
+    def reply(self, _text : str, _parent_id : Optional[int]) -> Optional[int]:
         """
         Description:
             Print a reply to the given parent with the specified text.

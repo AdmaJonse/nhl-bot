@@ -83,10 +83,10 @@ def to_event(data) -> Event:
     """
     try:
 
-        is_penalty     : bool = data["result"]["event"] == "Penalty"
-        is_missed_shot : bool = data["result"]["event"] == "Missed Shot"
+        is_penalty     : bool = data["result"]["event"] == Events.PENALTY_EVENT.value
+        is_missed_shot : bool = data["result"]["event"] == Events.MISSED_SHOT_EVENT.value
 
-        if is_penalty and data["result"]["penaltySeverity"] == "Penalty Shot":
+        if is_penalty and data["result"]["penaltySeverity"] == Events.PENALTY_SHOT_EVENT.value:
             event_type = Events.PENALTY_SHOT_EVENT
         elif is_missed_shot and "goalpost" in data["result"]["description"].lower():
             event_type = Events.PING_EVENT

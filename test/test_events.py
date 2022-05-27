@@ -672,7 +672,7 @@ class TestEvents(unittest.TestCase):
         event     = event_factory.to_event(penalty_events.penalty_data)
         game_data = GameData(game_events.game_data)
         actual    = event.get_post(game_data)
-        expected  = "\nThere is a penalty on Washington.\n\nNic Dowd\n2 minute minor for hi-sticking\n\n#BOSvsWSH #GoAvsGo\n"
+        expected  = "\nThere is a penalty on Washington.\n\nNic Dowd will serve a 2 minute minor for hi-sticking.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
 
 

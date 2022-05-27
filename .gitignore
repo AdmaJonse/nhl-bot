@@ -8,6 +8,7 @@ test/test_data/__pycache__
 test/test_data/games
 data.json
 job.log
+.pytest_cache
 results.xml
 .vscode
 team_ids.txt

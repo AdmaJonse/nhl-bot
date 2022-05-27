@@ -165,6 +165,11 @@ class Goal(Event):
             logger.log_error("Attempted to call Goal reply with type: " + str(previous.__class__))
             return None
 
+        # Sometimes the NHL will remove all the data from a goal event after it's been posted.
+        # When that happens, we want to avoid posting a reply so that we don't spam tweets.
+        if self.scorer is None:
+            return None
+
         event_values = {
             "team":             game_data.get_team_string(self.team),
             "scorer":           self.scorer,
@@ -180,9 +185,10 @@ class Goal(Event):
             "hashtags":         game_data.hashtags
         }
 
-        update_text     : Optional[str] = None
-        update_count    : int           = 0
-        scorer_modified : bool          = previous.scorer != self.scorer
+        scorer_modified : bool = (
+            previous.scorer != self.scorer and
+            self.scorer is not None
+        )
 
         primary_assist_added : bool = (
             previous.primary_assist is None and
@@ -196,48 +202,40 @@ class Goal(Event):
 
         primary_assist_modified : bool = (
             previous.primary_assist is not None and
+            self.primary_assist is not None and
             previous.primary_assist != self.primary_assist
         )
 
         secondary_assist_modified : bool = (
             previous.secondary_assist is not None and
+            self.secondary_assist is not None and
             previous.secondary_assist != self.secondary_assist
         )
 
-        # Goal scorer has been changed
-        if scorer_modified:
-            update_count += 1
-            update_text = templates.SCORER_UPDATE_TEMPLATE.format(**event_values)
-
-        # Assists have been added
-        if primary_assist_added and secondary_assist_added:
-            update_count += 1
-            update_text = templates.ASSIST_ADD_BOTH_TEMPLATE.format(**event_values)
-        elif primary_assist_added:
-            update_count += 1
-            update_text = templates.ASSIST_ADD_PRIMARY_TEMPLATE.format(**event_values)
-        elif secondary_assist_added:
-            update_count += 1
-            update_text = templates.ASSIST_ADD_SECONDARY_TEMPLATE.format(**event_values)
-
-        # Assists have been changed
-        if primary_assist_modified and secondary_assist_modified:
-            update_count += 1
-            update_text = templates.ASSIST_UPDATE_TEMPLATE.format(**event_values)
-        elif primary_assist_modified:
-            update_count += 1
-            update_text = templates.PRIMARY_ASSIST_UPDATE_TEMPLATE.format(**event_values)
-        elif secondary_assist_modified:
-            update_count += 1
-            update_text = templates.SECONDARY_ASSIST_UPDATE_TEMPLATE.format(**event_values)
+        update_text : Optional[str] = None
 
         # Time of goal has been changed
         if previous.time != self.time:
-            update_count += 1
             update_text = templates.GOAL_TIME_UPDATE_TEMPLATE.format(**event_values)
 
-        # More than one update occurred, print a generic update
-        if update_count > 1:
-            update_text = templates.GOAL_REPLY_TEMPLATE.format(**event_values)
+        # Assists have been changed
+        if primary_assist_modified and secondary_assist_modified:
+            update_text = templates.ASSIST_UPDATE_TEMPLATE.format(**event_values)
+        elif primary_assist_modified:
+            update_text = templates.PRIMARY_ASSIST_UPDATE_TEMPLATE.format(**event_values)
+        elif secondary_assist_modified:
+            update_text = templates.SECONDARY_ASSIST_UPDATE_TEMPLATE.format(**event_values)
+
+        # Assists have been added
+        if primary_assist_added and secondary_assist_added:
+            update_text = templates.ASSIST_ADD_BOTH_TEMPLATE.format(**event_values)
+        elif primary_assist_added:
+            update_text = templates.ASSIST_ADD_PRIMARY_TEMPLATE.format(**event_values)
+        elif secondary_assist_added:
+            update_text = templates.ASSIST_ADD_SECONDARY_TEMPLATE.format(**event_values)
+
+        # Goal scorer has been changed
+        if scorer_modified:
+            update_text = templates.SCORER_UPDATE_TEMPLATE.format(**event_values)
 
         return update_text

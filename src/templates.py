@@ -94,10 +94,27 @@ Ping!
 # Penalty
 #################################################
 PENALTY_TEMPLATE = """
-There is a penalty on {team}.
+There is a penalty on {penalized_team}.
 
-{player}
-{minutes} minute {severity} for {penalty}
+{player} will serve a {minutes} minute {severity} for {penalty}.
+
+{hashtags}
+"""
+
+HOME_POWER_PLAY_TEMPLATE = """
+{home_team} will have a {home_skaters}-on-{away_skaters} power play for {time_remaining}.
+
+{hashtags}
+"""
+
+AWAY_POWER_PLAY_TEMPLATE = """
+{away_team} will have a {away_skaters}-on-{home_skaters} power play for {time_remaining}.
+
+{hashtags}
+"""
+
+EVEN_STRENGTH_TEMPLATE = """
+The teams will play {home_skaters}-on-{away_skaters} for {time_remaining}.
 
 {hashtags}
 """
@@ -113,8 +130,7 @@ The infraction is against {player} for {penalty}.
 PENALTY_REPLY_TEMPLATE = """
 There has been an update to the penalty on {team}.
 
-{player}
-{minutes} minute {severity} for {penalty}
+{player} will serve a {minutes} minute {severity} for {penalty}
 
 {hashtags}
 """

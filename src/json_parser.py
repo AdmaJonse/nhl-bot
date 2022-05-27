@@ -3,12 +3,12 @@ Description:
     This module handles parsing of the JSON game data.
 """
 
-from typing import Any, Optional
+from typing import Any, Dict, Optional
 
 import json
 import requests
 
-from src.events.game_end import GameEnd
+from src.events.game_official import GameOfficial
 from src.events.event import Event
 from src import event_factory
 from src import generator
@@ -27,12 +27,12 @@ class Parser:
     def __init__(self, game_id : int):
 
         # initialize our variables
-        self.game_id      : int  = game_id
-        self.is_game_over : bool = False
-        self.data         : Any  = []
-        self.new_records  : Any  = []
-        self.last_event   : int  = 0
-        self.events       : Any  = {}
+        self.game_id      : int              = game_id
+        self.is_game_over : bool             = False
+        self.data         : Any              = []
+        self.new_records  : Any              = []
+        self.last_event   : int              = 0
+        self.events       : Dict[int, Event] = {}
 
         # load initial data
         self.get_new_records()
@@ -76,11 +76,12 @@ class Parser:
         def filter_events(data):
 
             event            : Event = event_factory.to_event(data)
-            is_new_event     : bool  = event.event_id > self.last_event
-            is_updated_event : bool = False
+            is_new_id        : bool  = event.event_id > self.last_event
+            is_new_event     : bool  = is_new_id and event not in self.events.values()
+            is_updated_event : bool  = False
 
             try:
-                is_updated_event = self.events[event.event_id]["event"] != event
+                is_updated_event = self.events[event.event_id] != event
             except KeyError:
                 is_updated_event = False
 
@@ -106,12 +107,12 @@ class Parser:
         Description:
             Determine whether the given event indicates that the game is over.
         """
-        self.is_game_over = event.__class__ == GameEnd
+        self.is_game_over = event.__class__ == GameOfficial
         if self.is_game_over:
             logger.log_info("Game Over.")
 
 
-    def generate_tweet(self, event : Event) -> Optional[int]:
+    def generate_tweet(self, event : Event):
         """
         Description:
             Create and send a tweet based on the given event.
@@ -123,10 +124,15 @@ class Parser:
         if text is not None:
             tweet_id = output.post(text)
 
-        return tweet_id
+        event.tweet_id = tweet_id
+
+        if event.has_tweeted and event.auto_reply:
+            reply_text : Optional[str] = self.generator.get_auto_reply_string(event)
+            if reply_text is not None:
+                event.tweet_id = output.reply(reply_text, tweet_id)
 
 
-    def generate_reply(self, previous : Event, current : Event, parent_id : int) -> Optional[int]:
+    def generate_reply(self, previous : Event, current : Event):
         """
         Description:
             Create and send a reply to the given tweet based on the
@@ -135,15 +141,15 @@ class Parser:
 
         if previous.__class__ != current.__class__:
             logger.log_error("Attempted to generated reply between unlike classes")
-            return None
+            return
 
         tweet_id : Optional[int] = None
         text     : Optional[str] = self.generator.get_reply_string(previous, current)
 
-        if text is not None:
-            tweet_id = output.reply(text, parent_id)
+        if previous.has_tweeted and text is not None:
+            tweet_id = output.reply(text, previous.tweet_id)
 
-        return tweet_id
+        current.tweet_id = tweet_id
 
 
     def post_game_day(self):
@@ -169,27 +175,24 @@ class Parser:
         self.get_new_records()
         for record in self.new_records:
 
-            tweet_id       : int           = 0
-            parent_id      : Optional[int] = None
-            event          : Event         = event_factory.to_event(record)
-            previous_event : Event         = None
+            event    : Event = event_factory.to_event(record)
+            previous : Event = None
 
             logger.log_info(str(event))
 
             try:
-                parent_id      = self.events[event.event_id]["tweet_id"]
-                previous_event = self.events[event.event_id]["event"]
+                previous = self.events[event.event_id]
             except KeyError:
-                parent_id = None
+                previous = None
 
             # update any records stored by the generator
             self.generator.update_line_score(self.data["liveData"]["linescore"])
 
-            if parent_id is None:
-                tweet_id = self.generate_tweet(event)
+            if previous is not None and previous.has_tweeted:
+                self.generate_reply(previous, event)
             else:
-                tweet_id = self.generate_reply(previous_event, event, parent_id)
+                self.generate_tweet(event)
 
-            self.events[event.event_id] = {"tweet_id": tweet_id, "event": event}
+            self.events[event.event_id] = event
             self.last_event = event.event_id
             self.check_for_game_over(event)

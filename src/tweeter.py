@@ -78,7 +78,7 @@ class Tweeter(Outputter):
         return tweet_id
 
 
-    def reply(self, text : str, parent_id : int) -> Optional[int]:
+    def reply(self, text : str, parent_id : Optional[int]) -> Optional[int]:
         """
         Description:
             Send a reply to the given parent tweet with the specified text.
@@ -86,7 +86,7 @@ class Tweeter(Outputter):
 
         reply_id : Optional[int] = None
 
-        if parent_id > 0:
+        if parent_id is not None and parent_id > 0:
             if len(text) <= MAX_LENGTH:
 
                 logger.log_info("Reply to tweet " + str(parent_id) + ":\n" + text)

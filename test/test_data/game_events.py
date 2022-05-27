@@ -68,6 +68,18 @@ game_data = {
                     "numSkaters": 5,
                     "powerPlay": False
                 }
+            },
+            "powerPlayStrength" : "Even",
+            "hasShootout" : False,
+            "intermissionInfo" : {
+                "intermissionTimeRemaining" : 0,
+                "intermissionTimeElapsed" : 0,
+                "inIntermission" : False
+            },
+            "powerPlayInfo" : {
+                "situationTimeRemaining" : 0,
+                "situationTimeElapsed" : 0,
+                "inSituation" : False
             }
         }
     }

@@ -75,15 +75,32 @@ class Event:
     null_post = None
 
     def __init__(self, data : Any):
-        self._event_id    = data["about"]["eventIdx"]
-        self._description = data["result"]["description"]
-        self._period      = data["about"]["period"]
-        self._time        = data["about"]["periodTimeRemaining"]
-        self._home_goals  = data["about"]["goals"]["home"]
-        self._away_goals  = data["about"]["goals"]["away"]
+        self._tweet_id    : Optional[int] = None
+        self._event_id    : int           = data["about"]["eventIdx"]
+        self._description : str           = data["result"]["description"]
+        self._period      : int           = data["about"]["period"]
+        self._time        : str           = data["about"]["periodTimeRemaining"]
+        self._home_goals  : int           = data["about"]["goals"]["home"]
+        self._away_goals  : int           = data["about"]["goals"]["away"]
+        self._auto_reply  : bool          = False
 
     def __eq__(self, other):
         return self.__class__ == other.__class__ and self.event_id == other.event_id
+
+    @property
+    def tweet_id(self) -> Optional[int]:
+        """Getter for the tweet ID."""
+        return self._tweet_id
+
+    @tweet_id.setter
+    def tweet_id(self, tweet_id : Optional[int]):
+        """Setter for the tweet ID."""
+        self._tweet_id = tweet_id
+
+    @property
+    def has_tweeted(self) -> bool:
+        """Return a boolean indicating whether or not a tweet has been sent for this event."""
+        return self._tweet_id is not None and self._tweet_id > 0
 
     @property
     def event_id(self) -> int:
@@ -145,6 +162,16 @@ class Event:
         """Setter for the away goals."""
         self._away_goals = away_goals
 
+    @property
+    def auto_reply(self) -> bool:
+        """Getter for the auto reply field."""
+        return self._auto_reply
+
+    @auto_reply.setter
+    def auto_reply(self, reply : bool):
+        """Setter for the auto reply field."""
+        self._auto_reply = reply
+
     def get_period_string(self) -> str:
         """
         Description:
@@ -189,6 +216,15 @@ class Event:
         """
         Description:
             The base implementation for returning post text. This implementation simply
+            returns None and will not result in any tweet being posted.
+        """
+        return self.null_post
+
+
+    def get_auto_reply(self, _game_data : GameData) -> Optional[str]:
+        """
+        Description:
+            The base implementation for returning auto reply text. This implementation simply
             returns None and will not result in any tweet being posted.
         """
         return self.null_post

@@ -38,6 +38,14 @@ class Generator:
         return event.get_post(self.game_data)
 
 
+    def get_auto_reply_string(self, event : Event) -> Optional[str]:
+        """
+        Description:
+            Return the auto reply string for an event.
+        """
+        return event.get_auto_reply(self.game_data)
+
+
     def get_reply_string(self, previous : Event, current : Event) -> Optional[str]:
         """
         Description:
