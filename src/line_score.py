@@ -1,6 +1,6 @@
 """
 Description:
-    TODO
+    This module contains classes used to define line score data.
 """
 
 from dataclasses import dataclass
@@ -13,7 +13,7 @@ from src import logger
 class TeamData:
     """
     Description:
-        TODO
+        This data class defines data that is specific to one team.
     """
     shots          : int  = 0
     goalie_pulled  : bool = False
@@ -25,7 +25,7 @@ class TeamData:
 class PowerPlay:
     """
     Description:
-        TODO
+        This data class defines a power play.
     """
     team           : Optional[str]  = ""
     home_skaters   : int  = 0
@@ -92,7 +92,7 @@ def get_power_play(data) -> Optional[PowerPlay]:
 class LineScore:
     """
     Description:
-        TODO
+        This class defines line score data.
     """
 
     def __init__(self, data):
