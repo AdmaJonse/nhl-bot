@@ -3,38 +3,33 @@ Description:
     This module contains the Outputter class, which is the base class for output interfaces.
 """
 
+from abc import ABC, abstractmethod
 from typing import Optional
 
-class Outputter:
+class Outputter(ABC):
     """
     Description:
         The Outputter class is the base class for output interfaces, such as the tweeter and
-        printer classes. This class simply defines the interface. Child classes should override
-        the methods defined below.
+        printer classes.
     """
 
-    null_output = None
-    has_posted  = False
-
+    @abstractmethod
     def post(self, _text : str) -> Optional[int]:
         """
         Description:
             Print the specified text.
         """
-        return self.null_output
 
-
+    @abstractmethod
     def reply(self, _text : str, _parent_id : Optional[int]) -> Optional[int]:
         """
         Description:
             Print a reply to the given parent with the specified text.
         """
-        return self.null_output
 
-
+    @abstractmethod
     def has_posted_today(self):
         """
         Description:
             Return a boolean indicating whether or not we've posted today.
         """
-        return self.has_posted

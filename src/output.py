@@ -12,7 +12,8 @@ from src.tweeter import Tweeter
 class Output:
     """
     Description:
-        TODO
+        This class defines the output method to be used and any internal state of the
+        output interface.
     """
 
     def __init__(self):
@@ -35,8 +36,7 @@ class Output:
         Description:
             Set the dry run flag.
         """
-        self._dry_run = flag
-
+        self._dry_run   = flag
         self._outputter = Printer()
 
 
@@ -44,7 +44,7 @@ class Output:
     def outputter(self) -> Outputter:
         """
         Description:
-            TODO
+            Return the registered outputter instance.
         """
         return self._outputter
 
