@@ -10,8 +10,6 @@ from typing import Optional
 from src import logger
 from src.outputter import Outputter
 
-# pylint: disable=R0201
-
 class Printer(Outputter):
     """
     Description:
@@ -38,3 +36,11 @@ class Printer(Outputter):
         if parent_id is not None and parent_id > 0:
             logger.log_info("Reply to parent " + str(parent_id) + ":\n" + text)
         return reply_id
+
+
+    def has_posted_today(self):
+        """
+        Description:
+            Return a boolean indicating whether or not we've posted today.
+        """
+        return True

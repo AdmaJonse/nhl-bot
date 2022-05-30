@@ -31,7 +31,6 @@ class PenaltyShot(Event):
 
     def __eq__(self, other):
         return (self.__class__ == other.__class__ and
-                self.event_id  == other.event_id and
                 self.taker     == other.taker and
                 self.drawn_by  == other.drawn_by and
                 self.reason    == other.reason)
