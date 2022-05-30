@@ -31,7 +31,6 @@ class Goal(Event):
 
     def __eq__(self, other):
         return (self.__class__        == other.__class__ and
-                self.event_id         == other.event_id and
                 self.scorer           == other.scorer and
                 self.primary_assist   == other.primary_assist and
                 self.secondary_assist == other.secondary_assist and

@@ -85,7 +85,9 @@ class Event:
         self._auto_reply  : bool          = False
 
     def __eq__(self, other):
-        return self.__class__ == other.__class__ and self.event_id == other.event_id
+        return (self.__class__ == other.__class__ and
+                self.period == other.period and
+                self.time == other.time)
 
     @property
     def tweet_id(self) -> Optional[int]:
