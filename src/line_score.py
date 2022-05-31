@@ -42,13 +42,23 @@ def get_power_play(data) -> Optional[PowerPlay]:
     """
 
     strength        : str  = data["powerPlayStrength"]
-    time_remaining  : int  = data["powerPlayInfo"]["situationTimeRemaining"]
-    time_elapsed    : int  = data["powerPlayInfo"]["situationTimeElapsed"]
-    in_situation    : bool = data["powerPlayInfo"]["inSituation"]
     home_skaters    : int  = data["teams"]["home"]["numSkaters"]
     home_power_play : bool = data["teams"]["home"]["powerPlay"]
     away_skaters    : int  = data["teams"]["away"]["numSkaters"]
     away_power_play : bool = data["teams"]["away"]["powerPlay"]
+
+    try:
+
+        time_remaining  : int  = data["powerPlayInfo"]["situationTimeRemaining"]
+        time_elapsed    : int  = data["powerPlayInfo"]["situationTimeElapsed"]
+        in_situation    : bool = data["powerPlayInfo"]["inSituation"]
+
+    except KeyError:
+
+        time_remaining = 0
+        time_elapsed   = 0
+        in_situation   = False
+
 
     if not in_situation:
         return None
