@@ -12,7 +12,8 @@ class GameOfficial(Event):
     """
 
     def __str__(self):
-        return str(self.event_id) + " = Game Official - " + self.description
+        return str(self.time) + " = Game Official - " + self.description
 
     def __eq__(self, other):
-        return self.__class__ == other.__class__
+        return (isinstance(self, GameOfficial) and
+                isinstance(other, GameOfficial))

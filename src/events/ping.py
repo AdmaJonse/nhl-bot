@@ -7,6 +7,7 @@ from typing import Optional
 
 from src import templates
 from src.events.event import Event, get_player_name
+from src.exceptions import InsufficientData
 from src.game_data import GameData
 
 class Ping(Event):
@@ -17,16 +18,34 @@ class Ping(Event):
 
     def __init__(self, data):
         super().__init__(data)
-        self.shooter   = get_player_name(data, "Shooter")
-        self.goalie    = get_player_name(data, "Unknown")
+        self._shooter   : Optional[str] = get_player_name(data, "Shooter")
+        self._goalie    : Optional[str] = get_player_name(data, "Unknown")
+        self._goal_post : Optional[str] = None
 
         if "crossbar" in self.description.lower():
-            self.goal_post = "crossbar"
-        else:
-            self.goal_post = "post"
+            self._goal_post = "crossbar"
+        elif "post" in self.description.lower():
+            self._goal_post = "post"
+
+        if self.shooter is None:
+            raise InsufficientData
+
+        if self.goalie is None:
+            raise InsufficientData
+
+        if self.goal_post is None:
+            raise InsufficientData
 
     def __str__(self):
-        return str(self.event_id) + " = Ping! - " + self.description
+        return str(self.time) + " = Ping! - " + self.description
+
+    def __eq__(self, other):
+        return (isinstance(self, Ping) and
+                isinstance(other, Ping) and
+                self.period  == other.period and
+                self.time    == other.time and
+                self.shooter == other.shooter and
+                self.goalie  == other.goalie)
 
     @property
     def shooter(self) -> Optional[str]:
@@ -47,6 +66,16 @@ class Ping(Event):
     def goalie(self, goalie : str):
         """Setter for the goalie."""
         self._goalie = goalie
+
+    @property
+    def goal_post(self) -> Optional[str]:
+        """Getter for the goal post."""
+        return self._goal_post
+
+    @goal_post.setter
+    def goal_post(self, post : str):
+        """Setter for the goal post."""
+        self._goal_post = post
 
     def get_post(self, game_data : GameData) -> Optional[str]:
         """

@@ -49,7 +49,7 @@ def get_power_play(data) -> Optional[PowerPlay]:
 
     try:
 
-        time_remaining  : int  = data["powerPlayInfo"]["situationTimeRemaining"]
+        time_remaining  : int  = data["powerPlayInfo"]["situationtime_remainingaining"]
         time_elapsed    : int  = data["powerPlayInfo"]["situationTimeElapsed"]
         in_situation    : bool = data["powerPlayInfo"]["inSituation"]
 

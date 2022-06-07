@@ -72,12 +72,12 @@ game_data = {
             "powerPlayStrength" : "Even",
             "hasShootout" : False,
             "intermissionInfo" : {
-                "intermissionTimeRemaining" : 0,
+                "intermissiontime_remainingaining" : 0,
                 "intermissionTimeElapsed" : 0,
                 "inIntermission" : False
             },
             "powerPlayInfo" : {
-                "situationTimeRemaining" : 0,
+                "situationtime_remainingaining" : 0,
                 "situationTimeElapsed" : 0,
                 "inSituation" : False
             }

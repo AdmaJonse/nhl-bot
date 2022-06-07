@@ -108,7 +108,7 @@ class GameData:
         logger.log_info("Hashtags:          " + self.hashtags)
 
 
-    def get_team_string(self, team : str) -> str:
+    def get_team_string(self, team : Optional[str]) -> str:
         """
         Description:
             Return the name of the team from this event as a location name.
@@ -118,7 +118,7 @@ class GameData:
         elif team == self.away.full_name:
             team_string = self.away.location
         else:
-            logger.log_error("unknown team: " + team)
+            logger.log_error("unknown team: " + str(team))
         return team_string
 
 

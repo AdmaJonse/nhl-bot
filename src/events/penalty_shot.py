@@ -8,6 +8,7 @@ from typing import Optional
 from src import logger
 from src import templates
 from src.events.event import Event, get_player_name, get_team, get_value
+from src.exceptions import InsufficientData
 from src.game_data import GameData
 
 class PenaltyShot(Event):
@@ -21,19 +22,34 @@ class PenaltyShot(Event):
 
         reason = get_value(data, "result", "secondaryType")
 
-        self._taker    = get_player_name(data, "PenaltyOn")
-        self._drawn_by = get_player_name(data, "DrewBy")
-        self._reason   = None if reason is None else reason.lower().replace("ps - ", "")
-        self._team     = get_team(data)
+        self._taker    : Optional[str] = get_player_name(data, "PenaltyOn")
+        self._drawn_by : Optional[str] = get_player_name(data, "DrewBy")
+        self._reason   : Optional[str] = None
+        self._team     : Optional[str] = get_team(data)
+
+        if reason is not None:
+            self._reason = reason.lower().replace("ps - ", "")
+
+        if self.taker is None:
+            raise InsufficientData
+
+        if self.reason is None:
+            raise InsufficientData
+
+        if self.team is None:
+            raise InsufficientData
 
     def __str__(self):
-        return str(self.event_id) + " = Penalty - " + self.description
+        return str(self.time) + " = Penalty - " + self.description
 
     def __eq__(self, other):
-        return (self.__class__ == other.__class__ and
-                self.taker     == other.taker and
-                self.drawn_by  == other.drawn_by and
-                self.reason    == other.reason)
+        return (isinstance(self, PenaltyShot) and
+                isinstance(other, PenaltyShot) and
+                self.period   == other.period and
+                self.time     == other.time and
+                self.taker    == other.taker and
+                self.drawn_by == other.drawn_by and
+                self.reason   == other.reason)
 
     @property
     def taker(self) -> Optional[str]:
@@ -56,7 +72,7 @@ class PenaltyShot(Event):
         self._taker = drawn_by
 
     @property
-    def reason(self) -> str:
+    def reason(self) -> Optional[str]:
         """Getter for the reason."""
         return self._reason
 
@@ -66,7 +82,7 @@ class PenaltyShot(Event):
         self._reason = reason
 
     @property
-    def team(self) -> str:
+    def team(self) -> Optional[str]:
         """Getter for the team."""
         return self._team
 

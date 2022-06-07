@@ -6,6 +6,7 @@ Description:
 from typing import Optional
 
 from src.events.event import Event, get_player_name
+from src.exceptions import InsufficientData
 
 class Shot(Event):
     """
@@ -15,11 +16,25 @@ class Shot(Event):
 
     def __init__(self, data):
         super().__init__(data)
-        self.shooter = get_player_name(data, "Shooter")
-        self.goalie  = get_player_name(data, "Goalie")
+        self._shooter : Optional[str] = get_player_name(data, "Shooter")
+        self._goalie  : Optional[str] = get_player_name(data, "Goalie")
+
+        if self.shooter is None:
+            raise InsufficientData
+
+        if self.goalie is None:
+            raise InsufficientData
 
     def __str__(self):
-        return str(self.event_id) + " = Shot - " + self.description
+        return str(self.time) + " = Shot - " + self.description
+
+    def __eq__(self, other):
+        return (isinstance(self, Shot) and
+                isinstance(other, Shot) and
+                self.period  == other.period and
+                self.time    == other.time and
+                self.shooter == other.shooter and
+                self.goalie  == other.goalie)
 
     @property
     def shooter(self) -> Optional[str]:

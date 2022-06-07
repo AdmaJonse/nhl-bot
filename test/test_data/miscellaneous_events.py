@@ -4,17 +4,58 @@ Description:
 """
 
 null_event = {
+    "players": [
+        {"player": {"fullName": ""},
+        "playerType": "Scorer"},
+        {"player": {"fullName": ""},
+        "playerType": "Assist"},
+        {"player": {"fullName": ""},
+        "playerType": "Assist"},
+        {"player": {"fullName": ""},
+        "playerType": "Goalie"},
+        {"player": {"fullName": ""},
+        "playerType": "Winner"},
+        {"player": {"fullName": ""},
+        "playerType": "Loser"},
+        {"player": {"fullName": ""},
+        "playerType": "Hitter"},
+        {"player": {"fullName": ""},
+        "playerType": "Hittee"},
+        {"player": {"fullName": ""},
+        "playerType": "Shooter"},
+        {"player": {"fullName": ""},
+        "playerType": "Blocker"},
+        {"player": {"fullName": ""},
+        "playerType": "PenaltyOn"},
+        {"player": {"fullName": ""},
+        "playerType": "DrewBy"},
+        {"player": {"fullName": ""},
+        "playerType": "PlayerID"},
+        {"player": {"fullName": ""},
+        "playerType": "Unknown"}
+    ],
     "result": {
-        "description": "Lars Eller faceoff won against Charlie Coyle"
+        "description": "",
+        "secondaryType": "",
+        "penaltySeverity": "",
+        "penaltyMinutes": ""
     },
     "about": {
         "eventIdx": 3,
         "period": 1,
         "periodTimeRemaining": "20:00",
+        "dateTime": "2022-04-10T17:41:12Z",
         "goals": {
             "away": 0,
             "home": 0
         }
+    },
+    "coordinates": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "team": {
+        "name": ""
     }
 }
 

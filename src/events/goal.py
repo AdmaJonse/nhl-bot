@@ -8,6 +8,7 @@ from typing import Optional
 from src import logger
 from src import templates
 from src.events.event import Event, get_player_name, get_team, get_value
+from src.exceptions import InsufficientData
 from src.game_data import GameData
 
 class Goal(Event):
@@ -18,26 +19,41 @@ class Goal(Event):
 
     def __init__(self, data):
         super().__init__(data)
-        self._team             = get_team(data)
-        self._scorer           = get_player_name(data, "Scorer")
-        self._primary_assist   = get_player_name(data, "Assist", 1)
-        self._secondary_assist = get_player_name(data, "Assist", 2)
-        self._goalie           = get_player_name(data, "Goalie")
-        self._strength         = get_value(data, "result", "strength", "code")
-        self._is_empty_net     = get_value(data, "result", "emptyNet")
+        self._team             : Optional[str] = get_team(data)
+        self._scorer           : Optional[str] = get_player_name(data, "Scorer")
+        self._primary_assist   : Optional[str] = get_player_name(data, "Assist", 1)
+        self._secondary_assist : Optional[str] = get_player_name(data, "Assist", 2)
+        self._goalie           : Optional[str] = get_player_name(data, "Goalie")
+        self._strength         : Optional[str] = get_value(data, "result", "strength", "code")
+        self._is_empty_net     : bool          = get_value(data, "result", "emptyNet")
+
+        if self.team is None:
+            raise InsufficientData
+
+        if self.scorer is None:
+            raise InsufficientData
+
+        if self.goalie is None:
+            raise InsufficientData
 
     def __str__(self):
-        return str(self.event_id) + " = Goal - " + self.description
+        return str(self.time) + " = Goal - " + self.description
 
     def __eq__(self, other):
-        return (self.__class__        == other.__class__ and
+        return (isinstance(self, Goal) and
+                isinstance(other, Goal) and
+                self.period           == other.period and
+                self.time             == other.time and
                 self.scorer           == other.scorer and
                 self.primary_assist   == other.primary_assist and
                 self.secondary_assist == other.secondary_assist and
-                self.time             == other.time)
+                self.goalie           == other.goalie and
+                self.strength         == other.strength and
+                self.is_empty_net     == other.is_empty_net and
+                self.team             == other.team)
 
     @property
-    def team(self) -> str:
+    def team(self) -> Optional[str]:
         """Getter for the team."""
         return self._team
 
@@ -87,7 +103,7 @@ class Goal(Event):
         self._goalie = goalie
 
     @property
-    def strength(self) -> str:
+    def strength(self) -> Optional[str]:
         """Getter for the strength."""
         return self._strength
 

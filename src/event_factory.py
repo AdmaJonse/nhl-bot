@@ -1,7 +1,7 @@
 """This module defines the factory for Event objects. Given JSON data defining the event, we will
 determine the event type and dispatch to constructor of the expected Event subclass."""
 
-from typing import Dict, Type
+from typing import Dict, Optional, Type
 from enum import Enum
 
 from src import logger
@@ -26,6 +26,7 @@ from src.events.ping import Ping
 from src.events.shot import Shot
 from src.events.stoppage import Stoppage
 from src.events.takeaway import Takeaway
+from src.exceptions import InsufficientData
 
 class Events(Enum):
     """
@@ -76,7 +77,7 @@ event_constructors : Dict[Events, Type[Event]] = {
     Events.TAKEAWAY_EVENT:        Takeaway
 }
 
-def to_event(data) -> Event:
+def create(data) -> Optional[Event]:
     """
     Description:
         This function is used to construct events from JSON data.
@@ -98,4 +99,7 @@ def to_event(data) -> Event:
     except ValueError:
         logger.log_error("An unknown event type was processed: " + data["result"]["event"])
 
-    return event_constructors[event_type](data)
+    try:
+        return event_constructors[event_type](data)
+    except InsufficientData:
+        return None

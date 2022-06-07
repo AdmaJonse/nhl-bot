@@ -10,7 +10,11 @@ Description:
     update processing when minor JSON fields change as opposed to
     relevant event data.
 """
+
+from datetime import datetime
 from typing import Any, Optional
+from dateutil import parser
+from src.exceptions import InsufficientData
 
 from src.game_data import GameData
 from src import logger
@@ -76,18 +80,49 @@ class Event:
 
     def __init__(self, data : Any):
         self._tweet_id    : Optional[int] = None
-        self._event_id    : int           = data["about"]["eventIdx"]
         self._description : str           = data["result"]["description"]
         self._period      : int           = data["about"]["period"]
         self._time        : str           = data["about"]["periodTimeRemaining"]
+        self._timestamp   : datetime      = parser.parse(data["about"]["dateTime"])
         self._home_goals  : int           = data["about"]["goals"]["home"]
         self._away_goals  : int           = data["about"]["goals"]["away"]
         self._auto_reply  : bool          = False
+
+        if self.description is None:
+            raise InsufficientData
+
+        if self.period is None:
+            raise InsufficientData
+
+        if self.time is None:
+            raise InsufficientData
+
+        if self.timestamp is None:
+            raise InsufficientData
 
     def __eq__(self, other):
         return (self.__class__ == other.__class__ and
                 self.period == other.period and
                 self.time == other.time)
+
+    @property
+    def id(self) -> str:
+        """
+        Return a unique identifier for this event that will not change, even if the event_id int
+        changes.
+        """
+
+        def inits(text : str) -> str:
+            words  = text.split()
+            result = ""
+            for word in words[:2]:
+                result += word[0].upper()
+            return result
+
+        name        : str = self.__class__.__name__
+        time        : str = self.timestamp.strftime("%H%M%S")
+        description : str = inits(str(self.description))
+        return name + "-" + time + "-" + description
 
     @property
     def tweet_id(self) -> Optional[int]:
@@ -105,17 +140,7 @@ class Event:
         return self._tweet_id is not None and self._tweet_id > 0
 
     @property
-    def event_id(self) -> int:
-        """Getter for the event ID."""
-        return self._event_id
-
-    @event_id.setter
-    def event_id(self, event_id : int):
-        """Setter for the event ID."""
-        self._event_id = event_id
-
-    @property
-    def description(self) -> str:
+    def description(self) -> Optional[str]:
         """Getter for the description."""
         return self._description
 
@@ -135,7 +160,7 @@ class Event:
         self._period = period
 
     @property
-    def time(self) -> str:
+    def time(self) -> Optional[str]:
         """Getter for the time."""
         return self._time
 
@@ -143,6 +168,16 @@ class Event:
     def time(self, time : str):
         """Setter for the time."""
         self._time = time
+
+    @property
+    def timestamp(self) -> datetime:
+        """Getter for the time."""
+        return self._timestamp
+
+    @timestamp.setter
+    def timestamp(self, timestamp : datetime):
+        """Setter for the timestamp."""
+        self._timestamp = timestamp
 
     @property
     def home_goals(self) -> int:

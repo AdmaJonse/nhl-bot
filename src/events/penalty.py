@@ -8,6 +8,7 @@ from typing import Optional
 from src import logger
 from src import templates
 from src.events.event import Event, get_player_name, get_team, get_value
+from src.exceptions import InsufficientData
 from src.game_data import GameData
 
 class Penalty(Event):
@@ -23,31 +24,48 @@ class Penalty(Event):
         reason   = get_value(data, "result", "secondaryType")
         severity = get_value(data, "result", "penaltySeverity")
 
-        self._taker    = get_player_name(data, "PenaltyOn")
-        self._drawn_by = get_player_name(data, "DrewBy")
-        self._reason   = None if reason is None else reason.lower()
-        self._severity = None if severity is None else severity.lower()
-        self._minutes  = get_value(data, "result", "penaltyMinutes")
-        self._team     = get_team(data)
-        self._auto_reply = False
+        self._taker      : Optional[str] = get_player_name(data, "PenaltyOn")
+        self._drawn_by   : Optional[str] = get_player_name(data, "DrewBy")
+        self._reason     : Optional[str] = None if reason is None else reason.lower()
+        self._severity   : Optional[str] = None if severity is None else severity.lower()
+        self._minutes    : Optional[int] = get_value(data, "result", "penaltyMinutes")
+        self._team       : Optional[str] = get_team(data)
+        self._auto_reply : bool          = False
 
-        if self._reason == "minor":
-            self._reason = None
+        if self.reason == "minor":
+            self.reason = None
 
-        if self._reason is not None and self._reason == "missing key [pd_151]":
-            self._reason = "delaying game - unsuccessful challenge"
+        if self.reason is not None and self._reason == "missing key [pd_151]":
+            self.reason = "delaying game - unsuccessful challenge"
 
+        if self.taker is None:
+            raise InsufficientData
+
+        if self.reason is None:
+            raise InsufficientData
+
+        if self.severity is None:
+            raise InsufficientData
+
+        if self.minutes is None:
+            raise InsufficientData
+
+        if self.team is None:
+            raise InsufficientData
 
     def __str__(self):
-        return str(self.event_id) + " = Penalty - " + self.description
+        return str(self.time) + " = Penalty - " + self.description
 
     def __eq__(self, other):
-        return (self.__class__ == other.__class__ and
-                self.taker     == other.taker and
-                self.drawn_by  == other.drawn_by and
-                self.reason    == other.reason and
-                self.severity  == other.severity and
-                self.minutes   == other.minutes)
+        return (isinstance(self, Penalty) and
+                isinstance(other, Penalty) and
+                self.period   == other.period and
+                self.time     == other.time and
+                self.taker    == other.taker and
+                self.drawn_by == other.drawn_by and
+                self.reason   == other.reason and
+                self.severity == other.severity and
+                self.minutes  == other.minutes)
 
     @property
     def taker(self) -> Optional[str]:
@@ -70,7 +88,7 @@ class Penalty(Event):
         self._taker = drawn_by
 
     @property
-    def reason(self) -> str:
+    def reason(self) -> Optional[str]:
         """Getter for the reason."""
         return self._reason
 
@@ -80,7 +98,7 @@ class Penalty(Event):
         self._reason = reason
 
     @property
-    def severity(self) -> str:
+    def severity(self) -> Optional[str]:
         """Getter for the severity."""
         return self._severity
 
@@ -90,7 +108,7 @@ class Penalty(Event):
         self._severity = severity
 
     @property
-    def minutes(self) -> int:
+    def minutes(self) -> Optional[int]:
         """Getter for the minutes."""
         return self._minutes
 
@@ -100,7 +118,7 @@ class Penalty(Event):
         self._minutes = minutes
 
     @property
-    def team(self) -> str:
+    def team(self) -> Optional[str]:
         """Getter for the team."""
         return self._team
 
