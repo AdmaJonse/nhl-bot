@@ -12,7 +12,9 @@ class PeriodReady(Event):
     """
 
     def __str__(self):
-        return str(self.event_id) + " = Period Ready - " + self.description
+        return str(self.time) + " = Period Ready - " + self.description
 
     def __eq__(self, other):
-        return self.__class__ == other.__class__ and self.period == other.period
+        return (isinstance(self, PeriodReady) and
+                isinstance(other, PeriodReady) and
+                self.period == other.period)

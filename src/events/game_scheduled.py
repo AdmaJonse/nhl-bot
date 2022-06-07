@@ -12,7 +12,8 @@ class GameScheduled(Event):
     """
 
     def __str__(self):
-        return str(self.event_id) + " = Game Scheduled - " + self.description
+        return str(self.time) + " = Game Scheduled - " + self.description
 
     def __eq__(self, other):
-        return self.__class__ == other.__class__
+        return (isinstance(self, GameScheduled) and
+                isinstance(other, GameScheduled))

@@ -16,10 +16,12 @@ class PeriodStart(Event):
     """
 
     def __str__(self):
-        return str(self.event_id) + " = Period Start - " + self.description
+        return str(self.time) + " = Period Start - " + self.description
 
     def __eq__(self, other):
-        return self.__class__ == other.__class__ and self.period == other.period
+        return (isinstance(self, PeriodStart) and
+                isinstance(other, PeriodStart) and
+                self.period == other.period)
 
     def get_post(self, game_data : GameData) -> Optional[str]:
         """

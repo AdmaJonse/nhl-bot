@@ -53,7 +53,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a game scheduled event.
         """
-        event    = event_factory.to_event(game_events.game_scheduled_data)
+        event    = event_factory.create(game_events.game_scheduled_data)
         actual   = self.generator.get_event_string(event)
         expected = None
         self.assertEqual(expected, actual)
@@ -64,7 +64,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a game end event.
         """
-        event    = event_factory.to_event(game_events.game_end_data)
+        event    = event_factory.create(game_events.game_end_data)
         actual   = self.generator.get_event_string(event)
         expected = "\nThe game is over. Washington wins!\n\nFinal Score:\nWashington: 4\nBoston: 2\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
@@ -75,7 +75,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a game official event.
         """
-        event    = event_factory.to_event(game_events.game_official_data)
+        event    = event_factory.create(game_events.game_official_data)
         actual   = self.generator.get_event_string(event)
         expected = None
         self.assertEqual(expected, actual)
@@ -86,7 +86,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a faceoff event.
         """
-        event    = event_factory.to_event(miscellaneous_events.faceoff_data)
+        event    = event_factory.create(miscellaneous_events.faceoff_data)
         actual   = self.generator.get_event_string(event)
         expected = None
         self.assertEqual(expected, actual)
@@ -97,7 +97,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a stoppage event.
         """
-        event    = event_factory.to_event(miscellaneous_events.stoppage_data)
+        event    = event_factory.create(miscellaneous_events.stoppage_data)
         actual   = self.generator.get_event_string(event)
         expected = None
         self.assertEqual(expected, actual)
@@ -108,7 +108,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a shot event.
         """
-        event    = event_factory.to_event(miscellaneous_events.shot_data)
+        event    = event_factory.create(miscellaneous_events.shot_data)
         actual   = self.generator.get_event_string(event)
         expected = None
         self.assertEqual(expected, actual)
@@ -119,7 +119,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a hit event.
         """
-        event    = event_factory.to_event(miscellaneous_events.hit_data)
+        event    = event_factory.create(miscellaneous_events.hit_data)
         actual   = self.generator.get_event_string(event)
         expected = None
         self.assertEqual(expected, actual)
@@ -130,7 +130,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a blocked shot event.
         """
-        event    = event_factory.to_event(miscellaneous_events.blocked_shot_data)
+        event    = event_factory.create(miscellaneous_events.blocked_shot_data)
         actual   = self.generator.get_event_string(event)
         expected = None
         self.assertEqual(expected, actual)
@@ -141,7 +141,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a giveaway event.
         """
-        event    = event_factory.to_event(miscellaneous_events.giveaway_data)
+        event    = event_factory.create(miscellaneous_events.giveaway_data)
         actual   = self.generator.get_event_string(event)
         expected = None
         self.assertEqual(expected, actual)
@@ -152,7 +152,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a takeaway event.
         """
-        event    = event_factory.to_event(miscellaneous_events.takeaway_data)
+        event    = event_factory.create(miscellaneous_events.takeaway_data)
         actual   = self.generator.get_event_string(event)
         expected = None
         self.assertEqual(expected, actual)
@@ -163,7 +163,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a missed shot event.
         """
-        event    = event_factory.to_event(miscellaneous_events.missed_shot_data)
+        event    = event_factory.create(miscellaneous_events.missed_shot_data)
         actual   = self.generator.get_event_string(event)
         expected = None
         self.assertEqual(expected, actual)
@@ -174,7 +174,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a penalty event.
         """
-        event    = event_factory.to_event(penalty_events.penalty_data)
+        event    = event_factory.create(penalty_events.penalty_data)
         actual   = self.generator.get_event_string(event)
         expected = "\nThere is a penalty on Washington.\n\nNic Dowd will serve a 2 minute minor for hi-sticking.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
@@ -186,10 +186,9 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a penalty event when no
             penalty taker is present in the event data.
         """
-        event    = event_factory.to_event(penalty_events.penalty_data_no_taker)
-        actual   = self.generator.get_event_string(event)
+        event    = event_factory.create(penalty_events.penalty_data_no_taker)
         expected = None
-        self.assertEqual(expected, actual)
+        self.assertEqual(expected, event)
 
 
     def test_penalty_shot(self):
@@ -197,7 +196,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a penalty shot event.
         """
-        event    = event_factory.to_event(penalty_events.penalty_shot_data)
+        event    = event_factory.create(penalty_events.penalty_shot_data)
         actual   = self.generator.get_event_string(event)
         expected = "\nThat's a penalty shot for Washington!\n\nThe infraction is against Brenden Dillon for hooking on breakaway.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
@@ -208,7 +207,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a period ready event.
         """
-        event    = event_factory.to_event(period_events.period_ready_data)
+        event    = event_factory.create(period_events.period_ready_data)
         actual   = self.generator.get_event_string(event)
         expected = None
         self.assertEqual(expected, actual)
@@ -219,7 +218,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a period start event.
         """
-        event    = event_factory.to_event(period_events.period_start_data)
+        event    = event_factory.create(period_events.period_start_data)
         actual   = self.generator.get_event_string(event)
         expected = "\nThe second period is starting at Capital One Arena in Washington.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
@@ -230,7 +229,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a period end event.
         """
-        event    = event_factory.to_event(period_events.period_end_data)
+        event    = event_factory.create(period_events.period_end_data)
         actual   = self.generator.get_event_string(event)
         expected = "\nThe first period is over at Capital One Arena in Washington.\n\nGoals\nWashington: 0\nBoston: 0\n\nShots on Goal\nWashington: 33\nBoston: 30\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
@@ -241,7 +240,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a period official event.
         """
-        event    = event_factory.to_event(period_events.period_official_data)
+        event    = event_factory.create(period_events.period_official_data)
         actual   = self.generator.get_event_string(event)
         expected = None
         self.assertEqual(expected, actual)
@@ -252,7 +251,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a goal event.
         """
-        event    = event_factory.to_event(goal_events.goal_data)
+        event    = event_factory.create(goal_events.goal_data)
         actual   = self.generator.get_event_string(event)
         expected = "\nWashington goal!\n\nScored by John Carlson with 15:49 remaining in the 2nd period.\n\nAssisted by Conor Sheary.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
@@ -264,10 +263,9 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a goal event when no scorer is present
             in the event data.
         """
-        event    = event_factory.to_event(goal_events.goal_data_no_scorer)
-        actual   = self.generator.get_event_string(event)
+        event    = event_factory.create(goal_events.goal_data_no_scorer)
         expected = None
-        self.assertEqual(expected, actual)
+        self.assertEqual(expected, event)
 
 
     def test_challenge(self):
@@ -275,7 +273,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a coach's challenge event.
         """
-        event    = event_factory.to_event(miscellaneous_events.challenge_data)
+        event    = event_factory.create(miscellaneous_events.challenge_data)
         actual   = self.generator.get_event_string(event)
         expected = "\nBoston is challenging the ruling on the play.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
@@ -286,7 +284,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a ping event.
         """
-        event    = event_factory.to_event(miscellaneous_events.goalpost_data)
+        event    = event_factory.create(miscellaneous_events.goalpost_data)
         actual   = self.generator.get_event_string(event)
         expected = "\nPing!\n\nAndrew Cogliano's shot on Jordan Binnington hit the post.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
@@ -297,7 +295,7 @@ class TestGenerator(unittest.TestCase):
         Description:
             Test the expected output of a ping event.
         """
-        event    = event_factory.to_event(miscellaneous_events.crossbar_data)
+        event    = event_factory.create(miscellaneous_events.crossbar_data)
         actual   = self.generator.get_event_string(event)
         expected = "\nPing!\n\nNazem Kadri's shot on Jordan Binnington hit the crossbar.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
@@ -313,7 +311,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a game scheduled event.
         """
         previous = GameScheduled(miscellaneous_events.null_event)
-        event    = event_factory.to_event(game_events.game_scheduled_data)
+        event    = event_factory.create(game_events.game_scheduled_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)
@@ -325,7 +323,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a game end event.
         """
         previous = GameEnd(miscellaneous_events.null_event)
-        event    = event_factory.to_event(game_events.game_end_data)
+        event    = event_factory.create(game_events.game_end_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)
@@ -337,7 +335,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a game official event.
         """
         previous = GameOfficial(miscellaneous_events.null_event)
-        event    = event_factory.to_event(game_events.game_official_data)
+        event    = event_factory.create(game_events.game_official_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)
@@ -349,7 +347,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a faceoff event.
         """
         previous = Faceoff(miscellaneous_events.null_event)
-        event    = event_factory.to_event(miscellaneous_events.faceoff_data)
+        event    = event_factory.create(miscellaneous_events.faceoff_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)
@@ -361,7 +359,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a stoppage event.
         """
         previous = Stoppage(miscellaneous_events.null_event)
-        event    = event_factory.to_event(miscellaneous_events.stoppage_data)
+        event    = event_factory.create(miscellaneous_events.stoppage_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)
@@ -373,7 +371,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a shot event.
         """
         previous = Shot(miscellaneous_events.null_event)
-        event    = event_factory.to_event(miscellaneous_events.shot_data)
+        event    = event_factory.create(miscellaneous_events.shot_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)
@@ -385,7 +383,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a hit event.
         """
         previous = Hit(miscellaneous_events.null_event)
-        event    = event_factory.to_event(miscellaneous_events.hit_data)
+        event    = event_factory.create(miscellaneous_events.hit_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)
@@ -397,7 +395,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a blocked shot event.
         """
         previous = BlockedShot(miscellaneous_events.null_event)
-        event    = event_factory.to_event(miscellaneous_events.blocked_shot_data)
+        event    = event_factory.create(miscellaneous_events.blocked_shot_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)
@@ -409,7 +407,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a giveaway event.
         """
         previous = Giveaway(miscellaneous_events.null_event)
-        event    = event_factory.to_event(miscellaneous_events.giveaway_data)
+        event    = event_factory.create(miscellaneous_events.giveaway_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)
@@ -421,7 +419,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a takeaway event.
         """
         previous = Takeaway(miscellaneous_events.null_event)
-        event    = event_factory.to_event(miscellaneous_events.takeaway_data)
+        event    = event_factory.create(miscellaneous_events.takeaway_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)
@@ -433,7 +431,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a missed shot event.
         """
         previous = MissedShot(miscellaneous_events.null_event)
-        event    = event_factory.to_event(miscellaneous_events.missed_shot_data)
+        event    = event_factory.create(miscellaneous_events.missed_shot_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)
@@ -445,7 +443,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a penalty event.
         """
         previous = Penalty(miscellaneous_events.null_event)
-        event    = event_factory.to_event(penalty_events.penalty_data)
+        event    = event_factory.create(penalty_events.penalty_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)
@@ -457,7 +455,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a penalty event.
         """
         previous = PenaltyShot(miscellaneous_events.null_event)
-        event    = event_factory.to_event(penalty_events.penalty_shot_data)
+        event    = event_factory.create(penalty_events.penalty_shot_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)
@@ -469,7 +467,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a period ready event.
         """
         previous = PeriodReady(miscellaneous_events.null_event)
-        event    = event_factory.to_event(period_events.period_ready_data)
+        event    = event_factory.create(period_events.period_ready_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)
@@ -481,7 +479,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a period start event.
         """
         previous = PeriodStart(miscellaneous_events.null_event)
-        event    = event_factory.to_event(period_events.period_start_data)
+        event    = event_factory.create(period_events.period_start_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)
@@ -493,7 +491,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a period end event.
         """
         previous = PeriodEnd(miscellaneous_events.null_event)
-        event    = event_factory.to_event(period_events.period_end_data)
+        event    = event_factory.create(period_events.period_end_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)
@@ -505,7 +503,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a period official event.
         """
         previous = PeriodOfficial(miscellaneous_events.null_event)
-        event    = event_factory.to_event(period_events.period_official_data)
+        event    = event_factory.create(period_events.period_official_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)
@@ -518,7 +516,7 @@ class TestGenerator(unittest.TestCase):
             the goal scorer has changed.
         """
         previous = Goal(goal_events.goal_data_scorer_change)
-        event    = event_factory.to_event(goal_events.goal_data)
+        event    = event_factory.create(goal_events.goal_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = "\nThe goal is now being awarded to John Carlson.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
@@ -531,7 +529,7 @@ class TestGenerator(unittest.TestCase):
             the primary assist has chnaged.
         """
         previous = Goal(goal_events.goal_data_two_assists)
-        event    = event_factory.to_event(goal_events.goal_data_primary_assist_change)
+        event    = event_factory.create(goal_events.goal_data_primary_assist_change)
         actual   = self.generator.get_reply_string(previous, event)
         expected = "\nThe assists have been changed on this goal. The primary assist has been awarded to Alex Ovechkin.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
@@ -544,7 +542,7 @@ class TestGenerator(unittest.TestCase):
             the secondary assist has changed.
         """
         previous = Goal(goal_events.goal_data_two_assists)
-        event    = event_factory.to_event(goal_events.goal_data_secondary_assist_change)
+        event    = event_factory.create(goal_events.goal_data_secondary_assist_change)
         actual   = self.generator.get_reply_string(previous, event)
         expected = "\nThe assists have been changed on this goal. The secondary assist has been awarded to Alex Ovechkin.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
@@ -557,7 +555,7 @@ class TestGenerator(unittest.TestCase):
             the time of the goal has changed.
         """
         previous = Goal(goal_events.goal_data)
-        event    = event_factory.to_event(goal_events.goal_data_time_change)
+        event    = event_factory.create(goal_events.goal_data_time_change)
         actual   = self.generator.get_reply_string(previous, event)
         expected = "\nThe time of this goal has been changed. The scoresheet now indicates this goal occurred with 15:50 remaining in the 2nd period.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
@@ -570,7 +568,7 @@ class TestGenerator(unittest.TestCase):
             a primary assist has been added.
         """
         previous = Goal(goal_events.goal_data_no_assists)
-        event    = event_factory.to_event(goal_events.goal_data_one_assist)
+        event    = event_factory.create(goal_events.goal_data_one_assist)
         actual   = self.generator.get_reply_string(previous, event)
         expected = "\nA primary assist has been awarded to Conor Sheary.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
@@ -583,7 +581,7 @@ class TestGenerator(unittest.TestCase):
             a secondary assist has been added.
         """
         previous = Goal(goal_events.goal_data_one_assist)
-        event    = event_factory.to_event(goal_events.goal_data_two_assists)
+        event    = event_factory.create(goal_events.goal_data_two_assists)
         actual   = self.generator.get_reply_string(previous, event)
         expected = "\nA secondary assist has been awarded to Adam Jones.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
@@ -596,7 +594,7 @@ class TestGenerator(unittest.TestCase):
             both a primary and a secondary assist have been added.
         """
         previous = Goal(goal_events.goal_data_no_assists)
-        event    = event_factory.to_event(goal_events.goal_data_two_assists)
+        event    = event_factory.create(goal_events.goal_data_two_assists)
         actual   = self.generator.get_reply_string(previous, event)
         expected = "\nAssists have been awarded to Conor Sheary and Adam Jones.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
@@ -608,7 +606,7 @@ class TestGenerator(unittest.TestCase):
             Test the expected output of a reply to a coach's challenge event.
         """
         previous = Challenge(miscellaneous_events.null_event)
-        event    = event_factory.to_event(miscellaneous_events.challenge_data)
+        event    = event_factory.create(miscellaneous_events.challenge_data)
         actual   = self.generator.get_reply_string(previous, event)
         expected = None
         self.assertEqual(expected, actual)

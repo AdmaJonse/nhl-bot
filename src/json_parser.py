@@ -32,7 +32,7 @@ class Parser:
         self.data         : Any              = []
         self.new_records  : Any              = []
         self.last_event   : int              = 0
-        self.events       : Dict[int, Event] = {}
+        self.events       : Dict[str, Event] = {}
 
         # load initial data
         self.get_new_records()
@@ -46,11 +46,10 @@ class Parser:
         # to find the last event in the list so that we can start
         # processing only new events from this point.
         for record in self.new_records:
-            event = event_factory.to_event(record)
-            self.check_for_game_over(event)
-            self.last_event = event.event_id
-
-        logger.log_info("starting event processing from ID: " + str(self.last_event))
+            event = event_factory.create(record)
+            if event is not None:
+                self.check_for_game_over(event)
+                self.events[event.id] = event
 
 
     def get_data(self):
@@ -75,13 +74,17 @@ class Parser:
         # Filter out all play data that has already been processed
         def filter_events(data):
 
-            event            : Event = event_factory.to_event(data)
-            is_new_id        : bool  = event.event_id > self.last_event
-            is_new_event     : bool  = is_new_id and event not in self.events.values()
-            is_updated_event : bool  = False
+            event : Event = event_factory.create(data)
+
+            if event is None:
+                return False
+
+            is_new_event     : bool = event.id not in self.events
+            is_updated_event : bool = False
 
             try:
-                is_updated_event = self.events[event.event_id] != event
+                if not is_new_event:
+                    is_updated_event = (self.events[event.id] != event)
             except KeyError:
                 is_updated_event = False
 
@@ -102,14 +105,23 @@ class Parser:
             json.dump(self.data, file, ensure_ascii=False, indent=4)
 
 
-    def check_for_game_over(self, event : Event):
+    def check_for_game_over(self, event : Optional[Event]):
         """
         Description:
             Determine whether the given event indicates that the game is over.
         """
-        self.is_game_over = event.__class__ == GameOfficial
-        if self.is_game_over:
-            logger.log_info("Game Over.")
+        if event is not None:
+            self.is_game_over = event.__class__ == GameOfficial
+            if self.is_game_over:
+                logger.log_info("Game Over.")
+
+
+    def update_generator(self):
+        """
+        Description:
+            Update the line score data stored by the generator.
+        """
+        self.generator.update_line_score(self.data["liveData"]["linescore"])
 
 
     def generate_tweet(self, event : Event):
@@ -172,27 +184,26 @@ class Parser:
         Description:
             Parse new event records from the game data and handle any new events.
         """
+
         self.get_new_records()
+        self.update_generator()
+
         for record in self.new_records:
 
-            event    : Event = event_factory.to_event(record)
-            previous : Event = None
+            event    : Optional[Event] = event_factory.create(record)
+            previous : Optional[Event] = None
 
-            logger.log_info(str(event))
+            if event is not None:
 
-            try:
-                previous = self.events[event.event_id]
-            except KeyError:
-                previous = None
+                logger.log_info(event)
 
-            # update any records stored by the generator
-            self.generator.update_line_score(self.data["liveData"]["linescore"])
+                if event.id in self.events:
+                    previous = self.events[event.id]
 
-            if previous is not None and previous.has_tweeted:
-                self.generate_reply(previous, event)
-            else:
-                self.generate_tweet(event)
+                if previous is not None and previous.has_tweeted:
+                    self.generate_reply(previous, event)
+                else:
+                    self.generate_tweet(event)
 
-            self.events[event.event_id] = event
-            self.last_event = event.event_id
-            self.check_for_game_over(event)
+                self.events[event.id] = event
+                self.check_for_game_over(event)

@@ -2,7 +2,11 @@
 Description:
     This module defines the Takeaway event.
 """
+
+from typing import Optional
+
 from src.events.event import Event, get_player_name
+from src.exceptions import InsufficientData
 
 class Takeaway(Event):
     """
@@ -12,7 +16,26 @@ class Takeaway(Event):
 
     def __init__(self, data):
         super().__init__(data)
-        self.player = get_player_name(data, "PlayerID")
+        self._player : Optional[str] = get_player_name(data, "PlayerID")
+
+        if self.player is None:
+            raise InsufficientData
 
     def __str__(self):
-        return str(self.event_id) + " = Takeaway - " + self.description
+        return str(self.time) + " = Takeaway - " + self.description
+
+    def __eq__(self, other):
+        return (isinstance(self, Takeaway) and
+                isinstance(other, Takeaway) and
+                self.period  == other.period and
+                self.time    == other.time)
+
+    @property
+    def player(self) -> Optional[str]:
+        """Getter for the player."""
+        return self._player
+
+    @player.setter
+    def player(self, player : str):
+        """Setter for the player."""
+        self._player = player
