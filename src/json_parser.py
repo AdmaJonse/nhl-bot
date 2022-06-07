@@ -76,18 +76,19 @@ class Parser:
 
             event : Event = event_factory.create(data)
 
-            if event is not None:
+            if event is None:
+                return False
 
-                is_new_event     : bool  = event.id not in self.events
-                is_updated_event : bool  = False
+            is_new_event     : bool = event.id not in self.events
+            is_updated_event : bool = False
 
-                try:
-                    if not is_new_event:
-                        is_updated_event = (self.events[event.id] != event)
-                except KeyError:
-                    is_updated_event = False
+            try:
+                if not is_new_event:
+                    is_updated_event = (self.events[event.id] != event)
+            except KeyError:
+                is_updated_event = False
 
-                return is_new_event or is_updated_event
+            return is_new_event or is_updated_event
 
         self.get_data()
         all_plays : Any = self.data["liveData"]["plays"]["allPlays"]
