@@ -26,7 +26,7 @@ class MissedShot(Event):
             raise InsufficientData
 
     def __str__(self):
-        return str(self.time) + " = Missed Shot - " + self.description
+        return str(self.id) + " - " + str(self.time) + " = Missed Shot - " + self.description
 
     def __eq__(self, other):
         return (isinstance(self, MissedShot) and
@@ -35,6 +35,13 @@ class MissedShot(Event):
                 self.time    == other.time and
                 self.shooter == other.shooter and
                 self.goalie  == other.goalie)
+
+    @property
+    def code(self) -> str:
+        """
+        Return a five-character code representing the event type.
+        """
+        return "MSSHT"
 
     @property
     def shooter(self) -> Optional[str]:

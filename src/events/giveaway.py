@@ -22,7 +22,7 @@ class Giveaway(Event):
             raise InsufficientData
 
     def __str__(self):
-        return str(self.time) + " = Giveaway - " + self.description
+        return str(self.id) + " - " + str(self.time) + " = Giveaway - " + self.description
 
     def __eq__(self, other):
         return (isinstance(self, Giveaway) and
@@ -30,6 +30,13 @@ class Giveaway(Event):
                 self.period == other.period and
                 self.time   == other.time and
                 self.player == other.player)
+
+    @property
+    def code(self) -> str:
+        """
+        Return a four letter code representing the event type.
+        """
+        return " GIVE"
 
     @property
     def player(self) -> Optional[str]:
