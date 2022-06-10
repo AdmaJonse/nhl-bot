@@ -24,13 +24,20 @@ class Challenge(Event):
             raise InsufficientData
 
     def __str__(self):
-        return str(self.time) + " = Challenge - " + self.description
+        return str(self.id) + " - " + str(self.time) + " = Challenge - " + self.description
 
     def __eq__(self, other):
         return (isinstance(self, Challenge) and
                 isinstance(other, Challenge) and
                 self.period  == other.period and
                 self.time    == other.time)
+
+    @property
+    def code(self) -> str:
+        """
+        Return a five-character code representing the event type.
+        """
+        return "CHLNG"
 
     @property
     def team(self) -> Optional[str]:

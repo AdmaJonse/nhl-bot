@@ -54,7 +54,7 @@ class Penalty(Event):
             raise InsufficientData
 
     def __str__(self):
-        return str(self.time) + " = Penalty - " + self.description
+        return str(self.id) + " - " + str(self.time) + " = Penalty - " + self.description
 
     def __eq__(self, other):
         return (isinstance(self, Penalty) and
@@ -66,6 +66,13 @@ class Penalty(Event):
                 self.reason   == other.reason and
                 self.severity == other.severity and
                 self.minutes  == other.minutes)
+
+    @property
+    def code(self) -> str:
+        """
+        Return a five-character code representing the event type.
+        """
+        return "PNLTY"
 
     @property
     def taker(self) -> Optional[str]:

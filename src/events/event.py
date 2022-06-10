@@ -106,6 +106,13 @@ class Event:
                 self.time == other.time)
 
     @property
+    def code(self) -> str:
+        """
+        Return a four letter code representing the event type.
+        """
+        return "EVENT"
+
+    @property
     def id(self) -> str:
         """
         Return a unique identifier for this event that will not change, even if the event_id int
@@ -117,9 +124,9 @@ class Event:
             result = ""
             for word in words[:2]:
                 result += word[0].upper()
-            return result
+            return result.ljust(2, '0')
 
-        name        : str = self.__class__.__name__
+        name        : str = self.code
         time        : str = self.timestamp.strftime("%H%M%S")
         description : str = inits(str(self.description))
         return name + "-" + time + "-" + description

@@ -26,7 +26,7 @@ class BlockedShot(Event):
             raise InsufficientData
 
     def __str__(self):
-        return str(self.time) + " = Blocked Shot - " + self.description
+        return str(self.id) + " - " + str(self.time) + " = Blocked Shot - " + self.description
 
     def __eq__(self, other):
         return (isinstance(self, BlockedShot) and
@@ -35,6 +35,13 @@ class BlockedShot(Event):
                 self.time    == other.time and
                 self.shooter == other.shooter and
                 self.blocker == other.blocker)
+
+    @property
+    def code(self) -> str:
+        """
+        Return a five-character code representing the event type.
+        """
+        return "BLOCK"
 
     @property
     def shooter(self) -> Optional[str]:

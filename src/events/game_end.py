@@ -16,11 +16,18 @@ class GameEnd(Event):
     """
 
     def __str__(self):
-        return str(self.time) + " = Game End - " + self.description
+        return str(self.id) + " - " + str(self.time) + " = Game End - " + self.description
 
     def __eq__(self, other):
         return (isinstance(self, GameEnd) and
                 isinstance(other, GameEnd))
+
+    @property
+    def code(self) -> str:
+        """
+        Return a four letter code representing the event type.
+        """
+        return "GMEND"
 
     def get_post(self, game_data : GameData) -> Optional[str]:
         """

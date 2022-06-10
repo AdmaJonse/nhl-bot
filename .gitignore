@@ -1,10 +1,7 @@
 config/.env
 config/keys.txt
 .mypy_cache
-src/__pycache__
-src/events/__pycache__
-test/__pycache__
-test/test_data/__pycache__
+__pycache__
 test/test_data/games
 data.json
 job.log

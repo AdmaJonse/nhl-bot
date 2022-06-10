@@ -12,10 +12,17 @@ class Stoppage(Event):
     """
 
     def __str__(self):
-        return str(self.time) + " = Stoppage - " + self.description
+        return str(self.id) + " - " + str(self.time) + " = Stoppage - " + self.description
 
     def __eq__(self, other):
         return (isinstance(self, Stoppage) and
                 isinstance(other, Stoppage) and
                 self.period  == other.period and
                 self.time    == other.time)
+
+    @property
+    def code(self) -> str:
+        """
+        Return a five-character code representing the event type.
+        """
+        return " STOP"

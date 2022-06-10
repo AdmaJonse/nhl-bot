@@ -26,7 +26,7 @@ class Hit(Event):
             raise InsufficientData
 
     def __str__(self):
-        return str(self.time) + " = Hit - " + self.description
+        return str(self.id) + " - " + str(self.time) + " = Hit - " + self.description
 
     def __eq__(self, other):
         return (isinstance(self, Hit) and
@@ -35,6 +35,13 @@ class Hit(Event):
                 self.time   == other.time and
                 self.hitter == other.hitter and
                 self.hittee == other.hittee)
+
+    @property
+    def code(self) -> str:
+        """
+        Return a four letter code representing the event type.
+        """
+        return "  HIT"
 
     @property
     def hitter(self) -> Optional[str]:

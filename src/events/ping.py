@@ -37,15 +37,23 @@ class Ping(Event):
             raise InsufficientData
 
     def __str__(self):
-        return str(self.time) + " = Ping! - " + self.description
+        return str(self.id) + " - " + str(self.time) + " = Ping! - " + self.description
 
     def __eq__(self, other):
         return (isinstance(self, Ping) and
                 isinstance(other, Ping) and
-                self.period  == other.period and
-                self.time    == other.time and
-                self.shooter == other.shooter and
-                self.goalie  == other.goalie)
+                self.period    == other.period and
+                self.time      == other.time and
+                self.shooter   == other.shooter and
+                self.goalie    == other.goalie and
+                self.goal_post == other.goal_post)
+
+    @property
+    def code(self) -> str:
+        """
+        Return a five-character code representing the event type.
+        """
+        return " PING"
 
     @property
     def shooter(self) -> Optional[str]:

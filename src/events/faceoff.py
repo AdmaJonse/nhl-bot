@@ -26,7 +26,7 @@ class Faceoff(Event):
             raise InsufficientData
 
     def __str__(self):
-        return str(self.time) + " = Faceoff - " + self.description
+        return str(self.id) + " - " + str(self.time) + " = Faceoff - " + self.description
 
     def __eq__(self, other):
         return (isinstance(self, Faceoff) and
@@ -35,6 +35,13 @@ class Faceoff(Event):
                 self.time   == other.time and
                 self.winner == other.winner and
                 self.loser  == other.loser)
+
+    @property
+    def code(self) -> str:
+        """
+        Return a four letter code representing the event type.
+        """
+        return "FCOFF"
 
     @property
     def winner(self) -> Optional[str]:

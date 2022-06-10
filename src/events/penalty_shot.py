@@ -40,7 +40,7 @@ class PenaltyShot(Event):
             raise InsufficientData
 
     def __str__(self):
-        return str(self.time) + " = Penalty - " + self.description
+        return str(self.id) + " - " + str(self.time) + " = Penalty - " + self.description
 
     def __eq__(self, other):
         return (isinstance(self, PenaltyShot) and
@@ -50,6 +50,13 @@ class PenaltyShot(Event):
                 self.taker    == other.taker and
                 self.drawn_by == other.drawn_by and
                 self.reason   == other.reason)
+
+    @property
+    def code(self) -> str:
+        """
+        Return a five-character code representing the event type.
+        """
+        return "PNSHT"
 
     @property
     def taker(self) -> Optional[str]:
