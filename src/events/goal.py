@@ -10,6 +10,7 @@ from src import templates
 from src.events.event import Event, get_player_name, get_team, get_value
 from src.exceptions import InsufficientData
 from src.game_data import GameData
+from src.utils import pad
 
 class Goal(Event):
     """
@@ -58,6 +59,20 @@ class Goal(Event):
         Return a four letter code representing the event type.
         """
         return " GOAL"
+
+    @property
+    def blob(self) -> str:
+        """
+        Return a unique identifier that describes this specific event.
+        """
+        # We need to account for possible changes to scorer, assists, etc, so we
+        # avoid using player names in the blob. We'll just use the score here
+        # since it should theoretically always be the same for a specific goal.
+
+        home : str = str(self.home_goals)
+        away : str = str(self.away_goals)
+        blob : str = home + "TO" + away
+        return pad(blob, 6)
 
     @property
     def team(self) -> Optional[str]:

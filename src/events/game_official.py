@@ -19,8 +19,5 @@ class GameOfficial(Event):
                 isinstance(other, GameOfficial))
 
     @property
-    def code(self) -> str:
-        """
-        Return a five-character code representing the event type.
-        """
-        return "GMOFF"
+    def id(self) -> str:
+        return "GAME-OFFICIAL"

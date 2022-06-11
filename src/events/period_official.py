@@ -19,8 +19,5 @@ class PeriodOfficial(Event):
                 self.period == other.period)
 
     @property
-    def code(self) -> str:
-        """
-        Return a five-character code representing the event type.
-        """
-        return "PDOFF"
+    def id(self) -> str:
+        return "PER" + str(self.period) + "-OFFICIAL"

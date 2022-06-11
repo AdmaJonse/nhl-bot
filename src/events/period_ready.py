@@ -20,8 +20,5 @@ class PeriodReady(Event):
                 self.period == other.period)
 
     @property
-    def code(self) -> str:
-        """
-        Return a five-character code representing the event type.
-        """
-        return "PDRDY"
+    def id(self) -> str:
+        return "PER" + str(self.period) + "-READY"

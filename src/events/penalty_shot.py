@@ -10,6 +10,7 @@ from src import templates
 from src.events.event import Event, get_player_name, get_team, get_value
 from src.exceptions import InsufficientData
 from src.game_data import GameData
+from src.utils import initials, pad
 
 class PenaltyShot(Event):
     """
@@ -56,7 +57,17 @@ class PenaltyShot(Event):
         """
         Return a five-character code representing the event type.
         """
-        return "PNSHT"
+        return "PENSH"
+
+    @property
+    def blob(self) -> str:
+        """
+        Return a unique identifier that describes this specific event.
+        """
+        taker : str = initials(self.taker)
+        drawn : str = initials(self.drawn_by)
+        blob  : str = taker + "ON" + drawn
+        return pad(blob, 6)
 
     @property
     def taker(self) -> Optional[str]:

@@ -24,11 +24,8 @@ class PeriodStart(Event):
                 self.period == other.period)
 
     @property
-    def code(self) -> str:
-        """
-        Return a five-character code representing the event type.
-        """
-        return "PDSTA"
+    def id(self) -> str:
+        return "PER" + str(self.period) + "-START"
 
     def get_post(self, game_data : GameData) -> Optional[str]:
         """

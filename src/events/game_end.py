@@ -23,11 +23,8 @@ class GameEnd(Event):
                 isinstance(other, GameEnd))
 
     @property
-    def code(self) -> str:
-        """
-        Return a four letter code representing the event type.
-        """
-        return "GMEND"
+    def id(self) -> str:
+        return "GAME-END"
 
     def get_post(self, game_data : GameData) -> Optional[str]:
         """
