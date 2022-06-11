@@ -19,8 +19,5 @@ class GameScheduled(Event):
                 isinstance(other, GameScheduled))
 
     @property
-    def code(self) -> str:
-        """
-        Return a five-character code representing the event type.
-        """
-        return "GMSCD"
+    def id(self) -> str:
+        return "GAME-SCHEDULED"

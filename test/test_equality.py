@@ -62,58 +62,58 @@ class TestEquality(unittest.TestCase):
         child4 = BlockedShot(blocked_shot_events.blocked_shot_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
         self.assertNotEqual(parent, child4)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1, child2)
         self.assertNotEqual(child1, child3)
         self.assertNotEqual(child2, child3)
         self.assertNotEqual(child2, child4)
         self.assertNotEqual(child3, child4)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child4)
         self.assertEqual(child4, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
         self.assertNotEqual(child4, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is not equivalent
+        # Test Case 8 - different period
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_period)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is not equivalent
+        # Test Case 10 - different period time remaining
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_period_time_remaining)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 11 - different shooter is not equivalent
+        # Test Case 11 - different shooter
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_shooter)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 12 - different blocker is not equivalent
+        # Test Case 12 - different blocker
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_blocker)
         self.assertNotEqual(child1, diff)
 
@@ -127,60 +127,60 @@ class TestEquality(unittest.TestCase):
         child4 = BlockedShot(blocked_shot_events.blocked_shot_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
         self.assertNotEqual(parent.id, child4.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1.id, child2.id)
         self.assertNotEqual(child1.id, child3.id)
         self.assertNotEqual(child2.id, child3.id)
         self.assertNotEqual(child2.id, child4.id)
         self.assertNotEqual(child3.id, child4.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child4.id)
         self.assertEqual(child4.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
         self.assertNotEqual(child4.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_datetime)
         self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 11 - different shooter is still equivalent
+        # Test Case 11 - different shooter
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_shooter)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 12 - different blocker is still equivalent
+        # Test Case 12 - different blocker
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_blocker)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
 
     def test_challenge_equality(self):
@@ -191,43 +191,43 @@ class TestEquality(unittest.TestCase):
         child3 = Challenge(challenge_events.challenge_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1, child2)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child3)
         self.assertEqual(child3, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Challenge(challenge_events.challenge_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Challenge(challenge_events.challenge_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = Challenge(challenge_events.challenge_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is not equivalent
+        # Test Case 8 - different period
         diff = Challenge(challenge_events.challenge_different_period)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Challenge(challenge_events.challenge_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is not equivalent
+        # Test Case 10 - different period time remaining
         diff = Challenge(challenge_events.challenge_different_period_time_remaining)
         self.assertNotEqual(child1, diff)
 
@@ -240,43 +240,43 @@ class TestEquality(unittest.TestCase):
         child3 = Challenge(challenge_events.challenge_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1.id, child2.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child3.id)
         self.assertEqual(child3.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Challenge(challenge_events.challenge_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Challenge(challenge_events.challenge_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = Challenge(challenge_events.challenge_different_datetime)
         self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = Challenge(challenge_events.challenge_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Challenge(challenge_events.challenge_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = Challenge(challenge_events.challenge_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
@@ -290,58 +290,58 @@ class TestEquality(unittest.TestCase):
         child4 = Faceoff(faceoff_events.faceoff_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
         self.assertNotEqual(parent, child4)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1, child2)
         self.assertNotEqual(child1, child3)
         self.assertNotEqual(child2, child3)
         self.assertNotEqual(child2, child4)
         self.assertNotEqual(child3, child4)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child4)
         self.assertEqual(child4, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
         self.assertNotEqual(child4, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Faceoff(faceoff_events.faceoff_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Faceoff(faceoff_events.faceoff_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = Faceoff(faceoff_events.faceoff_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is not equivalent
+        # Test Case 8 - different period
         diff = Faceoff(faceoff_events.faceoff_different_period)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Faceoff(faceoff_events.faceoff_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is not equivalent
+        # Test Case 10 - different period time remaining
         diff = Faceoff(faceoff_events.faceoff_different_period_time_remaining)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 11 - different winner is not equivalent
+        # Test Case 11 - different winner
         diff = Faceoff(faceoff_events.faceoff_different_winner)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 12 - different loser is not equivalent
+        # Test Case 12 - different loser
         diff = Faceoff(faceoff_events.faceoff_different_loser)
         self.assertNotEqual(child1, diff)
 
@@ -355,60 +355,60 @@ class TestEquality(unittest.TestCase):
         child4 = Faceoff(faceoff_events.faceoff_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
         self.assertNotEqual(parent.id, child4.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1.id, child2.id)
         self.assertNotEqual(child1.id, child3.id)
         self.assertNotEqual(child2.id, child3.id)
         self.assertNotEqual(child2.id, child4.id)
         self.assertNotEqual(child3.id, child4.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child4.id)
         self.assertEqual(child4.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
         self.assertNotEqual(child4.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Faceoff(faceoff_events.faceoff_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Faceoff(faceoff_events.faceoff_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = Faceoff(faceoff_events.faceoff_different_datetime)
         self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = Faceoff(faceoff_events.faceoff_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Faceoff(faceoff_events.faceoff_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = Faceoff(faceoff_events.faceoff_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 11 - different winner is still equivalent
+        # Test Case 11 - different winner
         diff = Faceoff(faceoff_events.faceoff_different_winner)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 12 - different loser is still equivalent
+        # Test Case 12 - different loser
         diff = Faceoff(faceoff_events.faceoff_different_loser)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
 
     def test_game_end_equality(self):
@@ -419,45 +419,45 @@ class TestEquality(unittest.TestCase):
         child3 = GameEnd(game_end_events.game_end_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
 
-        # Test Case 2 - Unlike instances are equivalent
+        # Test Case 2 - Unlike instances
         self.assertEqual(child1, child2)
         self.assertEqual(child2, child3)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child3)
         self.assertEqual(child3, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = GameEnd(game_end_events.game_end_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = GameEnd(game_end_events.game_end_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = GameEnd(game_end_events.game_end_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = GameEnd(game_end_events.game_end_different_period)
         self.assertEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = GameEnd(game_end_events.game_end_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = GameEnd(game_end_events.game_end_different_period_time_remaining)
         self.assertEqual(child1, diff)
 
@@ -471,45 +471,45 @@ class TestEquality(unittest.TestCase):
         child3 = GameEnd(game_end_events.game_end_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
-        self.assertNotEqual(child1.id, child2.id)
-        self.assertNotEqual(child2.id, child3.id)
+        # Test Case 2 - Unlike instances
+        self.assertEqual(child1.id, child2.id)
+        self.assertEqual(child2.id, child3.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child3.id)
         self.assertEqual(child3.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = GameEnd(game_end_events.game_end_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = GameEnd(game_end_events.game_end_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = GameEnd(game_end_events.game_end_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
+        self.assertEqual(child1.id, diff.id)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = GameEnd(game_end_events.game_end_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = GameEnd(game_end_events.game_end_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = GameEnd(game_end_events.game_end_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
@@ -522,45 +522,45 @@ class TestEquality(unittest.TestCase):
         child3 = GameOfficial(game_official_events.game_official_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
 
-        # Test Case 2 - Unlike instances are equivalent
+        # Test Case 2 - Unlike instances
         self.assertEqual(child1, child2)
         self.assertEqual(child2, child3)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child3)
         self.assertEqual(child3, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = GameOfficial(game_official_events.game_official_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = GameOfficial(game_official_events.game_official_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = GameOfficial(game_official_events.game_official_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = GameOfficial(game_official_events.game_official_different_period)
         self.assertEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = GameOfficial(game_official_events.game_official_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = GameOfficial(game_official_events.game_official_different_period_time_remaining)
         self.assertEqual(child1, diff)
 
@@ -574,45 +574,45 @@ class TestEquality(unittest.TestCase):
         child3 = GameOfficial(game_official_events.game_official_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
-        self.assertNotEqual(child1.id, child2.id)
-        self.assertNotEqual(child2.id, child3.id)
+        # Test Case 2 - Unlike instances
+        self.assertEqual(child1.id, child2.id)
+        self.assertEqual(child2.id, child3.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child3.id)
         self.assertEqual(child3.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = GameOfficial(game_official_events.game_official_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = GameOfficial(game_official_events.game_official_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = GameOfficial(game_official_events.game_official_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
+        self.assertEqual(child1.id, diff.id)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = GameOfficial(game_official_events.game_official_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = GameOfficial(game_official_events.game_official_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = GameOfficial(game_official_events.game_official_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
@@ -625,45 +625,45 @@ class TestEquality(unittest.TestCase):
         child3 = GameScheduled(game_scheduled_events.game_scheduled_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
 
-        # Test Case 2 - Unlike instances are equivalent
+        # Test Case 2 - Unlike instances
         self.assertEqual(child1, child2)
         self.assertEqual(child2, child3)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child3)
         self.assertEqual(child3, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = GameScheduled(game_scheduled_events.game_scheduled_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = GameScheduled(game_scheduled_events.game_scheduled_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = GameScheduled(game_scheduled_events.game_scheduled_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = GameScheduled(game_scheduled_events.game_scheduled_different_period)
         self.assertEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = GameScheduled(game_scheduled_events.game_scheduled_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = GameScheduled(game_scheduled_events.game_scheduled_different_period_time_remaining)
         self.assertEqual(child1, diff)
 
@@ -677,45 +677,45 @@ class TestEquality(unittest.TestCase):
         child3 = GameScheduled(game_scheduled_events.game_scheduled_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
-        self.assertNotEqual(child1.id, child2.id)
-        self.assertNotEqual(child2.id, child3.id)
+        # Test Case 2 - Unlike instances
+        self.assertEqual(child1.id, child2.id)
+        self.assertEqual(child2.id, child3.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child3.id)
         self.assertEqual(child3.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = GameScheduled(game_scheduled_events.game_scheduled_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = GameScheduled(game_scheduled_events.game_scheduled_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = GameScheduled(game_scheduled_events.game_scheduled_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
+        self.assertEqual(child1.id, diff.id)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = GameScheduled(game_scheduled_events.game_scheduled_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = GameScheduled(game_scheduled_events.game_scheduled_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = GameScheduled(game_scheduled_events.game_scheduled_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
@@ -729,54 +729,54 @@ class TestEquality(unittest.TestCase):
         child4 = Giveaway(giveaway_events.giveaway_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
         self.assertNotEqual(parent, child4)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1, child2)
         self.assertNotEqual(child1, child3)
         self.assertNotEqual(child2, child3)
         self.assertNotEqual(child2, child4)
         self.assertNotEqual(child3, child4)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child4)
         self.assertEqual(child4, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
         self.assertNotEqual(child4, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Giveaway(giveaway_events.giveaway_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Giveaway(giveaway_events.giveaway_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = Giveaway(giveaway_events.giveaway_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is not equivalent
+        # Test Case 8 - different period
         diff = Giveaway(giveaway_events.giveaway_different_period)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Giveaway(giveaway_events.giveaway_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is not equivalent
+        # Test Case 10 - different period time remaining
         diff = Giveaway(giveaway_events.giveaway_different_period_time_remaining)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 11 - different player is not equivalent
+        # Test Case 11 - different player
         diff = Giveaway(giveaway_events.giveaway_different_player)
         self.assertNotEqual(child1, diff)
 
@@ -790,56 +790,56 @@ class TestEquality(unittest.TestCase):
         child4 = Giveaway(giveaway_events.giveaway_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
         self.assertNotEqual(parent.id, child4.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1.id, child2.id)
         self.assertNotEqual(child1.id, child3.id)
         self.assertNotEqual(child2.id, child3.id)
         self.assertNotEqual(child2.id, child4.id)
         self.assertNotEqual(child3.id, child4.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child4.id)
         self.assertEqual(child4.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
         self.assertNotEqual(child4.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Giveaway(giveaway_events.giveaway_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Giveaway(giveaway_events.giveaway_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = Giveaway(giveaway_events.giveaway_different_datetime)
         self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = Giveaway(giveaway_events.giveaway_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Giveaway(giveaway_events.giveaway_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = Giveaway(giveaway_events.giveaway_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 11 - different player is still equivalent
+        # Test Case 11 - different player
         diff = Giveaway(giveaway_events.giveaway_different_player)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
 
     def test_goal_equality(self):
@@ -851,78 +851,78 @@ class TestEquality(unittest.TestCase):
         child4 = Goal(goal_events.goal_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
         self.assertNotEqual(parent, child4)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1, child2)
         self.assertNotEqual(child1, child3)
         self.assertNotEqual(child2, child3)
         self.assertNotEqual(child2, child4)
         self.assertNotEqual(child3, child4)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child4)
         self.assertEqual(child4, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
         self.assertNotEqual(child4, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Goal(goal_events.goal_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Goal(goal_events.goal_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = Goal(goal_events.goal_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is not equivalent
+        # Test Case 8 - different period
         diff = Goal(goal_events.goal_different_period)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Goal(goal_events.goal_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is not equivalent
+        # Test Case 10 - different period time remaining
         diff = Goal(goal_events.goal_different_period_time_remaining)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 11 - different scorer is not equivalent
+        # Test Case 11 - different scorer
         diff = Goal(goal_events.goal_different_scorer)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 12 - different primary assist is not equivalent
+        # Test Case 12 - different primary assist
         diff = Goal(goal_events.goal_different_primary_assist)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 13 - different secondary assist is not equivalent
+        # Test Case 13 - different secondary assist
         diff = Goal(goal_events.goal_different_secondary_assist)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 14 - different goalie is not equivalent
+        # Test Case 14 - different goalie
         diff = Goal(goal_events.goal_different_goalie)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 15 - different strength is not equivalent
+        # Test Case 15 - different strength
         diff = Goal(goal_events.goal_different_strength)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 16 - different empty net is not equivalent
+        # Test Case 16 - different empty net
         diff = Goal(goal_events.goal_different_empty_net)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 17 - different team is not equivalent
+        # Test Case 17 - different team
         diff = Goal(goal_events.goal_different_team)
         self.assertNotEqual(child1, diff)
 
@@ -936,78 +936,78 @@ class TestEquality(unittest.TestCase):
         child4 = Goal(goal_events.goal_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
         self.assertNotEqual(parent.id, child4.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1.id, child2.id)
         self.assertNotEqual(child1.id, child3.id)
         self.assertNotEqual(child2.id, child3.id)
         self.assertNotEqual(child2.id, child4.id)
         self.assertNotEqual(child3.id, child4.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child4.id)
         self.assertEqual(child4.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
         self.assertNotEqual(child4.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Goal(goal_events.goal_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Goal(goal_events.goal_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = Goal(goal_events.goal_different_datetime)
         self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = Goal(goal_events.goal_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Goal(goal_events.goal_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different period time remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = Goal(goal_events.goal_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 11 - different scorer is still equivalent
+        # Test Case 11 - different scorer
         diff = Goal(goal_events.goal_different_scorer)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 12 - different primary assist is still equivalent
+        # Test Case 12 - different primary assist
         diff = Goal(goal_events.goal_different_primary_assist)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 13 - different secondary assist is still equivalent
+        # Test Case 13 - different secondary assist
         diff = Goal(goal_events.goal_different_secondary_assist)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 14 - different goalie is still equivalent
+        # Test Case 14 - different goalie
         diff = Goal(goal_events.goal_different_goalie)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 15 - different strength is still equivalent
+        # Test Case 15 - different strength
         diff = Goal(goal_events.goal_different_strength)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 16 - different empty net is still equivalent
+        # Test Case 16 - different empty net
         diff = Goal(goal_events.goal_different_empty_net)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 17 - different team is still equivalent
+        # Test Case 17 - different team
         diff = Goal(goal_events.goal_different_team)
         self.assertEqual(child1.id, diff.id)
 
@@ -1021,58 +1021,58 @@ class TestEquality(unittest.TestCase):
         child4 = Hit(hit_events.hit_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
         self.assertNotEqual(parent, child4)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1, child2)
         self.assertNotEqual(child1, child3)
         self.assertNotEqual(child2, child3)
         self.assertNotEqual(child2, child4)
         self.assertNotEqual(child3, child4)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child4)
         self.assertEqual(child4, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
         self.assertNotEqual(child4, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Hit(hit_events.hit_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Hit(hit_events.hit_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = Hit(hit_events.hit_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is not equivalent
+        # Test Case 8 - different period
         diff = Hit(hit_events.hit_different_period)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Hit(hit_events.hit_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is not equivalent
+        # Test Case 10 - different period time remaining
         diff = Hit(hit_events.hit_different_period_time_remaining)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 11 - different hitter is not equivalent
+        # Test Case 11 - different hitter
         diff = Hit(hit_events.hit_different_hitter)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 12 - different hittee is not equivalent
+        # Test Case 12 - different hittee
         diff = Hit(hit_events.hit_different_hittee)
         self.assertNotEqual(child1, diff)
 
@@ -1086,60 +1086,60 @@ class TestEquality(unittest.TestCase):
         child4 = Hit(hit_events.hit_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
         self.assertNotEqual(parent.id, child4.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1.id, child2.id)
         self.assertNotEqual(child1.id, child3.id)
         self.assertNotEqual(child2.id, child3.id)
         self.assertNotEqual(child2.id, child4.id)
         self.assertNotEqual(child3.id, child4.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child4.id)
         self.assertEqual(child4.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
         self.assertNotEqual(child4.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Hit(hit_events.hit_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Hit(hit_events.hit_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = Hit(hit_events.hit_different_datetime)
         self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = Hit(hit_events.hit_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Hit(hit_events.hit_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = Hit(hit_events.hit_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 11 - different hitter is still equivalent
+        # Test Case 11 - different hitter
         diff = Hit(hit_events.hit_different_hitter)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 12 - different hittee is still equivalent
+        # Test Case 12 - different hittee
         diff = Hit(hit_events.hit_different_hittee)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
 
     def test_missed_shot_equality(self):
@@ -1151,58 +1151,58 @@ class TestEquality(unittest.TestCase):
         child4 = MissedShot(missed_shot_events.missed_shot_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
         self.assertNotEqual(parent, child4)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1, child2)
         self.assertNotEqual(child1, child3)
         self.assertNotEqual(child2, child3)
         self.assertNotEqual(child2, child4)
         self.assertNotEqual(child3, child4)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child4)
         self.assertEqual(child4, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
         self.assertNotEqual(child4, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = MissedShot(missed_shot_events.missed_shot_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = MissedShot(missed_shot_events.missed_shot_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = MissedShot(missed_shot_events.missed_shot_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is not equivalent
+        # Test Case 8 - different period
         diff = MissedShot(missed_shot_events.missed_shot_different_period)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = MissedShot(missed_shot_events.missed_shot_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is not equivalent
+        # Test Case 10 - different period time remaining
         diff = MissedShot(missed_shot_events.missed_shot_different_period_time_remaining)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 11 - different shooter is not equivalent
+        # Test Case 11 - different shooter
         diff = MissedShot(missed_shot_events.missed_shot_different_shooter)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 12 - different goalie is not equivalent
+        # Test Case 12 - different goalie
         diff = MissedShot(missed_shot_events.missed_shot_different_goalie)
         self.assertNotEqual(child1, diff)
 
@@ -1216,60 +1216,60 @@ class TestEquality(unittest.TestCase):
         child4 = MissedShot(missed_shot_events.missed_shot_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
         self.assertNotEqual(parent.id, child4.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1.id, child2.id)
         self.assertNotEqual(child1.id, child3.id)
         self.assertNotEqual(child2.id, child3.id)
         self.assertNotEqual(child2.id, child4.id)
         self.assertNotEqual(child3.id, child4.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child4.id)
         self.assertEqual(child4.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
         self.assertNotEqual(child4.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = MissedShot(missed_shot_events.missed_shot_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = MissedShot(missed_shot_events.missed_shot_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = MissedShot(missed_shot_events.missed_shot_different_datetime)
         self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = MissedShot(missed_shot_events.missed_shot_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = MissedShot(missed_shot_events.missed_shot_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = MissedShot(missed_shot_events.missed_shot_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 11 - different shooter is still equivalent
+        # Test Case 11 - different shooter
         diff = MissedShot(missed_shot_events.missed_shot_different_shooter)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 12 - different goalie is still equivalent
+        # Test Case 12 - different goalie
         diff = MissedShot(missed_shot_events.missed_shot_different_goalie)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
 
     def test_penalty_shot_equality(self):
@@ -1281,62 +1281,62 @@ class TestEquality(unittest.TestCase):
         child4 = PenaltyShot(penalty_shot_events.penalty_shot_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
         self.assertNotEqual(parent, child4)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1, child2)
         self.assertNotEqual(child1, child3)
         self.assertNotEqual(child2, child3)
         self.assertNotEqual(child2, child4)
         self.assertNotEqual(child3, child4)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child4)
         self.assertEqual(child4, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
         self.assertNotEqual(child4, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is not equivalent
+        # Test Case 8 - different period
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_period)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is not equivalent
+        # Test Case 10 - different period time remaining
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_period_time_remaining)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 11 - different taker is not equivalent
+        # Test Case 11 - different taker
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_taker)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 12 - different drawn by is not equivalent
+        # Test Case 12 - different drawn by
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_drawn_by)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 13 - different reason is not equivalent
+        # Test Case 13 - different reason
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_reason)
         self.assertNotEqual(child1, diff)
 
@@ -1350,60 +1350,60 @@ class TestEquality(unittest.TestCase):
         child4 = PenaltyShot(penalty_shot_events.penalty_shot_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
         self.assertNotEqual(parent.id, child4.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1.id, child2.id)
         self.assertNotEqual(child1.id, child3.id)
         self.assertNotEqual(child2.id, child3.id)
         self.assertNotEqual(child2.id, child4.id)
         self.assertNotEqual(child3.id, child4.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child4.id)
         self.assertEqual(child4.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
         self.assertNotEqual(child4.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_datetime)
         self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 11 - different taker is still equivalent
+        # Test Case 11 - different taker
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_taker)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 12 - different drawn by is still equivalent
+        # Test Case 12 - different drawn by
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_drawn_by)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
 
     def test_penalty_equality(self):
@@ -1415,70 +1415,70 @@ class TestEquality(unittest.TestCase):
         child4 = Penalty(penalty_events.penalty_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
         self.assertNotEqual(parent, child4)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1, child2)
         self.assertNotEqual(child1, child3)
         self.assertNotEqual(child2, child3)
         self.assertNotEqual(child2, child4)
         self.assertNotEqual(child3, child4)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child4)
         self.assertEqual(child4, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
         self.assertNotEqual(child4, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Penalty(penalty_events.penalty_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Penalty(penalty_events.penalty_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = Penalty(penalty_events.penalty_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is not equivalent
+        # Test Case 8 - different period
         diff = Penalty(penalty_events.penalty_different_period)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Penalty(penalty_events.penalty_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is not equivalent
+        # Test Case 10 - different period time remaining
         diff = Penalty(penalty_events.penalty_different_period_time_remaining)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 11 - different taker is not equivalent
+        # Test Case 11 - different taker
         diff = Penalty(penalty_events.penalty_different_taker)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 12 - different drawn by is not equivalent
+        # Test Case 12 - different drawn by
         diff = Penalty(penalty_events.penalty_different_drawn_by)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 13 - different reason is not equivalent
+        # Test Case 13 - different reason
         diff = Penalty(penalty_events.penalty_different_reason)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 14 - different severity is not equivalent
+        # Test Case 14 - different severity
         diff = Penalty(penalty_events.penalty_different_severity)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 15 - different minutes is not equivalent
+        # Test Case 15 - different minutes
         diff = Penalty(penalty_events.penalty_different_minutes)
         self.assertNotEqual(child1, diff)
 
@@ -1492,70 +1492,70 @@ class TestEquality(unittest.TestCase):
         child4 = Penalty(penalty_events.penalty_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
         self.assertNotEqual(parent.id, child4.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1.id, child2.id)
         self.assertNotEqual(child1.id, child3.id)
         self.assertNotEqual(child2.id, child3.id)
         self.assertNotEqual(child2.id, child4.id)
         self.assertNotEqual(child3.id, child4.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child4.id)
         self.assertEqual(child4.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
         self.assertNotEqual(child4.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Penalty(penalty_events.penalty_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Penalty(penalty_events.penalty_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = Penalty(penalty_events.penalty_different_datetime)
         self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = Penalty(penalty_events.penalty_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Penalty(penalty_events.penalty_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = Penalty(penalty_events.penalty_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 11 - different taker is still equivalent
+        # Test Case 11 - different taker
         diff = Penalty(penalty_events.penalty_different_taker)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 12 - different drawn by is still equivalent
+        # Test Case 12 - different drawn by
         diff = Penalty(penalty_events.penalty_different_drawn_by)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 13 - different reason is still equivalent
+        # Test Case 13 - different reason
         diff = Penalty(penalty_events.penalty_different_reason)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 14 - different severity is still equivalent
+        # Test Case 14 - different severity
         diff = Penalty(penalty_events.penalty_different_severity)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 15 - different minutes is still equivalent
+        # Test Case 15 - different minutes
         diff = Penalty(penalty_events.penalty_different_minutes)
         self.assertEqual(child1.id, diff.id)
 
@@ -1569,50 +1569,50 @@ class TestEquality(unittest.TestCase):
         child4 = PeriodEnd(period_end_events.period_end_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
         self.assertNotEqual(parent, child4)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1, child2)
         self.assertNotEqual(child1, child3)
         self.assertNotEqual(child2, child3)
         self.assertNotEqual(child2, child4)
         self.assertNotEqual(child3, child4)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child4)
         self.assertEqual(child4, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
         self.assertNotEqual(child4, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = PeriodEnd(period_end_events.period_end_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = PeriodEnd(period_end_events.period_end_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = PeriodEnd(period_end_events.period_end_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is not equivalent
+        # Test Case 8 - different period
         diff = PeriodEnd(period_end_events.period_end_different_period)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = PeriodEnd(period_end_events.period_end_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = PeriodEnd(period_end_events.period_end_different_period_time_remaining)
         self.assertEqual(child1, diff)
 
@@ -1626,50 +1626,50 @@ class TestEquality(unittest.TestCase):
         child4 = PeriodEnd(period_end_events.period_end_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
         self.assertNotEqual(parent.id, child4.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1.id, child2.id)
         self.assertNotEqual(child1.id, child3.id)
         self.assertNotEqual(child2.id, child3.id)
         self.assertNotEqual(child2.id, child4.id)
         self.assertNotEqual(child3.id, child4.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child4.id)
         self.assertEqual(child4.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
         self.assertNotEqual(child4.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = PeriodEnd(period_end_events.period_end_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = PeriodEnd(period_end_events.period_end_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = PeriodEnd(period_end_events.period_end_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
-
-        # Test Case 8 - different period is still equivalent
-        diff = PeriodEnd(period_end_events.period_end_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 8 - different period
+        diff = PeriodEnd(period_end_events.period_end_different_period)
+        self.assertNotEqual(child1.id, diff.id)
+
+        # Test Case 9 - different period time
         diff = PeriodEnd(period_end_events.period_end_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is not equivalent
+        # Test Case 10 - different period time remaining
         diff = PeriodEnd(period_end_events.period_end_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
@@ -1683,50 +1683,50 @@ class TestEquality(unittest.TestCase):
         child4 = PeriodOfficial(period_official_events.period_official_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
         self.assertNotEqual(parent, child4)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1, child2)
         self.assertNotEqual(child1, child3)
         self.assertNotEqual(child2, child3)
         self.assertNotEqual(child2, child4)
         self.assertNotEqual(child3, child4)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child4)
         self.assertEqual(child4, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
         self.assertNotEqual(child4, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = PeriodOfficial(period_official_events.period_official_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = PeriodOfficial(period_official_events.period_official_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = PeriodOfficial(period_official_events.period_official_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is not equivalent
+        # Test Case 8 - different period
         diff = PeriodOfficial(period_official_events.period_official_different_period)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = PeriodOfficial(period_official_events.period_official_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = PeriodOfficial(period_official_events.period_official_different_period_time_remaining)
         self.assertEqual(child1, diff)
 
@@ -1740,50 +1740,50 @@ class TestEquality(unittest.TestCase):
         child4 = PeriodOfficial(period_official_events.period_official_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
         self.assertNotEqual(parent.id, child4.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1.id, child2.id)
         self.assertNotEqual(child1.id, child3.id)
         self.assertNotEqual(child2.id, child3.id)
         self.assertNotEqual(child2.id, child4.id)
         self.assertNotEqual(child3.id, child4.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child4.id)
         self.assertEqual(child4.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
         self.assertNotEqual(child4.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = PeriodOfficial(period_official_events.period_official_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = PeriodOfficial(period_official_events.period_official_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = PeriodOfficial(period_official_events.period_official_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
-
-        # Test Case 8 - different period is still equivalent
-        diff = PeriodOfficial(period_official_events.period_official_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 8 - different period
+        diff = PeriodOfficial(period_official_events.period_official_different_period)
+        self.assertNotEqual(child1.id, diff.id)
+
+        # Test Case 9 - different period time
         diff = PeriodOfficial(period_official_events.period_official_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is not equivalent
+        # Test Case 10 - different period time remaining
         diff = PeriodOfficial(period_official_events.period_official_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
@@ -1797,50 +1797,50 @@ class TestEquality(unittest.TestCase):
         child4 = PeriodReady(period_ready_events.period_ready_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
         self.assertNotEqual(parent, child4)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1, child2)
         self.assertNotEqual(child1, child3)
         self.assertNotEqual(child2, child3)
         self.assertNotEqual(child2, child4)
         self.assertNotEqual(child3, child4)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child4)
         self.assertEqual(child4, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
         self.assertNotEqual(child4, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = PeriodReady(period_ready_events.period_ready_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = PeriodReady(period_ready_events.period_ready_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = PeriodReady(period_ready_events.period_ready_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is not equivalent
+        # Test Case 8 - different period
         diff = PeriodReady(period_ready_events.period_ready_different_period)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = PeriodReady(period_ready_events.period_ready_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = PeriodReady(period_ready_events.period_ready_different_period_time_remaining)
         self.assertEqual(child1, diff)
 
@@ -1854,50 +1854,50 @@ class TestEquality(unittest.TestCase):
         child4 = PeriodReady(period_ready_events.period_ready_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
         self.assertNotEqual(parent.id, child4.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1.id, child2.id)
         self.assertNotEqual(child1.id, child3.id)
         self.assertNotEqual(child2.id, child3.id)
         self.assertNotEqual(child2.id, child4.id)
         self.assertNotEqual(child3.id, child4.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child4.id)
         self.assertEqual(child4.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
         self.assertNotEqual(child4.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = PeriodReady(period_ready_events.period_ready_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = PeriodReady(period_ready_events.period_ready_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = PeriodReady(period_ready_events.period_ready_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
-
-        # Test Case 8 - different period is still equivalent
-        diff = PeriodReady(period_ready_events.period_ready_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 8 - different period
+        diff = PeriodReady(period_ready_events.period_ready_different_period)
+        self.assertNotEqual(child1.id, diff.id)
+
+        # Test Case 9 - different period time
         diff = PeriodReady(period_ready_events.period_ready_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is not equivalent
+        # Test Case 10 - different period time remaining
         diff = PeriodReady(period_ready_events.period_ready_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
@@ -1911,50 +1911,50 @@ class TestEquality(unittest.TestCase):
         child4 = PeriodStart(period_start_events.period_start_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
         self.assertNotEqual(parent, child4)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1, child2)
         self.assertNotEqual(child1, child3)
         self.assertNotEqual(child2, child3)
         self.assertNotEqual(child2, child4)
         self.assertNotEqual(child3, child4)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child4)
         self.assertEqual(child4, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
         self.assertNotEqual(child4, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = PeriodStart(period_start_events.period_start_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = PeriodStart(period_start_events.period_start_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = PeriodStart(period_start_events.period_start_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is not equivalent
+        # Test Case 8 - different period
         diff = PeriodStart(period_start_events.period_start_different_period)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = PeriodStart(period_start_events.period_start_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = PeriodStart(period_start_events.period_start_different_period_time_remaining)
         self.assertEqual(child1, diff)
 
@@ -1968,50 +1968,50 @@ class TestEquality(unittest.TestCase):
         child4 = PeriodStart(period_start_events.period_start_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
         self.assertNotEqual(parent.id, child4.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1.id, child2.id)
         self.assertNotEqual(child1.id, child3.id)
         self.assertNotEqual(child2.id, child3.id)
         self.assertNotEqual(child2.id, child4.id)
         self.assertNotEqual(child3.id, child4.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child4.id)
         self.assertEqual(child4.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
         self.assertNotEqual(child4.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = PeriodStart(period_start_events.period_start_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = PeriodStart(period_start_events.period_start_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = PeriodStart(period_start_events.period_start_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
-
-        # Test Case 8 - different period is still equivalent
-        diff = PeriodStart(period_start_events.period_start_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 8 - different period
+        diff = PeriodStart(period_start_events.period_start_different_period)
+        self.assertNotEqual(child1.id, diff.id)
+
+        # Test Case 9 - different period time
         diff = PeriodStart(period_start_events.period_start_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is not equivalent
+        # Test Case 10 - different period time remaining
         diff = PeriodStart(period_start_events.period_start_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
@@ -2025,62 +2025,62 @@ class TestEquality(unittest.TestCase):
         child4 = Ping(ping_events.ping_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
         self.assertNotEqual(parent, child4)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1, child2)
         self.assertNotEqual(child1, child3)
         self.assertNotEqual(child2, child3)
         self.assertNotEqual(child2, child4)
         self.assertNotEqual(child3, child4)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child4)
         self.assertEqual(child4, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
         self.assertNotEqual(child4, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Ping(ping_events.ping_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Ping(ping_events.ping_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = Ping(ping_events.ping_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is not equivalent
+        # Test Case 8 - different period
         diff = Ping(ping_events.ping_different_period)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Ping(ping_events.ping_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is not equivalent
+        # Test Case 10 - different period time remaining
         diff = Ping(ping_events.ping_different_period_time_remaining)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 11 - different shooter is not equivalent
+        # Test Case 11 - different shooter
         diff = Ping(ping_events.ping_different_shooter)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 12 - different goalie is not equivalent
+        # Test Case 12 - different goalie
         diff = Ping(ping_events.ping_different_goalie)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 13 - different goal post is not equivalent
+        # Test Case 13 - different goal post
         diff = Ping(ping_events.ping_different_goal_post)
         self.assertNotEqual(child1, diff)
 
@@ -2094,62 +2094,62 @@ class TestEquality(unittest.TestCase):
         child4 = Ping(ping_events.ping_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
         self.assertNotEqual(parent.id, child4.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1.id, child2.id)
         self.assertNotEqual(child1.id, child3.id)
         self.assertNotEqual(child2.id, child3.id)
         self.assertNotEqual(child2.id, child4.id)
         self.assertNotEqual(child3.id, child4.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child4.id)
         self.assertEqual(child4.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
         self.assertNotEqual(child4.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Ping(ping_events.ping_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Ping(ping_events.ping_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = Ping(ping_events.ping_different_datetime)
         self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = Ping(ping_events.ping_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Ping(ping_events.ping_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = Ping(ping_events.ping_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 11 - different shooter is still equivalent
+        # Test Case 11 - different shooter
         diff = Ping(ping_events.ping_different_shooter)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 12 - different goalie is still equivalent
+        # Test Case 12 - different goalie
         diff = Ping(ping_events.ping_different_goalie)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 13 - different goal post is still equivalent
+        # Test Case 13 - different goal post
         diff = Ping(ping_events.ping_different_goal_post)
         self.assertEqual(child1.id, diff.id)
 
@@ -2163,58 +2163,58 @@ class TestEquality(unittest.TestCase):
         child4 = Shot(shot_events.shot_1)
         other  = PeriodOfficial(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
         self.assertNotEqual(parent, child4)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1, child2)
         self.assertNotEqual(child1, child3)
         self.assertNotEqual(child2, child3)
         self.assertNotEqual(child2, child4)
         self.assertNotEqual(child3, child4)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child4)
         self.assertEqual(child4, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
         self.assertNotEqual(child4, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Shot(shot_events.shot_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Shot(shot_events.shot_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = Shot(shot_events.shot_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is not equivalent
+        # Test Case 8 - different period
         diff = Shot(shot_events.shot_different_period)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Shot(shot_events.shot_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is not equivalent
+        # Test Case 10 - different period time remaining
         diff = Shot(shot_events.shot_different_period_time_remaining)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 11 - different shooter is not equivalent
+        # Test Case 11 - different shooter
         diff = Shot(shot_events.shot_different_shooter)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 12 - different goalie is not equivalent
+        # Test Case 12 - different goalie
         diff = Shot(shot_events.shot_different_goalie)
         self.assertNotEqual(child1, diff)
 
@@ -2228,60 +2228,60 @@ class TestEquality(unittest.TestCase):
         child4 = Shot(shot_events.shot_1)
         other  = PeriodOfficial(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
         self.assertNotEqual(parent.id, child4.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1.id, child2.id)
         self.assertNotEqual(child1.id, child3.id)
         self.assertNotEqual(child2.id, child3.id)
         self.assertNotEqual(child2.id, child4.id)
         self.assertNotEqual(child3.id, child4.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child4.id)
         self.assertEqual(child4.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
         self.assertNotEqual(child4.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Shot(shot_events.shot_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Shot(shot_events.shot_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = Shot(shot_events.shot_different_datetime)
         self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = Shot(shot_events.shot_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Shot(shot_events.shot_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = Shot(shot_events.shot_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 11 - different shooter is still equivalent
+        # Test Case 11 - different shooter
         diff = Shot(shot_events.shot_different_shooter)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 12 - different goalie is still equivalent
+        # Test Case 12 - different goalie
         diff = Shot(shot_events.shot_different_goalie)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
 
     def test_stoppage_equality(self):
@@ -2293,50 +2293,50 @@ class TestEquality(unittest.TestCase):
         child4 = Stoppage(stoppage_events.stoppage_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
         self.assertNotEqual(parent, child4)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1, child2)
         self.assertNotEqual(child1, child3)
         self.assertNotEqual(child2, child3)
         self.assertNotEqual(child2, child4)
         self.assertNotEqual(child3, child4)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child4)
         self.assertEqual(child4, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
         self.assertNotEqual(child4, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Stoppage(stoppage_events.stoppage_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Stoppage(stoppage_events.stoppage_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = Stoppage(stoppage_events.stoppage_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is not equivalent
+        # Test Case 8 - different period
         diff = Stoppage(stoppage_events.stoppage_different_period)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Stoppage(stoppage_events.stoppage_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is not equivalent
+        # Test Case 10 - different period time remaining
         diff = Stoppage(stoppage_events.stoppage_different_period_time_remaining)
         self.assertNotEqual(child1, diff)
 
@@ -2350,50 +2350,50 @@ class TestEquality(unittest.TestCase):
         child4 = Stoppage(stoppage_events.stoppage_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
         self.assertNotEqual(parent.id, child4.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1.id, child2.id)
         self.assertNotEqual(child1.id, child3.id)
         self.assertNotEqual(child2.id, child3.id)
         self.assertNotEqual(child2.id, child4.id)
         self.assertNotEqual(child3.id, child4.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child4.id)
         self.assertEqual(child4.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1.id, other.id)
         self.assertNotEqual(child2.id, other.id)
         self.assertNotEqual(child3.id, other.id)
         self.assertNotEqual(child4.id, other.id)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Stoppage(stoppage_events.stoppage_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Stoppage(stoppage_events.stoppage_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = Stoppage(stoppage_events.stoppage_different_datetime)
         self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = Stoppage(stoppage_events.stoppage_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Stoppage(stoppage_events.stoppage_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = Stoppage(stoppage_events.stoppage_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
@@ -2407,54 +2407,54 @@ class TestEquality(unittest.TestCase):
         child4 = Takeaway(takeaway_events.takeaway_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent, child1)
         self.assertNotEqual(parent, child2)
         self.assertNotEqual(parent, child3)
         self.assertNotEqual(parent, child4)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1, child2)
         self.assertNotEqual(child1, child3)
         self.assertNotEqual(child2, child3)
         self.assertNotEqual(child2, child4)
         self.assertNotEqual(child3, child4)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1, child4)
         self.assertEqual(child4, child1)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
         self.assertNotEqual(child4, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Takeaway(takeaway_events.takeaway_different_event_id)
         self.assertEqual(child1, diff)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Takeaway(takeaway_events.takeaway_different_event_id_x)
         self.assertEqual(child1, diff)
 
-        # Test Case 7 - different datetime is still equivalent
+        # Test Case 7 - different datetime
         diff = Takeaway(takeaway_events.takeaway_different_datetime)
         self.assertEqual(child1, diff)
 
-        # Test Case 8 - different period is not equivalent
+        # Test Case 8 - different period
         diff = Takeaway(takeaway_events.takeaway_different_period)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Takeaway(takeaway_events.takeaway_different_period_time)
         self.assertEqual(child1, diff)
 
-        # Test Case 10 - different periodtime_remaining is not equivalent
+        # Test Case 10 - different period time remaining
         diff = Takeaway(takeaway_events.takeaway_different_period_time_remaining)
         self.assertNotEqual(child1, diff)
 
-        # Test Case 11 - different player is not equivalent
+        # Test Case 11 - different player
         diff = Takeaway(takeaway_events.takeaway_different_player)
         self.assertNotEqual(child1, diff)
 
@@ -2468,53 +2468,53 @@ class TestEquality(unittest.TestCase):
         child4 = Takeaway(takeaway_events.takeaway_1)
         other  = Shot(shot_events.shot_1)
 
-        # Test Case 1 - parent is not equivalent to child
+        # Test Case 1 - parent to child
         self.assertNotEqual(parent.id, child1.id)
         self.assertNotEqual(parent.id, child2.id)
         self.assertNotEqual(parent.id, child3.id)
         self.assertNotEqual(parent.id, child4.id)
 
-        # Test Case 2 - Unlike instances are not equivalent
+        # Test Case 2 - Unlike instances
         self.assertNotEqual(child1.id, child2.id)
         self.assertNotEqual(child1.id, child3.id)
         self.assertNotEqual(child2.id, child3.id)
         self.assertNotEqual(child2.id, child4.id)
         self.assertNotEqual(child3.id, child4.id)
 
-        # Test Case 3 - Like instances are equivalent
+        # Test Case 3 - Like instances
         self.assertEqual(child1.id, child4.id)
         self.assertEqual(child4.id, child1.id)
 
-        # Test Case 4 - Unlike classes are not equivalent
+        # Test Case 4 - Unlike classes
         self.assertNotEqual(child1, other)
         self.assertNotEqual(child2, other)
         self.assertNotEqual(child3, other)
         self.assertNotEqual(child4, other)
 
-        # Test Case 5 - different eventid is still equivalent
+        # Test Case 5 - different eventid
         diff = Takeaway(takeaway_events.takeaway_different_event_id)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 6 - different eventidx is still equivalent
+        # Test Case 6 - different eventidx
         diff = Takeaway(takeaway_events.takeaway_different_event_id_x)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 7 - different datetime is not equivalent
+        # Test Case 7 - different datetime
         diff = Takeaway(takeaway_events.takeaway_different_datetime)
         self.assertNotEqual(child1.id, diff.id)
 
-        # Test Case 8 - different period is still equivalent
+        # Test Case 8 - different period
         diff = Takeaway(takeaway_events.takeaway_different_period)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 9 - different periodtime is still equivalent
+        # Test Case 9 - different period time
         diff = Takeaway(takeaway_events.takeaway_different_period_time)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 10 - different periodtime_remaining is still equivalent
+        # Test Case 10 - different period time remaining
         diff = Takeaway(takeaway_events.takeaway_different_period_time_remaining)
         self.assertEqual(child1.id, diff.id)
 
-        # Test Case 11 - different player is still equivalent
+        # Test Case 11 - different player
         diff = Takeaway(takeaway_events.takeaway_different_player)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)

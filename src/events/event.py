@@ -18,6 +18,7 @@ from src.exceptions import InsufficientData
 
 from src.game_data import GameData
 from src import logger
+from src.utils import pad
 
 
 def get_player_name(event : Any, player_type : str, index : int = 1):
@@ -113,22 +114,25 @@ class Event:
         return "EVENT"
 
     @property
+    def blob(self) -> str:
+        """
+        Return a unique identifier for this event that will not change, even if the event_id int
+        changes.
+        """
+
+        blob : str = "######"
+        return pad(blob, 6)
+
+    @property
     def id(self) -> str:
         """
         Return a unique identifier for this event that will not change, even if the event_id int
         changes.
         """
 
-        def inits(text : str) -> str:
-            words  = text.split()
-            result = ""
-            for word in words[:2]:
-                result += word[0].upper()
-            return result.ljust(2, '0')
-
         name        : str = self.code
         time        : str = self.timestamp.strftime("%H%M%S")
-        description : str = inits(str(self.description))
+        description : str = self.blob
         return name + "-" + time + "-" + description
 
     @property

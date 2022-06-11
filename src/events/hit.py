@@ -7,6 +7,7 @@ from typing import Optional
 
 from src.events.event import Event, get_player_name
 from src.exceptions import InsufficientData
+from src.utils import initials, pad
 
 class Hit(Event):
     """
@@ -42,6 +43,16 @@ class Hit(Event):
         Return a four letter code representing the event type.
         """
         return "  HIT"
+
+    @property
+    def blob(self) -> str:
+        """
+        Return a unique identifier that describes this specific event.
+        """
+        hitter : str = initials(self.hitter)
+        hittee : str = initials(self.hittee)
+        blob   : str = hitter + "ON" + hittee
+        return pad(blob, 6)
 
     @property
     def hitter(self) -> Optional[str]:

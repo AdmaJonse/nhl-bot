@@ -7,6 +7,7 @@ from typing import Any, Optional
 
 from src.events.event import Event, get_player_name
 from src.exceptions import InsufficientData
+from src.utils import initials, pad
 
 class BlockedShot(Event):
     """
@@ -42,6 +43,16 @@ class BlockedShot(Event):
         Return a five-character code representing the event type.
         """
         return "BLOCK"
+
+    @property
+    def blob(self) -> str:
+        """
+        Return a unique identifier that describes this specific event.
+        """
+        shooter : str = initials(self.shooter)
+        blocker : str = initials(self.blocker)
+        blob    : str = blocker + "ON" + shooter
+        return pad(blob, 6)
 
     @property
     def shooter(self) -> Optional[str]:
