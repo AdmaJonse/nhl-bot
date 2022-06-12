@@ -18,7 +18,7 @@ from src.exceptions import InsufficientData
 
 from src.game_data import GameData
 from src import logger
-from src.utils import pad
+from src.utils import pad_blob, pad_code
 
 
 def get_player_name(event : Any, player_type : str, index : int = 1):
@@ -111,7 +111,8 @@ class Event:
         """
         Return a four letter code representing the event type.
         """
-        return "EVENT"
+        code : str = "EVENT"
+        return pad_code(code)
 
     @property
     def blob(self) -> str:
@@ -121,7 +122,7 @@ class Event:
         """
 
         blob : str = "######"
-        return pad(blob, 6)
+        return pad_blob(blob)
 
     @property
     def id(self) -> str:
@@ -131,7 +132,7 @@ class Event:
         """
 
         name        : str = self.code
-        time        : str = self.timestamp.strftime("%H%M%S")
+        time        : str = str(self.period) + "-" + str(self.time).replace(':', '')
         description : str = self.blob
         return name + "-" + time + "-" + description
 

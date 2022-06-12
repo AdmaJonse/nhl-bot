@@ -10,7 +10,7 @@ from src import templates
 from src.events.event import Event, get_player_name, get_team, get_value
 from src.exceptions import InsufficientData
 from src.game_data import GameData
-from src.utils import initials, pad
+from src.utils import initials, pad_blob, pad_code
 
 class Penalty(Event):
     """
@@ -71,9 +71,10 @@ class Penalty(Event):
     @property
     def code(self) -> str:
         """
-        Return a five-character code representing the event type.
+        Return a seven-character code representing the event type.
         """
-        return "PENAL"
+        code : str = "PENALTY"
+        return pad_code(code)
 
     @property
     def blob(self) -> str:
@@ -83,7 +84,7 @@ class Penalty(Event):
         taker : str = initials(self.taker)
         drawn : str = initials(self.drawn_by)
         blob  : str = taker + "ON" + drawn
-        return pad(blob, 6)
+        return pad_blob(blob)
 
     @property
     def taker(self) -> Optional[str]:
