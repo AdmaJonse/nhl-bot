@@ -4,6 +4,7 @@ Description:
 """
 
 from src.events.event import Event
+from src.utils import pad_code
 
 class PeriodReady(Event):
     """
@@ -18,6 +19,14 @@ class PeriodReady(Event):
         return (isinstance(self, PeriodReady) and
                 isinstance(other, PeriodReady) and
                 self.period == other.period)
+
+    @property
+    def code(self) -> str:
+        """
+        Return a seven-character code representing the event type.
+        """
+        code : str = "PERREADY"
+        return pad_code(code)
 
     @property
     def id(self) -> str:

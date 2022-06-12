@@ -9,7 +9,7 @@ from src import templates
 from src.events.event import Event, get_team
 from src.exceptions import InsufficientData
 from src.game_data import GameData
-from src.utils import pad
+from src.utils import pad_blob, pad_code
 
 class Challenge(Event):
     """
@@ -36,16 +36,17 @@ class Challenge(Event):
     @property
     def code(self) -> str:
         """
-        Return a five-character code representing the event type.
+        Return a seven-character code representing the event type.
         """
-        return "CHLNG"
+        code : str = "CHALLENGE"
+        return pad_code(code)
 
     @property
     def blob(self) -> str:
         """
         Return a unique identifier that describes this specific event.
         """
-        return pad(self.team, 6)
+        return pad_blob(self.team)
 
     @property
     def team(self) -> Optional[str]:

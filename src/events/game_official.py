@@ -4,6 +4,7 @@ Description:
 """
 
 from src.events.event import Event
+from src.utils import pad_code
 
 class GameOfficial(Event):
     """
@@ -17,6 +18,14 @@ class GameOfficial(Event):
     def __eq__(self, other):
         return (isinstance(self, GameOfficial) and
                 isinstance(other, GameOfficial))
+
+    @property
+    def code(self) -> str:
+        """
+        Return a seven-character code representing the event type.
+        """
+        code : str = "GAMEOFF"
+        return pad_code(code)
 
     @property
     def id(self) -> str:

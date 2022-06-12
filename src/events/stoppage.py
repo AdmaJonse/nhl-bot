@@ -4,7 +4,7 @@ Description:
 """
 
 from src.events.event import Event
-from src.utils import pad
+from src.utils import pad_blob, pad_code
 
 class Stoppage(Event):
     """
@@ -24,13 +24,14 @@ class Stoppage(Event):
     @property
     def code(self) -> str:
         """
-        Return a five-character code representing the event type.
+        Return a seven-character code representing the event type.
         """
-        return " STOP"
+        code : str = "STOPPAGE"
+        return pad_code(code)
 
     @property
     def blob(self) -> str:
         """
         Return a unique identifier that describes this specific event.
         """
-        return pad(self.description, 6)
+        return pad_blob(self.description)

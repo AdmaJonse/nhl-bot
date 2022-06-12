@@ -7,7 +7,7 @@ from typing import Optional
 
 from src.events.event import Event, get_player_name
 from src.exceptions import InsufficientData
-from src.utils import initials, pad
+from src.utils import initials, pad_blob, pad_code
 
 class Shot(Event):
     """
@@ -40,9 +40,10 @@ class Shot(Event):
     @property
     def code(self) -> str:
         """
-        Return a five-character code representing the event type.
+        Return a seven-character code representing the event type.
         """
-        return " SHOT"
+        code : str = "SHOT"
+        return pad_code(code)
 
     @property
     def blob(self) -> str:
@@ -52,7 +53,7 @@ class Shot(Event):
         shooter : str = initials(self.shooter)
         goalie  : str = initials(self.goalie)
         blob    : str = shooter + "ON" + goalie
-        return pad(blob, 6)
+        return pad_blob(blob)
 
     @property
     def shooter(self) -> Optional[str]:

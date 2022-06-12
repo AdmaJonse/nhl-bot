@@ -8,6 +8,7 @@ from typing import Optional
 from src import templates
 from src.events.event import Event
 from src.game_data import GameData
+from src.utils import pad_code
 
 class PeriodEnd(Event):
     """
@@ -22,6 +23,14 @@ class PeriodEnd(Event):
         return (isinstance(self, PeriodEnd) and
                 isinstance(other, PeriodEnd) and
                 self.period == other.period)
+
+    @property
+    def code(self) -> str:
+        """
+        Return a seven-character code representing the event type.
+        """
+        code : str = "PEREND"
+        return pad_code(code)
 
     @property
     def id(self) -> str:

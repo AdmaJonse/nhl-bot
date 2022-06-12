@@ -10,7 +10,7 @@ from src import templates
 from src.events.event import Event, get_player_name, get_team, get_value
 from src.exceptions import InsufficientData
 from src.game_data import GameData
-from src.utils import pad
+from src.utils import pad_blob, pad_code
 
 class Goal(Event):
     """
@@ -56,9 +56,10 @@ class Goal(Event):
     @property
     def code(self) -> str:
         """
-        Return a four letter code representing the event type.
+        Return a seven-character code representing the event type.
         """
-        return " GOAL"
+        code : str = "GOAL"
+        return pad_code(code)
 
     @property
     def blob(self) -> str:
@@ -72,7 +73,7 @@ class Goal(Event):
         home : str = str(self.home_goals)
         away : str = str(self.away_goals)
         blob : str = home + "TO" + away
-        return pad(blob, 6)
+        return pad_blob(blob)
 
     @property
     def team(self) -> Optional[str]:

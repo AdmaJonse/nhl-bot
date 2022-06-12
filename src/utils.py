@@ -20,19 +20,41 @@ def initials(text : Optional[str]) -> str:
     return result
 
 
-def pad(text : Optional[str], length : int) -> str:
+def pad(text : Optional[str], length : int, align : str = "left") -> str:
     """
     Pad the given string with spaces so that it has the specified length.
     """
 
-    if text is None:
-        return '#'*length
-
     result : str = ""
+    fill   : str = ' '
+
+    if text is None:
+        return fill*length
+
+    text = text.replace(' ','')
 
     if len(text) > length:
         result = text[:length]
     else:
-        result = text.ljust(length, '#')
+        if align == "left":
+            result = text.ljust(length, fill)
+        else:
+            result = text.rjust(length, fill)
 
-    return result
+    return result.upper()
+
+
+def pad_code(text : Optional[str]) -> str:
+    """
+    Pad the code string.
+    """
+    length : int = 10
+    return pad(text, length, "right")
+
+
+def pad_blob(text : Optional[str]) -> str:
+    """
+    Pad the blob string.
+    """
+    length : int = 6
+    return pad(text, length, "left")

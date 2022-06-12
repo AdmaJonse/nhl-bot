@@ -8,6 +8,7 @@ from typing import Optional
 from src import templates
 from src.events.event import Event
 from src.game_data import GameData
+from src.utils import pad_code
 
 class GameEnd(Event):
     """
@@ -21,6 +22,14 @@ class GameEnd(Event):
     def __eq__(self, other):
         return (isinstance(self, GameEnd) and
                 isinstance(other, GameEnd))
+
+    @property
+    def code(self) -> str:
+        """
+        Return a seven-character code representing the event type.
+        """
+        code : str = "GAMEEND"
+        return pad_code(code)
 
     @property
     def id(self) -> str:

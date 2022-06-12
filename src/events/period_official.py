@@ -2,7 +2,9 @@
 Description:
     This module defines the Period Official event.
 """
+
 from src.events.event import Event
+from src.utils import pad_code
 
 class PeriodOfficial(Event):
     """
@@ -17,6 +19,14 @@ class PeriodOfficial(Event):
         return (isinstance(self, PeriodOfficial) and
                 isinstance(other, PeriodOfficial) and
                 self.period == other.period)
+
+    @property
+    def code(self) -> str:
+        """
+        Return a seven-character code representing the event type.
+        """
+        code : str = "PEROFFICIAL"
+        return pad_code(code)
 
     @property
     def id(self) -> str:

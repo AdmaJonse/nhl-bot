@@ -7,7 +7,7 @@ from typing import Any, Optional
 
 from src.events.event import Event, get_player_name
 from src.exceptions import InsufficientData
-from src.utils import initials, pad
+from src.utils import initials, pad_blob, pad_code
 
 class Faceoff(Event):
     """
@@ -40,9 +40,10 @@ class Faceoff(Event):
     @property
     def code(self) -> str:
         """
-        Return a four letter code representing the event type.
+        Return a seven-character code representing the event type.
         """
-        return "FCOFF"
+        code : str = "FACEOFF"
+        return pad_code(code)
 
     @property
     def blob(self) -> str:
@@ -52,7 +53,7 @@ class Faceoff(Event):
         winner : str = initials(self.winner)
         loser  : str = initials(self.loser)
         blob   : str = winner + "VS" + loser
-        return pad(blob, 6)
+        return pad_blob(blob)
 
     @property
     def winner(self) -> Optional[str]:

@@ -8,6 +8,7 @@ from typing import Optional
 from src import templates
 from src.events.event import Event
 from src.game_data import GameData
+from src.utils import pad_code
 
 class PeriodStart(Event):
     """
@@ -22,6 +23,14 @@ class PeriodStart(Event):
         return (isinstance(self, PeriodStart) and
                 isinstance(other, PeriodStart) and
                 self.period == other.period)
+
+    @property
+    def code(self) -> str:
+        """
+        Return a seven-character code representing the event type.
+        """
+        code : str = "PERSTART"
+        return pad_code(code)
 
     @property
     def id(self) -> str:

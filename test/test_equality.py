@@ -160,11 +160,11 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 7 - different datetime
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
+        self.assertEqual(child1.id, diff.id)
 
         # Test Case 8 - different period
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_period)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 9 - different period time
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_period_time)
@@ -172,7 +172,7 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 10 - different period time remaining
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_period_time_remaining)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 11 - different shooter
         diff = BlockedShot(blocked_shot_events.blocked_shot_different_shooter)
@@ -266,11 +266,11 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 7 - different datetime
         diff = Challenge(challenge_events.challenge_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
+        self.assertEqual(child1.id, diff.id)
 
         # Test Case 8 - different period
         diff = Challenge(challenge_events.challenge_different_period)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 9 - different period time
         diff = Challenge(challenge_events.challenge_different_period_time)
@@ -278,7 +278,7 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 10 - different period time remaining
         diff = Challenge(challenge_events.challenge_different_period_time_remaining)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
 
     def test_faceoff_equality(self):
@@ -388,11 +388,11 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 7 - different datetime
         diff = Faceoff(faceoff_events.faceoff_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
+        self.assertEqual(child1.id, diff.id)
 
         # Test Case 8 - different period
         diff = Faceoff(faceoff_events.faceoff_different_period)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 9 - different period time
         diff = Faceoff(faceoff_events.faceoff_different_period_time)
@@ -400,7 +400,7 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 10 - different period time remaining
         diff = Faceoff(faceoff_events.faceoff_different_period_time_remaining)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 11 - different winner
         diff = Faceoff(faceoff_events.faceoff_different_winner)
@@ -823,11 +823,11 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 7 - different datetime
         diff = Giveaway(giveaway_events.giveaway_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
+        self.assertEqual(child1.id, diff.id)
 
         # Test Case 8 - different period
         diff = Giveaway(giveaway_events.giveaway_different_period)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 9 - different period time
         diff = Giveaway(giveaway_events.giveaway_different_period_time)
@@ -835,7 +835,7 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 10 - different period time remaining
         diff = Giveaway(giveaway_events.giveaway_different_period_time_remaining)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 11 - different player
         diff = Giveaway(giveaway_events.giveaway_different_player)
@@ -969,11 +969,11 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 7 - different datetime
         diff = Goal(goal_events.goal_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
+        self.assertEqual(child1.id, diff.id)
 
         # Test Case 8 - different period
         diff = Goal(goal_events.goal_different_period)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 9 - different period time
         diff = Goal(goal_events.goal_different_period_time)
@@ -981,7 +981,7 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 10 - different period time remaining
         diff = Goal(goal_events.goal_different_period_time_remaining)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 11 - different scorer
         diff = Goal(goal_events.goal_different_scorer)
@@ -1119,11 +1119,11 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 7 - different datetime
         diff = Hit(hit_events.hit_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
+        self.assertEqual(child1.id, diff.id)
 
         # Test Case 8 - different period
         diff = Hit(hit_events.hit_different_period)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 9 - different period time
         diff = Hit(hit_events.hit_different_period_time)
@@ -1131,7 +1131,7 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 10 - different period time remaining
         diff = Hit(hit_events.hit_different_period_time_remaining)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 11 - different hitter
         diff = Hit(hit_events.hit_different_hitter)
@@ -1249,11 +1249,11 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 7 - different datetime
         diff = MissedShot(missed_shot_events.missed_shot_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
+        self.assertEqual(child1.id, diff.id)
 
         # Test Case 8 - different period
         diff = MissedShot(missed_shot_events.missed_shot_different_period)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 9 - different period time
         diff = MissedShot(missed_shot_events.missed_shot_different_period_time)
@@ -1261,7 +1261,7 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 10 - different period time remaining
         diff = MissedShot(missed_shot_events.missed_shot_different_period_time_remaining)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 11 - different shooter
         diff = MissedShot(missed_shot_events.missed_shot_different_shooter)
@@ -1383,11 +1383,11 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 7 - different datetime
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
+        self.assertEqual(child1.id, diff.id)
 
         # Test Case 8 - different period
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_period)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 9 - different period time
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_period_time)
@@ -1395,7 +1395,7 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 10 - different period time remaining
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_period_time_remaining)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 11 - different taker
         diff = PenaltyShot(penalty_shot_events.penalty_shot_different_taker)
@@ -1525,11 +1525,11 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 7 - different datetime
         diff = Penalty(penalty_events.penalty_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
+        self.assertEqual(child1.id, diff.id)
 
         # Test Case 8 - different period
         diff = Penalty(penalty_events.penalty_different_period)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 9 - different period time
         diff = Penalty(penalty_events.penalty_different_period_time)
@@ -1537,7 +1537,7 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 10 - different period time remaining
         diff = Penalty(penalty_events.penalty_different_period_time_remaining)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 11 - different taker
         diff = Penalty(penalty_events.penalty_different_taker)
@@ -2127,11 +2127,11 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 7 - different datetime
         diff = Ping(ping_events.ping_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
+        self.assertEqual(child1.id, diff.id)
 
         # Test Case 8 - different period
         diff = Ping(ping_events.ping_different_period)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 9 - different period time
         diff = Ping(ping_events.ping_different_period_time)
@@ -2139,7 +2139,7 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 10 - different period time remaining
         diff = Ping(ping_events.ping_different_period_time_remaining)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 11 - different shooter
         diff = Ping(ping_events.ping_different_shooter)
@@ -2261,11 +2261,11 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 7 - different datetime
         diff = Shot(shot_events.shot_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
+        self.assertEqual(child1.id, diff.id)
 
         # Test Case 8 - different period
         diff = Shot(shot_events.shot_different_period)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 9 - different period time
         diff = Shot(shot_events.shot_different_period_time)
@@ -2273,7 +2273,7 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 10 - different period time remaining
         diff = Shot(shot_events.shot_different_period_time_remaining)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 11 - different shooter
         diff = Shot(shot_events.shot_different_shooter)
@@ -2383,11 +2383,11 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 7 - different datetime
         diff = Stoppage(stoppage_events.stoppage_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
+        self.assertEqual(child1.id, diff.id)
 
         # Test Case 8 - different period
         diff = Stoppage(stoppage_events.stoppage_different_period)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 9 - different period time
         diff = Stoppage(stoppage_events.stoppage_different_period_time)
@@ -2395,7 +2395,7 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 10 - different period time remaining
         diff = Stoppage(stoppage_events.stoppage_different_period_time_remaining)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
 
     def test_takeaway_equality(self):
@@ -2501,11 +2501,11 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 7 - different datetime
         diff = Takeaway(takeaway_events.takeaway_different_datetime)
-        self.assertNotEqual(child1.id, diff.id)
+        self.assertEqual(child1.id, diff.id)
 
         # Test Case 8 - different period
         diff = Takeaway(takeaway_events.takeaway_different_period)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 9 - different period time
         diff = Takeaway(takeaway_events.takeaway_different_period_time)
@@ -2513,7 +2513,7 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 10 - different period time remaining
         diff = Takeaway(takeaway_events.takeaway_different_period_time_remaining)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 11 - different player
         diff = Takeaway(takeaway_events.takeaway_different_player)
