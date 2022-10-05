@@ -111,14 +111,4 @@ jobs:
           with:
             push: true
             tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
-            file: ./Dockerfile
-    
-    deploy:
-        needs: build
-        runs-on: ubuntu-latest
-        if: github.ref == 'refs/heads/main'
-        steps:
-
-        - name: 'Checkout GitHub Action'
-          uses: actions/checkout@main
-          
+            file: ./Dockerfile          
