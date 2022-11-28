@@ -30,7 +30,7 @@ This seemed like a fun way to learn about the Twitter and NHL API. The bot is st
 > make build
 ```
 
-## How to deploy the docker container to Azure
+## How to deploy the docker container
 
 ```shell
 > make deploy
