@@ -6,9 +6,7 @@ Description:
 from datetime import datetime
 from typing import Optional
 
-import socket
 import time
-import os
 import pause
 
 from src import logger
@@ -47,9 +45,6 @@ def check_for_updates():
         found, it will trigger game event parsing at game time. If no game is
         found, it will pause until tomorrow.
     """
-
-    listen()
-
     while True:
 
         logger.log_info("Checking for a game today...")
@@ -71,13 +66,3 @@ def check_for_updates():
             logger.log_info("There is no game today.")
 
         wait_until_tomorrow()
-
-
-def listen():
-    """
-    Description:
-        Listen on the port defined by Google Cloud and print any data received.
-    """
-    port = int(os.getenv("PORT", "8080"))
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.bind(('', port))
