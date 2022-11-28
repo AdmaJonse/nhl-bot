@@ -1,6 +1,14 @@
 on: [push]
 name: CI
 
+env:
+  AWS_REGION: ca-central-1
+  ECR_REPOSITORY: avalanche-bot
+  ECS_SERVICE: avalanche-bot-service
+  ECS_CLUSTER: avalanche-bot-cluster
+  ECS_TASK_DEFINITION: .aws/task-definition.json
+  CONTAINER_NAME: avalanche-bot
+
 jobs:
     test:
       runs-on: ubuntu-latest
@@ -35,7 +43,6 @@ jobs:
           uses: EnricoMi/publish-unit-test-result-action@v1.36
           with:
             files: ./results.xml
-
 
     lint:
       runs-on: ubuntu-latest
@@ -74,41 +81,48 @@ jobs:
 
           - name: Perform static analysis on all src files
             run: make analyze
-
-    build:
+    
+    deploy:
         needs: [test, lint, analyze]
         runs-on: ubuntu-latest
+        if: github.ref == 'refs/heads/main'
         steps:
 
         - name: 'Checkout GitHub Action'
           uses: actions/checkout@main
+          
+        - name: Configure AWS credentials
+          uses: aws-actions/configure-aws-credentials@v1
+          with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ env.AWS_REGION }}
 
-        - name: Create env file
+        - name: Login to Amazon ECR
+          id: login-ecr
+          uses: aws-actions/amazon-ecr-login@v1
+
+        - name: Build, tag, and push docker image to Amazon ECR
+          env:
+            REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+            REPOSITORY: ${{ env.ECR_REPOSITORY }}
+            IMAGE_TAG: ${{ github.sha }}
           run: |
-            mkdir config
-            touch config/.env
-            echo BEARER_TOKEN=${{ secrets.BEARER_TOKEN }} >> config/.env
-            echo CONSUMER_KEY=${{ secrets.CONSUMER_KEY }} >> config/.env
-            echo CONSUMER_SECRET=${{ secrets.CONSUMER_SECRET }} >> config/.env
-            echo ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }} >> config/.env
-            echo ACCESS_TOKEN_SECRET=${{ secrets.ACCESS_TOKEN_SECRET }} >> config/.env
+            docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+            docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
-        - name: Set up Docker Buildx
-          uses: docker/setup-buildx-action@v1
-
-        - name: Log in to GitHub container registry
-          uses: docker/login-action@v1.10.0
+        - name: Fill in the new image ID in the Amazon ECS task definition
+          id: task-def
+          uses: aws-actions/amazon-ecs-render-task-definition@v1
           with:
-            registry: ghcr.io
-            username: ${{ github.actor }}
-            password: ${{ github.token }}
+            task-definition: ${{ env.ECS_TASK_DEFINITION }}
+            container-name: ${{ env.CONTAINER_NAME }}
+            image: ${{ steps.build-image.outputs.image }}
 
-        - name: Lowercase the repo name and username
-          run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
-
-        - name: Build and push container image to registry
-          uses: docker/build-push-action@v2
+        - name: Deploy Amazon ECS task definition
+          uses: aws-actions/amazon-ecs-deploy-task-definition@v1
           with:
-            push: true
-            tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
-            file: ./Dockerfile          
+            task-definition: ${{ steps.task-def.outputs.task-definition }}
+            service: ${{ env.ECS_SERVICE }}
+            cluster: ${{ env.ECS_CLUSTER }}
+            wait-for-service-stability: true

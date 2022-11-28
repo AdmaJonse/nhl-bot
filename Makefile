@@ -1,3 +1,7 @@
+container_registry := 124596083913.dkr.ecr.ca-central-1.amazonaws.com
+image_name         := avalanche-bot
+image_tag          := latest
+
 .PHONY: test
 test:
 	python -m pytest --junitxml results.xml test/
@@ -12,16 +16,16 @@ analyze:
 
 .PHONY: build
 build:
-	docker build . -t avalanchebot
-	docker tag avalanchebot avalanchebot.azurecr.io/avalanchebot:latest
+	docker build . -t $(image_name)
+	docker tag $(image_name) $(container_registry)/$(image_name):$(image_tag)
 
 .PHONY: deploy
 deploy: build
-	docker push avalanchebot.azurecr.io/avalanchebot:latest
+	docker push $(container_registry)/$(image_name):$(image_tag)
 
 .PHONY: run
 run: build
-	docker run avalanchebot.azurecr.io/avalanchebot:latest
+	docker run $(container_registry)/$(image_name):$(image_tag)
 
 .PHONY: clean
 clean:
