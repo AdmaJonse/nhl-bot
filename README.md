@@ -5,6 +5,7 @@ A Twitter bot that posts when events occur in Colorado Avalanche games.
 
 This seemed like a fun way to learn about the Twitter and NHL API. The bot is still a work-in-progress and provides very simple event updates.
 
+See the bot in action: [@avalanche_bot](https://twitter.com/avalanche_bot)
 
 ## How to run unit tests
 
