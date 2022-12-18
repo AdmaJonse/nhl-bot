@@ -4,12 +4,18 @@ Description:
 """
 
 import threading
+import logging
 from os import path
 from flask import Flask
+from waitress import serve
 
 from src import bot
 
 app = Flask(__name__)
+
+# prevent flask from logging requests
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 
 @app.route("/", methods=["GET"])
 def home():
@@ -29,4 +35,4 @@ if __name__ == '__main__':
     bot_thread.start()
 
     # Run the front-end web application
-    app.run(host="0.0.0.0", port=5000, threaded=True)
+    serve(app, host="0.0.0.0", port=5000)
