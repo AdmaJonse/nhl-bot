@@ -6,7 +6,6 @@ Description:
 import threading
 from os import path
 from flask import Flask
-from flask.logging import default_handler
 
 from src import bot
 
@@ -30,5 +29,4 @@ if __name__ == '__main__':
     bot_thread.start()
 
     # Run the front-end web application
-    app.logger.removeHandler(default_handler)
     app.run(host="0.0.0.0", port=5000, threaded=True)
