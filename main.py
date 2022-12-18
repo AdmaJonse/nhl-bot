@@ -20,7 +20,7 @@ def home():
         return ""
 
     with open("bot.log", encoding="utf-8") as log_file:
-        return log_file.read()
+        return "<xmp>" + log_file.read() + "</xmp>"
 
 if __name__ == '__main__':
 
