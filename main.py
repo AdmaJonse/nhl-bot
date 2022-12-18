@@ -4,8 +4,8 @@ Description:
 """
 
 import threading
-from flask import Flask
 from os import path
+from flask import Flask
 
 from src import bot
 
