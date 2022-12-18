@@ -3,8 +3,8 @@ config/keys.txt
 .mypy_cache
 __pycache__
 test/test_data/games
+bot.log
 data.json
-job.log
 .pytest_cache
 results.xml
 .vscode
