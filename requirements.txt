@@ -14,4 +14,5 @@ types-python-dateutil == 2.8.15
 types-pytz == 2021.3.8
 types-requests == 2.27.25
 types-urllib3 == 1.26.14
+types-waitress == 2.1.4.3
 waitress == 2.1.1
