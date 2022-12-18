@@ -125,13 +125,6 @@ jobs:
           with:
             lfs: 'true'
 
-        - name: Build the docker image
-          uses: docker/build-push-action@v2
-          with:
-            push: false
-            tags: avalanche-bot:latest
-            file: ./Dockerfile
-
         - name: Generate Deployment Package
           run: zip -r deploy.zip . -x "*.git*" -x "*test*"
 
@@ -142,6 +135,6 @@ jobs:
             aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             application_name: avalanche-bot
             environment_name: Avalanchebot-env
-            version_label: latest
+            version_label: ${{ github.sha }}
             region: ca-central-1
             deployment_package: deploy.zip
