@@ -37,7 +37,7 @@ jobs:
         - name: Publish Unit Test Results
           uses: EnricoMi/publish-unit-test-result-action@master
           with:
-            files: ./results.xml
+            junit_files: ./results.xml
 
     lint:
       runs-on: ubuntu-latest
@@ -99,7 +99,7 @@ jobs:
           uses: docker/setup-buildx-action@main
 
         - name: Log in to GitHub container registry
-          uses: docker/login-action@main
+          uses: docker/login-action@master
           with:
             registry: ghcr.io
             username: ${{ github.actor }}
