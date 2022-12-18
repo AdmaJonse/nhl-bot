@@ -35,7 +35,7 @@ jobs:
           run: make test
 
         - name: Publish Unit Test Results
-          uses: EnricoMi/publish-unit-test-result-action@main
+          uses: EnricoMi/publish-unit-test-result-action@master
           with:
             files: ./results.xml
 
