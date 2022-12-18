@@ -96,7 +96,7 @@ jobs:
             echo ACCESS_TOKEN_SECRET=${{ secrets.ACCESS_TOKEN_SECRET }} >> config/.env
 
         - name: Set up Docker Buildx
-          uses: docker/setup-buildx-action@main
+          uses: docker/setup-buildx-action@master
 
         - name: Log in to GitHub container registry
           uses: docker/login-action@master
