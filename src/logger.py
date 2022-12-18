@@ -22,7 +22,12 @@ class Logger:
         stdout_handler.setLevel(logging.INFO)
         stdout_handler.setFormatter(formatter)
 
+        file_handler = logging.FileHandler("bot.log", mode='w')
+        file_handler.setLevel(logging.INFO)
+        file_handler.setFormatter(formatter)
+
         self.logger.addHandler(stdout_handler)
+        self.logger.addHandler(file_handler)
 
 
     def info(self, msg):
