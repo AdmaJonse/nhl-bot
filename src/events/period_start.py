@@ -42,7 +42,7 @@ class PeriodStart(Event):
             Return the event string for a period start event.
         """
         event_values = {
-            "period":   self.get_period_string(),
+            "period":   str(self.period),
             "venue":    game_data.venue,
             "city":     game_data.city,
             "hashtags": game_data.hashtags

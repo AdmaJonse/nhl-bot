@@ -10,6 +10,7 @@ from test.test_data import goal_events
 from test.test_data import miscellaneous_events
 from test.test_data import penalty_events
 from test.test_data import period_events
+from test.test_data import shot_events
 
 from src import event_factory
 from src.game_data import GameData
@@ -31,6 +32,7 @@ from src.events.period_official import PeriodOfficial
 from src.events.period_ready import PeriodReady
 from src.events.period_start import PeriodStart
 from src.events.shot import Shot
+from src.events.shootout_end import ShootoutEnd
 from src.events.stoppage import Stoppage
 from src.events.takeaway import Takeaway
 
@@ -51,6 +53,7 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 0,
                 "period": 1,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "20:00",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
@@ -74,6 +77,7 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 384,
                 "period": 3,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "00:00",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
@@ -97,6 +101,7 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 385,
                 "period": 3,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "00:00",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
@@ -126,6 +131,7 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 3,
                 "period": 1,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "20:00",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
@@ -149,6 +155,7 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 6,
                 "period": 1,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "19:19",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
@@ -178,12 +185,16 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 12,
                 "period": 1,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "18:14",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
                     "home": 0,
                     "away": 0
                 }
+            },
+            "team" : {
+                "name" : "Washington Capitals"
             }
         }
         expected = Shot(data)
@@ -207,6 +218,7 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 15,
                 "period": 1,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "17:55",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
@@ -236,6 +248,7 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 31,
                 "period": 1,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "14:21",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
@@ -263,6 +276,7 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 24,
                 "period": 1,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "16:22",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
@@ -290,6 +304,7 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 8,
                 "period": 1,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "18:54",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
@@ -319,6 +334,7 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 17,
                 "period": 1,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "17:39",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
@@ -353,6 +369,7 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 77,
                 "period": 1,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "08:13",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
@@ -390,6 +407,7 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 212,
                 "period": 2,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "02:42",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
@@ -416,6 +434,7 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 1,
                 "period": 1,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "20:00",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
@@ -439,6 +458,7 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 124,
                 "period": 2,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "20:00",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
@@ -462,6 +482,7 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 121,
                 "period": 1,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "00:00",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
@@ -485,6 +506,7 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 122,
                 "period": 1,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "00:00",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
@@ -495,6 +517,30 @@ class TestEvents(unittest.TestCase):
         }
         expected = PeriodOfficial(data)
         actual   = event_factory.create(period_events.period_official_data)
+        self.assertEqual(expected, actual)
+
+
+    def test_shootout_end(self):
+        """
+        Description:
+            Test the constructor of a Shootout End event.
+        """
+        data = {
+            "result": {"description": "Shootout Complete"},
+            "about": {
+                "eventIdx": 122,
+                "period": 5,
+                "periodType": "SHOOTOUT",
+                "periodTimeRemaining": "00:00",
+                "dateTime": "2022-04-10T17:41:12Z",
+                "goals": {
+                    "home": 0,
+                    "away": 0
+                }
+            }
+        }
+        expected = ShootoutEnd(data)
+        actual   = event_factory.create(period_events.shootout_end_data)
         self.assertEqual(expected, actual)
 
 
@@ -554,6 +600,57 @@ class TestEvents(unittest.TestCase):
         self.assertEqual(expected, actual)
 
 
+    def test_shootout_goal(self):
+        """
+        Description:
+            Test the constructor of a Goal event for a shootout goal.
+        """
+        data = {
+            "players" : [ {
+            "player" : {
+                "fullName" : "Evan Rodrigues"
+            },
+            "playerType" : "Scorer"
+            }, {
+            "player" : {
+                "fullName" : "Ilya Sorokin"
+            },
+            "playerType" : "Goalie"
+            } ],
+            "result" : {
+            "event" : "Goal",
+            "eventTypeId" : "GOAL",
+            "description" : "Evan Rodrigues - Wrist Shot",
+            "secondaryType" : "Wrist Shot",
+            "strength" : {
+                "code" : "EVEN",
+                "name" : "Even"
+            },
+            "gameWinningGoal" : False
+            },
+            "about" : {
+            "eventIdx" : 369,
+            "eventId" : 939,
+            "period" : 5,
+            "periodType" : "SHOOTOUT",
+            "ordinalNum" : "SO",
+            "periodTime" : "00:00",
+            "periodTimeRemaining" : "00:00",
+            "dateTime" : "2022-12-20T04:49:31Z",
+            "goals" : {
+                "away" : 0,
+                "home" : 0
+            }
+            },
+            "team" : {
+            "name" : "Washington Capitals"
+            }
+        }
+        expected = Goal(data)
+        actual   = event_factory.create(goal_events.goal_data_shootout)
+        self.assertEqual(expected, actual)
+
+
     def test_challenge(self):
         """
         Description:
@@ -564,6 +661,7 @@ class TestEvents(unittest.TestCase):
             "about": {
                 "eventIdx": 105,
                 "period": 2,
+                "periodType": "REGULAR",
                 "periodTimeRemaining": "18:06",
                 "dateTime": "2022-04-10T17:41:12Z",
                 "goals": {
@@ -798,6 +896,18 @@ class TestEvents(unittest.TestCase):
         self.assertEqual(expected, actual)
 
 
+    def test_shootout_end_post(self):
+        """
+        Description:
+            Test the expected output of a shootout end event.
+        """
+        event     = event_factory.create(period_events.shootout_end_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = None
+        self.assertEqual(expected, actual)
+
+
     def test_goal_post(self):
         """
         Description:
@@ -890,4 +1000,40 @@ class TestEvents(unittest.TestCase):
         game_data = GameData(game_events.game_data)
         actual    = event.get_post(game_data)
         expected  = "\nPing!\n\nNazem Kadri's shot on Jordan Binnington hit the crossbar.\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_shootout_goal_post(self):
+        """
+        Description:
+            Test the expected output of a shootout goal event.
+        """
+        event     = event_factory.create(goal_events.goal_data_shootout)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = "\nWashington goal!\n\nEvan Rodrigues scores against Ilya Sorokin in the shootout.\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_shootout_miss_post(self):
+        """
+        Description:
+            Test the expected output of a shootout miss event.
+        """
+        event     = event_factory.create(shot_events.shootout_miss_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = "\nWashington miss.\n\nThe shootout attempt by Simon Holmstrom missed the net.\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_shootout_save_post(self):
+        """
+        Description:
+            Test the expected output of a shootout save event.
+        """
+        event     = event_factory.create(shot_events.shootout_save_data)
+        game_data = GameData(game_events.game_data)
+        actual    = event.get_post(game_data)
+        expected  = "\nWashington miss.\n\nAlexandar Georgiev stopped the shootout attempt by Mathew Barzal.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)

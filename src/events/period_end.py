@@ -34,7 +34,7 @@ class PeriodEnd(Event):
 
     @property
     def id(self) -> str:
-        return "PER" + str(self.period) + "-END"
+        return "PER" + str(self.period.number) + "-END"
 
     def get_post(self, game_data : GameData) -> Optional[str]:
         """
@@ -43,7 +43,7 @@ class PeriodEnd(Event):
         """
 
         event_values = {
-            "period":     self.get_period_string(),
+            "period":     str(self.period),
             "venue":      game_data.venue,
             "city":       game_data.city,
             "home_team":  game_data.home.location,

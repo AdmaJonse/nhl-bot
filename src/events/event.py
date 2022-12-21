@@ -16,8 +16,9 @@ from typing import Any, Optional
 from dateutil import parser
 from src.exceptions import InsufficientData
 
-from src.game_data import GameData
 from src import logger
+from src.game_data import GameData
+from src.period import Period
 from src.utils import pad_blob, pad_code
 
 
@@ -82,7 +83,7 @@ class Event:
     def __init__(self, data : Any):
         self._tweet_id    : Optional[int] = None
         self._description : str           = data["result"]["description"]
-        self._period      : int           = data["about"]["period"]
+        self._period      : Period        = Period(data["about"])
         self._time        : str           = data["about"]["periodTimeRemaining"]
         self._timestamp   : datetime      = parser.parse(data["about"]["dateTime"])
         self._home_goals  : int           = data["about"]["goals"]["home"]
@@ -103,7 +104,7 @@ class Event:
 
     def __eq__(self, other):
         return (self.__class__ == other.__class__ and
-                self.period == other.period and
+                self.period.number == other.period.number and
                 self.time == other.time)
 
     @property
@@ -132,7 +133,7 @@ class Event:
         """
 
         name        : str = self.code
-        time        : str = str(self.period) + "-" + str(self.time).replace(':', '')
+        time        : str = str(self.period.number) + "-" + str(self.time).replace(':', '')
         description : str = self.blob
         return name + "-" + time + "-" + description
 
@@ -162,12 +163,12 @@ class Event:
         self._description = description
 
     @property
-    def period(self) -> int:
+    def period(self) -> Period:
         """Getter for the period."""
         return self._period
 
     @period.setter
-    def period(self, period : int):
+    def period(self, period : Period):
         """Setter for the period."""
         self._period = period
 
@@ -220,46 +221,6 @@ class Event:
     def auto_reply(self, reply : bool):
         """Setter for the auto reply field."""
         self._auto_reply = reply
-
-    def get_period_string(self) -> str:
-        """
-        Description:
-            Return a string represenation of the period from the given event.
-        """
-        if self.period == 1:
-            period_string = "The first period"
-        elif self.period == 2:
-            period_string = "The second period"
-        elif self.period == 3:
-            period_string = "The third period"
-        else:
-            period_string = "The OT period"
-        return period_string
-
-
-    def get_ordinal_period_string(self) -> str:
-        """
-        Description:
-            Return an ordinal string represenation of the period from the given event.
-        """
-        if self.period == 1:
-            period_string = "1st"
-        elif self.period == 2:
-            period_string = "2nd"
-        elif self.period == 3:
-            period_string = "3rd"
-        elif self.period == 4:
-            period_string = "OT"
-        elif self.period == 5:
-            period_string = "2OT"
-        elif self.period == 6:
-            period_string = "3OT"
-        elif self.period == 7:
-            period_string = "4OT"
-        else:
-            period_string = "OT"
-        return period_string
-
 
     def get_post(self, _game_data : GameData) -> Optional[str]:
         """

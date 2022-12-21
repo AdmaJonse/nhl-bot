@@ -98,3 +98,27 @@ period_official_data = {
     },
     "coordinates": {}
 }
+
+shootout_end_data = {
+    "result" : {
+        "event" : "Shootout Complete",
+        "eventCode" : "COL944",
+        "eventTypeId" : "SHOOTOUT_COMPLETE",
+        "description" : "End of Shootout"
+    },
+    "about" : {
+        "eventIdx" : 373,
+        "eventId" : 944,
+        "period" : 5,
+        "periodType" : "SHOOTOUT",
+        "ordinalNum" : "SO",
+        "periodTime" : "00:00",
+        "periodTimeRemaining" : "00:00",
+        "dateTime" : "2022-12-20T04:50:45Z",
+        "goals" : {
+        "away" : 0,
+        "home" : 0
+        }
+    },
+    "coordinates" : { }
+}

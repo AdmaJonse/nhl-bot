@@ -162,17 +162,21 @@ class Goal(Event):
         event_values = {
             "team":             game_data.get_team_string(self.team),
             "scorer":           self.scorer,
+            "goalie":           self.goalie,
             "primary_assist":   self.primary_assist,
             "secondary_assist": self.secondary_assist,
             "description":      self.description,
             "time":             self.time,
-            "period":           self.get_ordinal_period_string(),
+            "period":           self.period.ordinal,
             "home_team":        game_data.home.location,
             "away_team":        game_data.away.location,
             "home_goals":       self.home_goals,
             "away_goals":       self.away_goals,
             "hashtags":         game_data.hashtags
         }
+
+        if self.period.is_shootout:
+            return templates.SHOOTOUT_GOAL_TEMPLATE.format(**event_values)
 
         if self.is_empty_net:
             goal_string = templates.EMPTY_NET_GOAL_TEMPLATE.format(**event_values)
@@ -215,7 +219,7 @@ class Goal(Event):
             "secondary_assist": self.secondary_assist,
             "description":      self.description,
             "time":             self.time,
-            "period":           self.get_ordinal_period_string(),
+            "period":           self.period.ordinal,
             "home_team":        game_data.home.location,
             "away_team":        game_data.away.location,
             "home_goals":       self.home_goals,

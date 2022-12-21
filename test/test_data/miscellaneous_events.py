@@ -43,6 +43,7 @@ null_event = {
     "about": {
         "eventIdx": 3,
         "period": 1,
+        "periodType": "REGULAR",
         "periodTimeRemaining": "20:00",
         "dateTime": "2022-04-10T17:41:12Z",
         "goals": {
