@@ -50,7 +50,6 @@ class Output:
 
 
 output = Output()
-output.dry_run = True
 
 
 def post(text : str) -> Optional[int]:
