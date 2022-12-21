@@ -12,17 +12,20 @@ from src.exceptions import InsufficientData
 from src.game_data import GameData
 from src.utils import initials, pad_blob, pad_code
 
-class Shot(Event):
+class FailedShot(Event):
     """
     Description:
-        The Shot event.
+        The Failed Shot event.
     """
 
     def __init__(self, data):
         super().__init__(data)
-        self._shooter : Optional[str] = get_player_name(data, "Shooter")
-        self._goalie  : Optional[str] = get_player_name(data, "Goalie")
         self._team    : Optional[str] = get_team(data)
+        self._shooter : Optional[str] = get_player_name(data, "Unknown", 1)
+        self._goalie  : Optional[str] = get_player_name(data, "Unknown", 2)
+
+        if self.team is None:
+            raise InsufficientData
 
         if self.shooter is None:
             raise InsufficientData
@@ -30,17 +33,13 @@ class Shot(Event):
         if self.goalie is None:
             raise InsufficientData
 
-        if self.team is None:
-            raise InsufficientData
 
     def __str__(self):
-        return str(self.id) + " - " + str(self.time) + " = Shot - " + self.description
+        return str(self.id) + " - " + str(self.time) + " = Failed Shot - " + self.description
 
     def __eq__(self, other):
-        return (isinstance(self, Shot) and
-                isinstance(other, Shot) and
-                self.period  == other.period and
-                self.time    == other.time and
+        return (isinstance(self, FailedShot) and
+                isinstance(other, FailedShot) and
                 self.shooter == other.shooter and
                 self.goalie  == other.goalie and
                 self.team    == other.team)
@@ -50,7 +49,7 @@ class Shot(Event):
         """
         Return a seven-character code representing the event type.
         """
-        code : str = "SHOT"
+        code : str = "FAILSHT"
         return pad_code(code)
 
     @property
@@ -93,14 +92,15 @@ class Shot(Event):
         """Setter for the team."""
         self._team = team
 
+
     def get_post(self, game_data : GameData) -> Optional[str]:
         """
         Description:
-            Return the event string for a penalty or penalty shot event.
+            Return the event string for a failed shot event.
         """
 
-        # We only want to log saves in the shootout, ignore all other events
-        if not self.period.is_shootout:
+        if self.team is None:
+            logger.log_error("Could not determine team. Delaying tweet.")
             return None
 
         if self.shooter is None:
@@ -111,14 +111,10 @@ class Shot(Event):
             logger.log_error("Could not determine goalie. Delaying tweet.")
             return None
 
-        if self.team is None:
-            logger.log_error("Could not determine shooter's team. Delaying tweet.")
-            return None
-
         event_values = {
             "team":     game_data.get_team_string(self.team),
             "shooter":  self.shooter,
             "goalie":   self.goalie,
             "hashtags": game_data.hashtags
         }
-        return templates.SHOOTOUT_SAVE_TEMPLATE.format(**event_values)
+        return templates.SHOOTOUT_MISS_TEMPLATE.format(**event_values)

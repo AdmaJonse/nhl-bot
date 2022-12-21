@@ -9,6 +9,7 @@ from src.events.event import Event
 from src.events.blocked_shot import BlockedShot
 from src.events.challenge import Challenge
 from src.events.faceoff import Faceoff
+from src.events.failed_shot import FailedShot
 from src.events.game_end import GameEnd
 from src.events.game_official import GameOfficial
 from src.events.game_scheduled import GameScheduled
@@ -24,6 +25,7 @@ from src.events.period_ready import PeriodReady
 from src.events.period_start import PeriodStart
 from src.events.ping import Ping
 from src.events.shot import Shot
+from src.events.shootout_end import ShootoutEnd
 from src.events.stoppage import Stoppage
 from src.events.takeaway import Takeaway
 from src.exceptions import InsufficientData
@@ -36,6 +38,7 @@ class Events(Enum):
     BLOCKED_SHOT_EVENT    = "Blocked Shot"
     CHALLENGE_EVENT       = "Official Challenge"
     FACEOFF_EVENT         = "Faceoff"
+    FAILED_SHOT_EVENT     = "Failed Shot Attempt"
     GAME_END_EVENT        = "Game End"
     GAME_OFFICIAL_EVENT   = "Game Official"
     GAME_SCHEDULED_EVENT  = "Game Scheduled"
@@ -51,6 +54,7 @@ class Events(Enum):
     PERIOD_START_EVENT    = "Period Start"
     PING_EVENT            = "Ping"
     SHOT_EVENT            = "Shot"
+    SHOOTOUT_END_EVENT    = "Shootout Complete"
     STOPPAGE_EVENT        = "Stoppage"
     TAKEAWAY_EVENT        = "Takeaway"
 
@@ -58,6 +62,7 @@ event_constructors : Dict[Events, Type[Event]] = {
     Events.BLOCKED_SHOT_EVENT:    BlockedShot,
     Events.CHALLENGE_EVENT:       Challenge,
     Events.FACEOFF_EVENT:         Faceoff,
+    Events.FAILED_SHOT_EVENT:     FailedShot,
     Events.GAME_END_EVENT:        GameEnd,
     Events.GAME_OFFICIAL_EVENT:   GameOfficial,
     Events.GAME_SCHEDULED_EVENT:  GameScheduled,
@@ -73,6 +78,7 @@ event_constructors : Dict[Events, Type[Event]] = {
     Events.PERIOD_START_EVENT:    PeriodStart,
     Events.PING_EVENT:            Ping,
     Events.SHOT_EVENT:            Shot,
+    Events.SHOOTOUT_END_EVENT:    ShootoutEnd,
     Events.STOPPAGE_EVENT:        Stoppage,
     Events.TAKEAWAY_EVENT:        Takeaway
 }

@@ -1,5 +1,6 @@
 """
-TODO
+Description:
+    Shot event test data.
 """
 
 shot_1 = {
@@ -538,5 +539,102 @@ shot_different_goalie = {
         "name" : "Colorado Avalanche",
         "link" : "/api/v1/teams/21",
         "triCode" : "COL"
+    }
+}
+
+shootout_miss_data = {
+    "players" : [ {
+        "player" : {
+        "id" : 8481601,
+        "fullName" : "Simon Holmstrom",
+        "link" : "/api/v1/people/8481601"
+        },
+        "playerType" : "Unknown"
+    }, {
+        "player" : {
+        "id" : 8480382,
+        "fullName" : "Alexandar Georgiev",
+        "link" : "/api/v1/people/8480382"
+        },
+        "playerType" : "Unknown"
+    } ],
+    "result" : {
+        "event" : "Failed Shot Attempt",
+        "eventCode" : "COL940",
+        "eventTypeId" : "FAILED_SHOT_ATTEMPT",
+        "description" : "Simon Holmstrom failed shot attempt on Alexandar Georgiev"
+    },
+    "about" : {
+        "eventIdx" : 368,
+        "eventId" : 940,
+        "period" : 5,
+        "periodType" : "SHOOTOUT",
+        "ordinalNum" : "SO",
+        "periodTime" : "00:00",
+        "periodTimeRemaining" : "00:00",
+        "dateTime" : "2022-12-20T04:49:31Z",
+        "goals" : {
+        "away" : 0,
+        "home" : 0
+        }
+    },
+    "coordinates" : {
+        "x" : 76.0,
+        "y" : -2.0
+    },
+    "team" : {
+        "id" : 2,
+        "name" : "Washington Capitals",
+        "link" : "/api/v1/teams/2",
+        "triCode" : "NYI"
+    }
+}
+
+shootout_save_data =  {
+    "players" : [ {
+        "player" : {
+        "id" : 8478445,
+        "fullName" : "Mathew Barzal",
+        "link" : "/api/v1/people/8478445"
+        },
+        "playerType" : "Shooter"
+    }, {
+        "player" : {
+        "id" : 8480382,
+        "fullName" : "Alexandar Georgiev",
+        "link" : "/api/v1/people/8480382"
+        },
+        "playerType" : "Goalie"
+    } ],
+    "result" : {
+        "event" : "Shot",
+        "eventCode" : "COL941",
+        "eventTypeId" : "SHOT",
+        "description" : "Mathew Barzal Backhand saved by Alexandar Georgiev",
+        "secondaryType" : "Backhand"
+    },
+    "about" : {
+        "eventIdx" : 370,
+        "eventId" : 941,
+        "period" : 5,
+        "periodType" : "SHOOTOUT",
+        "ordinalNum" : "SO",
+        "periodTime" : "00:00",
+        "periodTimeRemaining" : "00:00",
+        "dateTime" : "2022-12-20T04:50:05Z",
+        "goals" : {
+        "away" : 0,
+        "home" : 0
+        }
+    },
+    "coordinates" : {
+        "x" : 79.0,
+        "y" : 4.0
+    },
+    "team" : {
+        "id" : 2,
+        "name" : "Washington Capitals",
+        "link" : "/api/v1/teams/2",
+        "triCode" : "NYI"
     }
 }

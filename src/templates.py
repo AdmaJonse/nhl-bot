@@ -77,6 +77,33 @@ Shots On Goal:
 {hashtags}
 """
 
+#################################################
+# Shootout
+#################################################
+
+SHOOTOUT_MISS_TEMPLATE = """
+{team} miss.
+
+The shootout attempt by {shooter} missed the net.
+
+{hashtags}
+"""
+
+SHOOTOUT_SAVE_TEMPLATE = """
+{team} miss.
+
+{goalie} stopped the shootout attempt by {shooter}.
+
+{hashtags}
+"""
+
+SHOOTOUT_GOAL_TEMPLATE = """
+{team} goal!
+
+{scorer} scores against {goalie} in the shootout.
+
+{hashtags}
+"""
 
 #################################################
 # Ping!

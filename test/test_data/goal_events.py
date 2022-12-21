@@ -207,6 +207,61 @@ goal_data_scorer_change = {
     }
 }
 
+goal_data_shootout = {
+    "players" : [ {
+        "player" : {
+        "id" : 8478542,
+        "fullName" : "Evan Rodrigues",
+        "link" : "/api/v1/people/8478542"
+        },
+        "playerType" : "Scorer",
+        "seasonTotal" : 0
+    }, {
+        "player" : {
+        "id" : 8478009,
+        "fullName" : "Ilya Sorokin",
+        "link" : "/api/v1/people/8478009"
+        },
+        "playerType" : "Goalie"
+    } ],
+    "result" : {
+        "event" : "Goal",
+        "eventCode" : "COL939",
+        "eventTypeId" : "GOAL",
+        "description" : "Evan Rodrigues - Wrist Shot",
+        "secondaryType" : "Wrist Shot",
+        "strength" : {
+        "code" : "EVEN",
+        "name" : "Even"
+        },
+        "gameWinningGoal" : False
+    },
+    "about" : {
+        "eventIdx" : 369,
+        "eventId" : 939,
+        "period" : 5,
+        "periodType" : "SHOOTOUT",
+        "ordinalNum" : "SO",
+        "periodTime" : "00:00",
+        "periodTimeRemaining" : "00:00",
+        "dateTime" : "2022-12-20T04:49:31Z",
+        "goals" : {
+        "away" : 0,
+        "home" : 0
+        }
+    },
+    "coordinates" : {
+        "x" : -82.0,
+        "y" : 3.0
+    },
+    "team" : {
+        "id" : 21,
+        "name" : "Washington Capitals",
+        "link" : "/api/v1/teams/21",
+        "triCode" : "COL"
+    }
+}
+
 goal_data_no_scorer = {
     "players": [
         {

@@ -10,7 +10,7 @@ from src import templates
 from src.events.event import Event, get_player_name, get_team, get_value
 from src.exceptions import InsufficientData
 from src.game_data import GameData
-from src.utils import pad_blob, pad_code
+from src.utils import initials, pad_blob, pad_code
 
 class Goal(Event):
     """
@@ -73,6 +73,15 @@ class Goal(Event):
         home : str = str(self.home_goals)
         away : str = str(self.away_goals)
         blob : str = home + "TO" + away
+
+        # Shootout goals are special because the score doesn't change. Need to
+        # account for this by IDing them separately.
+
+        if self.period.is_shootout:
+            shooter : str = initials(self.scorer)
+            goalie  : str = initials(self.goalie)
+            blob = shooter + "ON" + goalie
+
         return pad_blob(blob)
 
     @property
@@ -162,17 +171,21 @@ class Goal(Event):
         event_values = {
             "team":             game_data.get_team_string(self.team),
             "scorer":           self.scorer,
+            "goalie":           self.goalie,
             "primary_assist":   self.primary_assist,
             "secondary_assist": self.secondary_assist,
             "description":      self.description,
             "time":             self.time,
-            "period":           self.get_ordinal_period_string(),
+            "period":           self.period.ordinal,
             "home_team":        game_data.home.location,
             "away_team":        game_data.away.location,
             "home_goals":       self.home_goals,
             "away_goals":       self.away_goals,
             "hashtags":         game_data.hashtags
         }
+
+        if self.period.is_shootout:
+            return templates.SHOOTOUT_GOAL_TEMPLATE.format(**event_values)
 
         if self.is_empty_net:
             goal_string = templates.EMPTY_NET_GOAL_TEMPLATE.format(**event_values)
@@ -215,7 +228,7 @@ class Goal(Event):
             "secondary_assist": self.secondary_assist,
             "description":      self.description,
             "time":             self.time,
-            "period":           self.get_ordinal_period_string(),
+            "period":           self.period.ordinal,
             "home_team":        game_data.home.location,
             "away_team":        game_data.away.location,
             "home_goals":       self.home_goals,
