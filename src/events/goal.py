@@ -10,7 +10,7 @@ from src import templates
 from src.events.event import Event, get_player_name, get_team, get_value
 from src.exceptions import InsufficientData
 from src.game_data import GameData
-from src.utils import pad_blob, pad_code
+from src.utils import initials, pad_blob, pad_code
 
 class Goal(Event):
     """
@@ -73,6 +73,15 @@ class Goal(Event):
         home : str = str(self.home_goals)
         away : str = str(self.away_goals)
         blob : str = home + "TO" + away
+
+        # Shootout goals are special because the score doesn't change. Need to
+        # account for this by IDing them separately.
+
+        if self.period.is_shootout:
+            shooter : str = initials(self.scorer)
+            goalie  : str = initials(self.goalie)
+            blob = shooter + "ON" + goalie
+
         return pad_blob(blob)
 
     @property
