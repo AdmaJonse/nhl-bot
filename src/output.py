@@ -20,6 +20,11 @@ class Output:
         self._dry_run   : bool      = False
         self._outputter : Outputter = Tweeter()
 
+        if self.dry_run:
+            self._outputter = Printer()
+        else:
+            self._outputter = Tweeter()
+
 
     @property
     def dry_run(self) -> bool:
@@ -36,8 +41,12 @@ class Output:
         Description:
             Set the dry run flag.
         """
-        self._dry_run   = flag
-        self._outputter = Printer()
+        self._dry_run = flag
+
+        if self.dry_run:
+            self._outputter = Printer()
+        else:
+            self._outputter = Tweeter()
 
 
     @property
