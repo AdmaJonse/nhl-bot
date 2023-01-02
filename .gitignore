@@ -3,7 +3,7 @@ config/keys.txt
 .mypy_cache
 __pycache__
 test/test_data/games
-bot.log
+bot.log*
 data.json
 .pytest_cache
 results.xml
