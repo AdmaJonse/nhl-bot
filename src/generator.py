@@ -67,7 +67,6 @@ class Generator:
             "home_team": self.game_data.home.location,
             "away_team": self.game_data.away.location,
             "venue":     self.game_data.venue,
-            "city":      self.game_data.city,
             "time":      time.strftime("%I:%M %p %Z"),
             "hashtags":  self.game_data.hashtags
         }

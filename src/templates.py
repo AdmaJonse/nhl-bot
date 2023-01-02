@@ -12,7 +12,7 @@ Description:
 GAME_DAY_TEMPLATE = """
 It's game day!
 
-{home_team} takes on {away_team} at {venue} in {city}. The puck drops at {time}.
+{home_team} takes on {away_team} at {venue}. The puck drops at {time}.
 
 {hashtags}
 """
@@ -24,7 +24,27 @@ It's game day!
 GAME_END_TEMPLATE = """
 The game is over. {winner} wins!
 
-Final Score:
+Final:
+{home_team}: {home_goals}
+{away_team}: {away_goals}
+
+{hashtags}
+"""
+
+GAME_END_OT_TEMPLATE = """
+The game is over. {winner} wins!
+
+Final/OT:
+{home_team}: {home_goals}
+{away_team}: {away_goals}
+
+{hashtags}
+"""
+
+GAME_END_SO_TEMPLATE = """
+The game is over. {winner} wins!
+
+Final/SO:
 {home_team}: {home_goals}
 {away_team}: {away_goals}
 
@@ -37,7 +57,7 @@ Final Score:
 #################################################
 
 PERIOD_START_TEMPLATE = """
-{period} is starting at {venue} in {city}.
+{period} is starting at {venue}.
 
 {hashtags}
 """
@@ -48,7 +68,7 @@ PERIOD_START_TEMPLATE = """
 #################################################
 
 PERIOD_END_TEMPLATE = """
-{period} is over at {venue} in {city}.
+{period} is over at {venue}.
 
 Goals
 {home_team}: {home_goals}

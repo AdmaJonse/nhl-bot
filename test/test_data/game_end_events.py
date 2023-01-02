@@ -19,8 +19,8 @@ game_end_1 = {
         "periodTimeRemaining" : "11:58",
         "dateTime" : "2022-05-18T04:38:08Z",
         "goals" : {
-        "away" : 2,
-        "home" : 3
+            "away" : 2,
+            "home" : 3
         }
     },
     "coordinates" : { }
@@ -43,8 +43,8 @@ game_end_2 = {
         "periodTimeRemaining" : "00:00",
         "dateTime" : "2022-05-18T01:50:34Z",
         "goals" : {
-        "away" : 4,
-        "home" : 1
+            "away" : 4,
+            "home" : 1
         }
     },
     "coordinates" : { }
@@ -67,8 +67,8 @@ game_end_different_event_id = {
         "periodTimeRemaining" : "11:58",
         "dateTime" : "2022-05-18T04:38:08Z",
         "goals" : {
-        "away" : 2,
-        "home" : 3
+            "away" : 2,
+            "home" : 3
         }
     },
     "coordinates" : { }
@@ -91,8 +91,8 @@ game_end_different_event_id_x = {
         "periodTimeRemaining" : "11:58",
         "dateTime" : "2022-05-18T04:38:08Z",
         "goals" : {
-        "away" : 2,
-        "home" : 3
+            "away" : 2,
+            "home" : 3
         }
     },
     "coordinates" : { }
@@ -115,8 +115,8 @@ game_end_different_datetime = {
         "periodTimeRemaining" : "11:58",
         "dateTime" : "2022-05-18T04:39:08Z",
         "goals" : {
-        "away" : 2,
-        "home" : 3
+            "away" : 2,
+            "home" : 3
         }
     },
     "coordinates" : { }
@@ -139,8 +139,8 @@ game_end_different_period = {
         "periodTimeRemaining" : "11:58",
         "dateTime" : "2022-05-18T04:38:08Z",
         "goals" : {
-        "away" : 2,
-        "home" : 3
+            "away" : 2,
+            "home" : 3
         }
     },
     "coordinates" : { }
@@ -163,8 +163,8 @@ game_end_different_period_time = {
         "periodTimeRemaining" : "11:58",
         "dateTime" : "2022-05-18T04:38:08Z",
         "goals" : {
-        "away" : 2,
-        "home" : 3
+            "away" : 2,
+            "home" : 3
         }
     },
     "coordinates" : { }
@@ -187,8 +187,8 @@ game_end_different_period_time_remaining = {
         "periodTimeRemaining" : "11:59",
         "dateTime" : "2022-05-18T04:38:08Z",
         "goals" : {
-        "away" : 2,
-        "home" : 3
+            "away" : 2,
+            "home" : 3
         }
     },
     "coordinates" : { }

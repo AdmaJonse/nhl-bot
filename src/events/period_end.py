@@ -45,7 +45,6 @@ class PeriodEnd(Event):
         event_values = {
             "period":     str(self.period),
             "venue":      game_data.venue,
-            "city":       game_data.city,
             "home_team":  game_data.home.location,
             "away_team":  game_data.away.location,
             "home_goals": self.home_goals,

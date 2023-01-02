@@ -701,7 +701,7 @@ class TestEvents(unittest.TestCase):
         event     = event_factory.create(game_events.game_end_data)
         game_data = GameData(game_events.game_data)
         actual    = event.get_post(game_data)
-        expected  = "\nThe game is over. Washington wins!\n\nFinal Score:\nWashington: 4\nBoston: 2\n\n#BOSvsWSH #GoAvsGo\n"
+        expected  = "\nThe game is over. Washington wins!\n\nFinal:\nWashington: 4\nBoston: 2\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
 
 
@@ -868,7 +868,7 @@ class TestEvents(unittest.TestCase):
         event     = event_factory.create(period_events.period_start_data)
         game_data = GameData(game_events.game_data)
         actual    = event.get_post(game_data)
-        expected  = "\nThe second period is starting at Capital One Arena in Washington.\n\n#BOSvsWSH #GoAvsGo\n"
+        expected  = "\nThe second period is starting at Capital One Arena.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
 
 
@@ -880,7 +880,7 @@ class TestEvents(unittest.TestCase):
         event     = event_factory.create(period_events.period_end_data)
         game_data = GameData(game_events.game_data)
         actual    = event.get_post(game_data)
-        expected  = "\nThe first period is over at Capital One Arena in Washington.\n\nGoals\nWashington: 0\nBoston: 0\n\nShots on Goal\nWashington: 33\nBoston: 30\n\n#BOSvsWSH #GoAvsGo\n"
+        expected  = "\nThe first period is over at Capital One Arena.\n\nGoals\nWashington: 0\nBoston: 0\n\nShots on Goal\nWashington: 33\nBoston: 30\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
 
 

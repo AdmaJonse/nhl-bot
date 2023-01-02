@@ -7,6 +7,8 @@ import logging
 import logging.handlers
 import sys
 
+LOG_FILE = "bot.log"
+
 class Logger:
     """
     Description:
@@ -19,18 +21,18 @@ class Logger:
         self.logger.setLevel(logging.INFO)
         formatter = logging.Formatter('| %(levelname)s | %(message)s')
 
-        stdout_handler = logging.StreamHandler(sys.stdout)
-        stdout_handler.setLevel(logging.INFO)
-        stdout_handler.setFormatter(formatter)
+        self.stdout_handler = logging.StreamHandler(sys.stdout)
+        self.stdout_handler.setLevel(logging.INFO)
+        self.stdout_handler.setFormatter(formatter)
 
-        file_handler = logging.handlers.RotatingFileHandler("bot.log",
+        self.file_handler = logging.handlers.RotatingFileHandler(LOG_FILE,
                                                             maxBytes=1000000,
                                                             backupCount=1)
-        file_handler.setLevel(logging.INFO)
-        file_handler.setFormatter(formatter)
+        self.file_handler.setLevel(logging.INFO)
+        self.file_handler.setFormatter(formatter)
 
-        self.logger.addHandler(stdout_handler)
-        self.logger.addHandler(file_handler)
+        self.logger.addHandler(self.stdout_handler)
+        self.logger.addHandler(self.file_handler)
 
 
     def info(self, msg):
@@ -55,6 +57,14 @@ class Logger:
             Log the given message at the debug level.
         """
         self.logger.debug(msg)
+
+
+    def flush(self):
+        """
+        Description:
+            Delete the current log file.
+        """
+        self.file_handler.doRollover()
 
 
 log = Logger()
@@ -82,3 +92,11 @@ def log_verbose(msg):
         Log the given message at the debug level.
     """
     log.verbose(msg)
+
+
+def flush():
+    """
+    Description:
+        Delete the existing log file.
+    """
+    log.flush()

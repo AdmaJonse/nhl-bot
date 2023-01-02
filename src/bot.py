@@ -47,6 +47,7 @@ def check_for_updates():
     """
     while True:
 
+        logger.flush()
         logger.log_info("Checking for a game today...")
 
         # Determine if there is a game today

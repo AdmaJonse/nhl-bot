@@ -44,7 +44,6 @@ class PeriodStart(Event):
         event_values = {
             "period":   str(self.period),
             "venue":    game_data.venue,
-            "city":     game_data.city,
             "hashtags": game_data.hashtags
         }
         return templates.PERIOD_START_TEMPLATE.format(**event_values)

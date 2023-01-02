@@ -16,6 +16,7 @@ class TeamData:
         This data class defines data that is specific to one team.
     """
     shots          : int  = 0
+    goals          : int  = 0
     goalie_pulled  : bool = False
     skater_count   : int  = 0
     is_power_play  : bool = False
@@ -87,7 +88,7 @@ def get_power_play(data) -> Optional[PowerPlay]:
 
         team = "even"
 
-    power_play : PowerPlay = PowerPlay(
+    return PowerPlay (
         team           = team,
         home_skaters   = home_skaters,
         away_skaters   = away_skaters,
@@ -96,7 +97,45 @@ def get_power_play(data) -> Optional[PowerPlay]:
         time_elapsed   = time.strftime("%M:%S", time.gmtime(time_elapsed))
     )
 
-    return power_play
+
+@dataclass
+class ShootoutData:
+    """
+    Description:
+        This data class defines data for a shootout event.
+    """
+    home_goals    : int = 0
+    home_attempts : int = 0
+    away_goals    : int = 0
+    away_attempts : int = 0
+
+
+def get_shootout(data) -> Optional[ShootoutData]:
+    """
+    Description:
+        Create a shootout data object using line score data.
+    """
+
+    home_goals    : int = 0
+    home_attempts : int = 0
+    away_goals    : int = 0
+    away_attempts : int = 0
+
+    if data["hasShootout"]:
+
+        home_goals    = data["shootoutInfo"]["home"]["scores"]
+        home_attempts = data["shootoutInfo"]["home"]["attempts"]
+        away_goals    = data["shootoutInfo"]["away"]["scores"]
+        away_attempts = data["shootoutInfo"]["away"]["attempts"]
+
+        return ShootoutData (
+            home_goals    = home_goals,
+            home_attempts = home_attempts,
+            away_goals    = away_goals,
+            away_attempts = away_attempts
+        )
+
+    return None
 
 
 class LineScore:
@@ -108,42 +147,58 @@ class LineScore:
     def __init__(self, data):
         self.home : TeamData = TeamData(
             shots         = data["teams"]["home"]["shotsOnGoal"],
+            goals         = data["teams"]["home"]["goals"],
             goalie_pulled = data["teams"]["home"]["goaliePulled"],
             skater_count  = data["teams"]["home"]["numSkaters"],
             is_power_play = data["teams"]["home"]["powerPlay"]
         )
         self.away : TeamData = TeamData(
             shots         = data["teams"]["away"]["shotsOnGoal"],
+            goals         = data["teams"]["away"]["goals"],
             goalie_pulled = data["teams"]["away"]["goaliePulled"],
             skater_count  = data["teams"]["away"]["numSkaters"],
             is_power_play = data["teams"]["away"]["powerPlay"]
         )
-        self.power_play : Optional[PowerPlay] = get_power_play(data)
+        self.power_play : Optional[PowerPlay]    = get_power_play(data)
+        self.shootout   : Optional[ShootoutData] = get_shootout(data)
 
 
     def __eq__(self, other):
-        return (self.home != other.home or
-                self.away != other.away or
-                self.power_play != other.power_play)
+        return (self.home == other.home and
+                self.away == other.away and
+                self.power_play == other.power_play and
+                self.shootout == other.shootout)
 
     def __str__(self):
         chunks = []
         chunks.append("Line Score: ")
         chunks.append("Home: ")
         chunks.append("  Shots:             " + str(self.home.shots))
+        chunks.append("  Goals:             " + str(self.home.goals))
         chunks.append("  Goalie Pulled:     " + str(self.home.goalie_pulled))
         chunks.append("  Number of Skaters: " + str(self.home.skater_count))
         chunks.append("  Is Power Play:     " + str(self.home.is_power_play))
         chunks.append("Away: ")
         chunks.append("  Shots:             " + str(self.away.shots))
+        chunks.append("  Goals:             " + str(self.away.goals))
         chunks.append("  Goalie Pulled:     " + str(self.away.goalie_pulled))
         chunks.append("  Number of Skaters: " + str(self.away.skater_count))
         chunks.append("  Is Power Play:     " + str(self.away.is_power_play))
-        chunks.append("Power Play: ")
-        chunks.append("  Team:              " + str(self.power_play.team))
-        chunks.append("  Strength:          " + str(self.power_play.strength))
-        chunks.append("  Time Remaining:    " + str(self.power_play.time_remaining))
-        chunks.append("  Time Elapsed:      " + str(self.power_play.time_elapsed))
+
+        if self.power_play is not None:
+            chunks.append("Power Play: ")
+            chunks.append("  Team:              " + str(self.power_play.team))
+            chunks.append("  Strength:          " + str(self.power_play.strength))
+            chunks.append("  Time Remaining:    " + str(self.power_play.time_remaining))
+            chunks.append("  Time Elapsed:      " + str(self.power_play.time_elapsed))
+
+        if self.shootout is not None:
+            chunks.append("Shootout: ")
+            chunks.append("  Home Goals:        " + str(self.shootout.home_goals))
+            chunks.append("  Home Attempts:     " + str(self.shootout.home_attempts))
+            chunks.append("  Away Goals:        " + str(self.shootout.away_goals))
+            chunks.append("  Away Attempts:     " + str(self.shootout.away_attempts))
+
         return '\n'.join(chunks)
 
 
@@ -156,15 +211,6 @@ class LineScore:
         return self.home.shots
 
 
-    @home_shots.setter
-    def home_shots(self, shots : int):
-        """
-        Description:
-            Setter for the home shots value.
-        """
-        self.home.shots = shots
-
-
     @property
     def away_shots(self) -> int:
         """
@@ -174,13 +220,22 @@ class LineScore:
         return self.away.shots
 
 
-    @away_shots.setter
-    def away_shots(self, shots : int):
+    @property
+    def home_goals(self) -> int:
         """
         Description:
-            Setter for the away shots value.
+            Getter for the home goals value.
         """
-        self.away.shots = shots
+        return self.home.goals
+
+
+    @property
+    def away_goals(self) -> int:
+        """
+        Description:
+            Getter for the away goals value.
+        """
+        return self.away.goals
 
 
     @property
@@ -192,15 +247,6 @@ class LineScore:
         return self.home.goalie_pulled
 
 
-    @home_goalie_pulled.setter
-    def home_goalie_pulled(self, is_pulled : bool):
-        """
-        Description:
-            Setter for the home goalie pulled value.
-        """
-        self.home.goalie_pulled = is_pulled
-
-
     @property
     def away_goalie_pulled(self) -> bool:
         """
@@ -210,31 +256,26 @@ class LineScore:
         return self.away.goalie_pulled
 
 
-    @away_goalie_pulled.setter
-    def away_goalie_pulled(self, is_pulled : bool):
+    @property
+    def home_shootout_goals(self) -> int:
         """
         Description:
-            Setter for the away goalie pulled value.
+            Getter for the home shootout goals value.
         """
-        self.away.goalie_pulled = is_pulled
+        if self.shootout is None:
+            return 0
+        return self.shootout.home_goals
 
 
     @property
-    def power_play(self) -> Optional[PowerPlay]:
+    def away_shootout_goals(self) -> int:
         """
         Description:
-            Getter for the power play record.
+            Getter for the away shotoout goals value.
         """
-        return self._power_play
-
-
-    @power_play.setter
-    def power_play(self, power_play : Optional[PowerPlay]):
-        """
-        Description:
-            Setter for the power play record.
-        """
-        self._power_play = power_play
+        if self.shootout is None:
+            return 0
+        return self.shootout.away_goals
 
 
 def check_for_events(previous : 'LineScore', current : 'LineScore'):
@@ -251,9 +292,9 @@ def check_for_events(previous : 'LineScore', current : 'LineScore'):
 
     if previous.away_goalie_pulled != current.away_goalie_pulled:
         if current.away_goalie_pulled:
-            logger.log_info("The home team has pulled their goalie.")
+            logger.log_info("The away team has pulled their goalie.")
         else:
-            logger.log_info("The home goalie has returned to the net.")
+            logger.log_info("The away goalie has returned to the net.")
 
     if previous.power_play != current.power_play:
         if current.power_play is None:

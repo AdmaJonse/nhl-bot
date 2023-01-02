@@ -30,8 +30,7 @@ class GameData:
         self._home        : Team      = Team(data["gameData"]["teams"]["home"])
         self._away        : Team      = Team(data["gameData"]["teams"]["away"])
         self._date        : datetime  = parser.parse(data["gameData"]["datetime"]["dateTime"])
-        self._venue       : str       = data["gameData"]["teams"]["home"]["venue"]["name"]
-        self._city        : str       = data["gameData"]["teams"]["home"]["venue"]["city"]
+        self._venue       : str       = data["gameData"]["venue"]["name"]
         self._is_playoffs : bool      = data["gameData"]["game"]["type"] == "P"
 
         self.print_constants()
@@ -120,13 +119,6 @@ class GameData:
         """Getter for the venue field."""
         return self._venue
 
-
-    @property
-    def city(self) -> str:
-        """Getter for the city field."""
-        return self._city
-
-
     @property
     def is_playoffs(self) -> bool:
         """Getter for the is_playoffs field."""
@@ -176,3 +168,75 @@ class GameData:
             Getter for the power play record.
         """
         return self.line_score.power_play
+
+
+    @property
+    def is_home_winner(self) -> bool:
+        """
+        Description:
+            Return a boolean indicating whether or not the home team has won the game.
+        """
+        is_winner : bool = self.line_score.home_goals > self.line_score.away_goals
+
+        if self.line_score.shootout is not None:
+            is_winner = self.line_score.home_shootout_goals > self.line_score.away_shootout_goals
+
+        return is_winner
+
+
+    @property
+    def is_away_winner(self) -> bool:
+        """
+        Description:
+            Return a boolean indicating whether or not the away team has won the game.
+        """
+        is_winner : bool = self.line_score.away_goals > self.line_score.home_goals
+
+        if self.line_score.shootout is not None:
+            is_winner = self.line_score.away_shootout_goals > self.line_score.home_shootout_goals
+
+        return is_winner
+
+
+    @property
+    def winner(self) -> str:
+        """
+        Description:
+            Return the name of the winning team.
+        """
+        team : str = "Nobody"
+
+        if self.is_home_winner:
+            team = self.home.location
+        elif self.is_away_winner:
+            team = self.away.location
+        else:
+            logger.log_error("Attempted to determine winner, but teams are tied.")
+
+        return team
+
+
+    @property
+    def home_score(self) -> int:
+        """
+        Description:
+            Slightly different from goals because we'll add the extra goal in
+            the event of a shootout win.
+        """
+        score : int = self.line_score.home_goals
+        if self.line_score.shootout is not None and self.is_home_winner:
+            score += 1
+        return score
+
+
+    @property
+    def away_score(self) -> int:
+        """
+        Description:
+            Slightly different from goals because we'll add the extra goal in
+            the event of a shootout win.
+        """
+        score : int = self.line_score.away_goals
+        if self.line_score.shootout is not None and self.is_away_winner:
+            score += 1
+        return score
