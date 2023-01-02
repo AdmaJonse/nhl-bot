@@ -17,41 +17,41 @@ class Team:
         self._full_name    : str = data["name"]
 
     @property
-    def location(self):
+    def location(self) -> str:
         """Getter for the team location."""
         return self._location
 
     @location.setter
-    def location(self, location):
+    def location(self, location : str):
         """Setter for the team location."""
         self._location = location
 
     @property
-    def team_name(self):
+    def team_name(self) -> str:
         """Getter for the team name."""
         return self._team_name
 
     @team_name.setter
-    def team_name(self, name):
+    def team_name(self, name : str):
         """Setter for the team name."""
         self._team_name = name
 
     @property
-    def abbreviation(self):
+    def abbreviation(self) -> str:
         """Getter for the team abbreviation."""
         return self._abbreviation
 
     @abbreviation.setter
-    def abbreviation(self, abbreviation):
+    def abbreviation(self, abbreviation : str):
         """Setter for the team abbreviation."""
         self._abbreviation = abbreviation
 
     @property
-    def full_name(self):
+    def full_name(self) -> str:
         """Getter for the team full name."""
         return self._full_name
 
     @full_name.setter
-    def full_name(self, name):
+    def full_name(self, name : str):
         """Setter for the team full name."""
         self._full_name = name

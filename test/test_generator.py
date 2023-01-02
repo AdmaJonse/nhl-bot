@@ -10,6 +10,7 @@ from test.test_data import miscellaneous_events
 from test.test_data import penalty_events
 from test.test_data import period_events
 
+from src import game_data
 from src import generator
 from src import event_factory
 
@@ -59,14 +60,39 @@ class TestGenerator(unittest.TestCase):
         self.assertEqual(expected, actual)
 
 
-    def test_game_end(self):
+    def test_game_end_regulation(self):
         """
         Description:
             Test the expected output of a game end event.
         """
+        self.generator.game_data = game_data.GameData(game_events.game_data)
         event    = event_factory.create(game_events.game_end_data)
         actual   = self.generator.get_event_string(event)
-        expected = "\nThe game is over. Washington wins!\n\nFinal Score:\nWashington: 4\nBoston: 2\n\n#BOSvsWSH #GoAvsGo\n"
+        expected = "\nThe game is over. Washington wins!\n\nFinal:\nWashington: 4\nBoston: 2\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_game_end_overtime(self):
+        """
+        Description:
+            Test the expected output of a game end event.
+        """
+        self.generator.game_data = game_data.GameData(game_events.game_data_overtime)
+        event    = event_factory.create(game_events.game_end_overtime_data)
+        actual   = self.generator.get_event_string(event)
+        expected = "\nThe game is over. Washington wins!\n\nFinal/OT:\nWashington: 4\nBoston: 3\n\n#BOSvsWSH #GoAvsGo\n"
+        self.assertEqual(expected, actual)
+
+
+    def test_game_end_shootout(self):
+        """
+        Description:
+            Test the expected output of a game end event.
+        """
+        self.generator.game_data = game_data.GameData(game_events.game_data_shootout)
+        event    = event_factory.create(game_events.game_end_shootout_data)
+        actual   = self.generator.get_event_string(event)
+        expected = "\nThe game is over. Washington wins!\n\nFinal/SO:\nWashington: 5\nBoston: 4\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
 
 
@@ -220,7 +246,7 @@ class TestGenerator(unittest.TestCase):
         """
         event    = event_factory.create(period_events.period_start_data)
         actual   = self.generator.get_event_string(event)
-        expected = "\nThe second period is starting at Capital One Arena in Washington.\n\n#BOSvsWSH #GoAvsGo\n"
+        expected = "\nThe second period is starting at Capital One Arena.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
 
 
@@ -231,7 +257,7 @@ class TestGenerator(unittest.TestCase):
         """
         event    = event_factory.create(period_events.period_end_data)
         actual   = self.generator.get_event_string(event)
-        expected = "\nThe first period is over at Capital One Arena in Washington.\n\nGoals\nWashington: 0\nBoston: 0\n\nShots on Goal\nWashington: 33\nBoston: 30\n\n#BOSvsWSH #GoAvsGo\n"
+        expected = "\nThe first period is over at Capital One Arena.\n\nGoals\nWashington: 0\nBoston: 0\n\nShots on Goal\nWashington: 33\nBoston: 30\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
 
 

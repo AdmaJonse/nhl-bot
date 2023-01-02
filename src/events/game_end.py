@@ -40,15 +40,19 @@ class GameEnd(Event):
         Description:
             Return the event string for a game end event.
         """
-        home = game_data.home.location
-        away = game_data.away.location
-
+        output : str = ""
         event_values = {
-            "winner":     home if self.home_goals > self.away_goals else away,
-            "home_team":  home,
-            "away_team":  away,
-            "home_goals": self.home_goals,
-            "away_goals": self.away_goals,
+            "winner":     game_data.winner,
+            "home_team":  game_data.home.location,
+            "away_team":  game_data.away.location,
+            "home_goals": game_data.home_score,
+            "away_goals": game_data.away_score,
             "hashtags":   game_data.hashtags
         }
-        return templates.GAME_END_TEMPLATE.format(**event_values)
+        if self.period.is_overtime:
+            output = templates.GAME_END_OT_TEMPLATE.format(**event_values)
+        elif self.period.is_shootout:
+            output = templates.GAME_END_SO_TEMPLATE.format(**event_values)
+        else:
+            output = templates.GAME_END_TEMPLATE.format(**event_values)
+        return output
