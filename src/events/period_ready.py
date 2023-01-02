@@ -30,4 +30,4 @@ class PeriodReady(Event):
 
     @property
     def id(self) -> str:
-        return "PER" + str(self.period) + "-READY"
+        return "PER" + str(self.period.number) + "-READY"
