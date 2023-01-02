@@ -30,4 +30,4 @@ class PeriodOfficial(Event):
 
     @property
     def id(self) -> str:
-        return "PER" + str(self.period) + "-OFFICIAL"
+        return "PER" + str(self.period.number) + "-OFFICIAL"

@@ -34,7 +34,7 @@ class PeriodStart(Event):
 
     @property
     def id(self) -> str:
-        return "PER" + str(self.period) + "-START"
+        return "PER" + str(self.period.number) + "-START"
 
     def get_post(self, game_data : GameData) -> Optional[str]:
         """
