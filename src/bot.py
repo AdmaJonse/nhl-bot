@@ -28,12 +28,12 @@ def wait_until_game_start():
         pause.until(game_time)
 
 
-def wait_until_tomorrow():
+def wait_until_tomorrow(from_time : Optional[datetime] = None):
     """
     Description:
         This function will wait until the next day.
     """
-    tomorrow : datetime = schedule.get_tomorrow().replace(hour=12)
+    tomorrow : datetime = schedule.get_tomorrow(from_time).replace(hour=12)
     logger.log_info("Pausing until: " + schedule.date_to_string(tomorrow))
     pause.until(tomorrow)
 
@@ -56,14 +56,16 @@ def check_for_updates():
         if game_id is not None and game_id >= 0:
 
             logger.log_info("There is a game today: " + str(game_id))
-            parser : json_parser.Parser = json_parser.Parser(game_id)
+            parser    : json_parser.Parser = json_parser.Parser(game_id)
+            game_time : Optional[datetime] = schedule.get_start_time()
             wait_until_game_start()
 
             while not parser.is_game_over:
                 parser.parse()
                 time.sleep(FREQUENCY)
 
+            wait_until_tomorrow(game_time)
+
         else:
             logger.log_info("There is no game today.")
-
-        wait_until_tomorrow()
+            wait_until_tomorrow()
