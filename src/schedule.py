@@ -65,13 +65,18 @@ def get_current_date() -> datetime:
     return current_date
 
 
-def get_tomorrow() -> datetime:
+def get_tomorrow(from_time : Optional[datetime] = None) -> datetime:
     """
     Description:
         Return the tomorrow's date localized using the time zone constant.
     """
-    current_date = get_current_date()
-    tomorrow     = current_date + timedelta(days=1)
+
+    if from_time is None:
+        from_date = get_current_date()
+    else:
+        from_date = from_time.replace(hour=0, minute=0, second=0, microsecond=0)
+
+    tomorrow     = from_date + timedelta(days=1)
     logger.log_verbose("tomorrow's date: " + date_to_string(tomorrow))
     return tomorrow
 

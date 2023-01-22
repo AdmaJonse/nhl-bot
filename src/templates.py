@@ -104,7 +104,7 @@ Shots On Goal:
 SHOOTOUT_MISS_TEMPLATE = """
 {team} miss.
 
-The shootout attempt by {shooter} missed the net.
+The shootout attempt by {shooter} failed.
 
 {hashtags}
 """

@@ -1023,7 +1023,7 @@ class TestEvents(unittest.TestCase):
         event     = event_factory.create(shot_events.shootout_miss_data)
         game_data = GameData(game_events.game_data)
         actual    = event.get_post(game_data)
-        expected  = "\nWashington miss.\n\nThe shootout attempt by Simon Holmstrom missed the net.\n\n#BOSvsWSH #GoAvsGo\n"
+        expected  = "\nWashington miss.\n\nThe shootout attempt by Simon Holmstrom failed.\n\n#BOSvsWSH #GoAvsGo\n"
         self.assertEqual(expected, actual)
 
 
