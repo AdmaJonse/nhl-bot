@@ -51,7 +51,7 @@ def get_current_time() -> datetime:
         Return the current time localized using the time zone constant.
     """
     current_time = datetime.now(TIME_ZONE)
-    logger.log_verbose("current time: " + time_to_string(current_time))
+    logger.log_info("current time: " + time_to_string(current_time))
     return current_time
 
 
@@ -61,7 +61,7 @@ def get_current_date() -> datetime:
         Return the current date localized using the time zone constant.
     """
     current_date = datetime.now(TIME_ZONE).replace(hour=0, minute=0, second=0, microsecond=0)
-    logger.log_verbose("current date: " + date_to_string(current_date))
+    logger.log_info("current date: " + date_to_string(current_date))
     return current_date
 
 
@@ -76,8 +76,8 @@ def get_tomorrow(from_time : Optional[datetime] = None) -> datetime:
     else:
         from_date = from_time.replace(hour=0, minute=0, second=0, microsecond=0)
 
-    tomorrow     = from_date + timedelta(days=1)
-    logger.log_verbose("tomorrow's date: " + date_to_string(tomorrow))
+    tomorrow = from_date + timedelta(days=1)
+    logger.log_info("tomorrow's date: " + date_to_string(tomorrow))
     return tomorrow
 
 
@@ -92,7 +92,7 @@ def get_schedule_json() -> Any:
     url    : str      = SCHEDULE_API + "?teamId=" + str(TEAM_ID) + "&date=" + date_to_string(date)
     params : str      = ""
 
-    logger.log_verbose("getting schedule JSON from: " + url)
+    logger.log_info("getting schedule JSON from: " + url)
     request = requests.get(url, params)
     return request.json()
 
@@ -107,7 +107,7 @@ def get_game_id() -> Optional[int]:
         data    : Any = get_schedule_json()
         game_id : int = data["dates"][0]["games"][0]["gamePk"]
 
-        logger.log_verbose("game id: " + str(game_id))
+        logger.log_info("game id: " + str(game_id))
         return game_id
 
     except IndexError:
@@ -127,7 +127,7 @@ def get_start_time() -> Optional[datetime]:
         data       : Any      = get_schedule_json()
         start_time : datetime = parser.parse(data["dates"][0]["games"][0]["gameDate"])
 
-        logger.log_verbose("game start time: " + time_to_string(start_time))
+        logger.log_info("game start time: " + time_to_string(start_time))
         return start_time
 
     except IndexError:
