@@ -50,7 +50,7 @@ def get_current_time() -> datetime:
     Description:
         Return the current time localized using the time zone constant.
     """
-    current_time = datetime.now(TIME_ZONE)
+    current_time : datetime = datetime.now(TIME_ZONE)
     logger.log_info("current time: " + time_to_string(current_time))
     return current_time
 
@@ -60,25 +60,30 @@ def get_current_date() -> datetime:
     Description:
         Return the current date localized using the time zone constant.
     """
-    current_date = datetime.now(TIME_ZONE).replace(hour=0, minute=0, second=0, microsecond=0)
+    now          : datetime = datetime.now(TIME_ZONE)
+    current_date : datetime = now.replace(hour=0, minute=0, second=0, microsecond=0)
     logger.log_info("current date: " + date_to_string(current_date))
     return current_date
 
 
-def get_tomorrow(from_time : Optional[datetime] = None) -> datetime:
+def get_tomorrow() -> datetime:
     """
     Description:
         Return the tomorrow's date localized using the time zone constant.
     """
-
-    if from_time is None:
-        from_date = get_current_date()
-    else:
-        from_date = from_time.replace(hour=0, minute=0, second=0, microsecond=0)
-
-    tomorrow = from_date + timedelta(days=1)
+    tomorrow = get_current_date() + timedelta(days=1)
     logger.log_info("tomorrow's date: " + date_to_string(tomorrow))
     return tomorrow
+
+
+def get_noon() -> datetime:
+    """
+    Description:
+        Return noon for the current date.
+    """
+    now  : datetime = datetime.now(TIME_ZONE)
+    noon : datetime = now.replace(hour=12, minute=0, second=0)
+    return noon
 
 
 def get_schedule_json() -> Any:

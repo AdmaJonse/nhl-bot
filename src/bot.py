@@ -3,7 +3,7 @@ Description:
     This module handles the main logic to check for game updates.
 """
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional
 
 import time
@@ -28,14 +28,17 @@ def wait_until_game_start():
         pause.until(game_time)
 
 
-def wait_until_tomorrow(from_time : Optional[datetime] = None):
+def wait_until_morning():
     """
     Description:
         This function will wait until the next day.
     """
-    tomorrow : datetime = schedule.get_tomorrow(from_time).replace(hour=12)
-    logger.log_info("Pausing until: " + schedule.date_to_string(tomorrow))
-    pause.until(tomorrow)
+    current_time : datetime = schedule.get_current_time()
+    noon : datetime = schedule.get_noon()
+    if current_time > noon:
+        noon += timedelta(days=1)
+    logger.log_info("Pausing until: " + schedule.time_to_string(noon))
+    pause.until(noon)
 
 
 def check_for_updates():
@@ -57,15 +60,13 @@ def check_for_updates():
 
             logger.log_info("There is a game today: " + str(game_id))
             parser    : json_parser.Parser = json_parser.Parser(game_id)
-            game_time : Optional[datetime] = schedule.get_start_time()
             wait_until_game_start()
 
             while not parser.is_game_over:
                 parser.parse()
                 time.sleep(FREQUENCY)
 
-            wait_until_tomorrow(game_time)
-
         else:
             logger.log_info("There is no game today.")
-            wait_until_tomorrow()
+
+        wait_until_morning()
