@@ -28,7 +28,7 @@ class Outputter(ABC):
         """
 
     @abstractmethod
-    def has_posted_today(self):
+    def has_posted_today(self, _query : str = ""):
         """
         Description:
             Return a boolean indicating whether or not we've posted today.

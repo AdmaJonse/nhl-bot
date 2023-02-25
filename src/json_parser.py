@@ -173,7 +173,7 @@ class Parser:
             duplicate.
         """
 
-        if not output.has_posted_today():
+        if not output.has_posted_today("game day"):
             text : Optional[str] = self.generator.get_game_day_string()
             if text is not None:
                 output.post(text)
