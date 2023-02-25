@@ -78,9 +78,9 @@ def reply(text : str, parent_id : Optional[int]) -> Optional[int]:
     return output.outputter.reply(text, parent_id)
 
 
-def has_posted_today() -> bool:
+def has_posted_today(query : str = "") -> bool:
     """
     Description:
         Return a boolean indicating whether or not we've posted today.
     """
-    return output.outputter.has_posted_today()
+    return output.outputter.has_posted_today(query)

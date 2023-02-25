@@ -4,7 +4,7 @@ Description:
     authenticate, tweet and reply.
 """
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Optional
 import os
 from os.path import join, dirname, abspath
@@ -105,26 +105,29 @@ class Tweeter(Outputter):
         return reply_id
 
 
-    def get_today_posts(self) -> List[tweepy.Tweet]:
+    def get_today_posts(self, query : str = "") -> List[tweepy.Tweet]:
         """
         Description:
-            Return a list of tweets that were created today.
+            Return a list of tweets that were created today. If a query is
+            provided, return only tweets that include the query as a substring.
         """
 
-        all_tweets   : List[tweepy.Tweet] = self.api.user_timeline()
+        all_tweets   : List[tweepy.Tweet] = self.api.user_timeline(count=50, exclude_replies=True)
         today_tweets : List[tweepy.Tweet] = []
+        period       : timedelta          = timedelta(hours=23, minutes=59)
 
         for tweet in all_tweets:
-            if (datetime.now(pytz.utc) - tweet.created_at).days < 1:
+            if ((datetime.now(pytz.utc) - tweet.created_at) < period and
+                query in tweet.text):
                 today_tweets.append(tweet)
 
         return today_tweets
 
 
-    def has_posted_today(self) -> bool:
+    def has_posted_today(self, query : str = "") -> bool:
         """
         Description:
             Return a boolean indicating whether or not a tweet has been sent today.
         """
-        tweets = self.get_today_posts()
+        tweets = self.get_today_posts(query)
         return len(tweets) > 0
