@@ -119,9 +119,9 @@ class Tweeter(Outputter):
             os.remove(filename)
             logger.log_info("return media ID string: " + media.media_id_string)
             return media.media_id_string
-        else:
-            logger.log_error("Could not download video: " + url)
-            return None
+
+        logger.log_error("Could not download video: " + url)
+        return None
 
 
     def post_with_media(self, text : str, media : str) -> Optional[int]:

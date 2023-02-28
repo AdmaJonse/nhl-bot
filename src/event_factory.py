@@ -1,7 +1,7 @@
 """
-        This module defines the factory for Event objects. Given JSON data defining the event, we will
+This module defines the factory for Event objects. Given JSON data defining the event, we will
 determine the event type and dispatch to constructor of the expected Event subclass.
-        """
+"""
 
 from typing import Dict, Optional, Type
 from enum import Enum

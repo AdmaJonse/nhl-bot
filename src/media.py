@@ -28,14 +28,15 @@ def check_for_data(method):
         return method(self, *args)
     return wrapper
 
-def get_id(highlight : str) -> int:
+
+def get_id(highlight : dict) -> int:
     """
     Return the video corresponding to the given event ID.
     """
     return int(highlight["id"])
 
 
-def get_event_id(highlight : str) -> Optional[int]:
+def get_event_id(highlight : dict) -> Optional[int]:
     """
     Return the event ID associated with this highlight.
     """
@@ -45,14 +46,14 @@ def get_event_id(highlight : str) -> Optional[int]:
     return None
 
 
-def get_description(highlight : str) -> str:
+def get_description(highlight : dict) -> str:
     """
     Return the description of this highlight.
     """
     return highlight["description"]
 
 
-def get_url(highlight : str):
+def get_url(highlight : dict):
     """
     Return the video url for this highlight.
     """
@@ -110,9 +111,9 @@ class Parser:
                 return highlight
         return None
 
-
+    #pylint: disable=no-self-use
     @check_for_data
-    def get_post(self, highlight : str) -> str:
+    def get_post(self, highlight : dict) -> str:
         """
         Create a post using the given highlight.
         """
@@ -136,7 +137,7 @@ class Parser:
         return False
 
 
-    def process_highlight(self, highlight : str):
+    def process_highlight(self, highlight : dict):
         """
         Create a post for the given highlight.
         """
