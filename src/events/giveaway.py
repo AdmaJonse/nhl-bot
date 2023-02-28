@@ -1,6 +1,5 @@
 """
-Description:
-    This module defines the Giveaway event.
+This module defines the Giveaway event.
 """
 
 from typing import Optional
@@ -11,8 +10,7 @@ from src.utils import initials, pad_blob, pad_code
 
 class Giveaway(Event):
     """
-    Description:
-        The Giveaway event.
+    The Giveaway event.
     """
 
     def __init__(self, data):
@@ -50,10 +48,14 @@ class Giveaway(Event):
 
     @property
     def player(self) -> Optional[str]:
-        """Getter for the player."""
+        """
+        Getter for the player.
+        """
         return self._player
 
     @player.setter
     def player(self, player : str):
-        """Setter for the player."""
+        """
+        Setter for the player.
+        """
         self._player = player

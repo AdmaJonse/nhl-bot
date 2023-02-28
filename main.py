@@ -1,6 +1,5 @@
 """
-Description:
-    The main process for the NHL twitter bot application.
+The main process for the NHL twitter bot application.
 """
 
 import threading

@@ -1,6 +1,5 @@
 """
-Description:
-    Unit tests for the generator class.
+Unit tests for the generator class.
 """
 
 import unittest
@@ -13,7 +12,7 @@ from test.test_data import period_events
 from test.test_data import shot_events
 
 from src import event_factory
-from src.game_data import GameData
+from src.data.game_data import GameData
 
 from src.events.blocked_shot import BlockedShot
 from src.events.challenge import Challenge
@@ -39,19 +38,18 @@ from src.events.takeaway import Takeaway
 
 class TestEvents(unittest.TestCase):
     """
-    Description:
-        Unit tests for the generator class.
+    Unit tests for the generator class.
     """
 
     def test_game_scheduled(self):
         """
-        Description:
-            Test the constructor of a game scheduled event.
+        Test the constructor of a game scheduled event.
         """
         data = {
             "result": {"description": "Game Scheduled"},
             "about": {
                 "eventIdx": 0,
+                "eventId": 0,
                 "period": 1,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "20:00",
@@ -69,13 +67,13 @@ class TestEvents(unittest.TestCase):
 
     def test_game_end(self):
         """
-        Description:
-            Test the constructor of a game end event.
+        Test the constructor of a game end event.
         """
         data = {
             "result": {"description": "Game End"},
             "about": {
                 "eventIdx": 384,
+                "eventId": 0,
                 "period": 3,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "00:00",
@@ -93,13 +91,13 @@ class TestEvents(unittest.TestCase):
 
     def test_game_official(self):
         """
-        Description:
-            Test the constructor of a game official event.
+        Test the constructor of a game official event.
         """
         data = {
             "result": {"description": "Game Official"},
             "about": {
                 "eventIdx": 385,
+                "eventId": 0,
                 "period": 3,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "00:00",
@@ -117,8 +115,7 @@ class TestEvents(unittest.TestCase):
 
     def test_faceoff(self):
         """
-        Description:
-            Test the constructor of a faceoff event.
+        Test the constructor of a faceoff event.
         """
         data = {
             "players": [
@@ -130,6 +127,7 @@ class TestEvents(unittest.TestCase):
             "result": {"description": "Faceoff"},
             "about": {
                 "eventIdx": 3,
+                "eventId": 0,
                 "period": 1,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "20:00",
@@ -147,13 +145,13 @@ class TestEvents(unittest.TestCase):
 
     def test_stoppage(self):
         """
-        Description:
-            Test the constructor of a stoppage event.
+        Test the constructor of a stoppage event.
         """
         data = {
             "result": {"description": "Puck in Netting"},
             "about": {
                 "eventIdx": 6,
+                "eventId": 0,
                 "period": 1,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "19:19",
@@ -171,8 +169,7 @@ class TestEvents(unittest.TestCase):
 
     def test_shot(self):
         """
-        Description:
-            Test the constructor of a shot event.
+        Test the constructor of a shot event.
         """
         data = {
             "players": [
@@ -184,6 +181,7 @@ class TestEvents(unittest.TestCase):
             "result": {"description": "Evgeny Kuznetsov Wrist Shot saved by Linus Ullmark"},
             "about": {
                 "eventIdx": 12,
+                "eventId": 0,
                 "period": 1,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "18:14",
@@ -204,8 +202,7 @@ class TestEvents(unittest.TestCase):
 
     def test_hit(self):
         """
-        Description:
-            Test the constructor of a hit event.
+        Test the constructor of a hit event.
         """
         data = {
             "players": [
@@ -217,6 +214,7 @@ class TestEvents(unittest.TestCase):
             "result": {"description": "Alex Ovechkin hit Curtis Lazar"},
             "about": {
                 "eventIdx": 15,
+                "eventId": 0,
                 "period": 1,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "17:55",
@@ -234,8 +232,7 @@ class TestEvents(unittest.TestCase):
 
     def test_blocked_shot(self):
         """
-        Description:
-            Test the constructor of a blocked shot event.
+        Test the constructor of a blocked shot event.
         """
         data = {
             "players": [
@@ -247,6 +244,7 @@ class TestEvents(unittest.TestCase):
             "result": {"description": "Tomas Nosek shot blocked shot by Justin Schultz"},
             "about": {
                 "eventIdx": 31,
+                "eventId": 0,
                 "period": 1,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "14:21",
@@ -264,8 +262,7 @@ class TestEvents(unittest.TestCase):
 
     def test_giveaway(self):
         """
-        Description:
-            Test the constructor of a giveaway event.
+        Test the constructor of a giveaway event.
         """
         data = {
             "players": [
@@ -275,6 +272,7 @@ class TestEvents(unittest.TestCase):
             "result": {"description": "Giveaway by Brandon Carlo"},
             "about": {
                 "eventIdx": 24,
+                "eventId": 0,
                 "period": 1,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "16:22",
@@ -292,8 +290,7 @@ class TestEvents(unittest.TestCase):
 
     def test_takeaway(self):
         """
-        Description:
-            Test the constructor of a takeaway event.
+        Test the constructor of a takeaway event.
         """
         data = {
             "players": [
@@ -303,6 +300,7 @@ class TestEvents(unittest.TestCase):
             "result": {"description": "Takeaway by Johan Larsson"},
             "about": {
                 "eventIdx": 8,
+                "eventId": 0,
                 "period": 1,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "18:54",
@@ -320,8 +318,7 @@ class TestEvents(unittest.TestCase):
 
     def test_missed_shot(self):
         """
-        Description:
-            Test the constructor of a missed shot event.
+        Test the constructor of a missed shot event.
         """
         data = {
             "players": [
@@ -333,6 +330,7 @@ class TestEvents(unittest.TestCase):
             "result": {"description": "Charlie McAvoy Wide of Net Vitek Vanecek"},
             "about": {
                 "eventIdx": 17,
+                "eventId": 0,
                 "period": 1,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "17:39",
@@ -350,8 +348,7 @@ class TestEvents(unittest.TestCase):
 
     def test_penalty(self):
         """
-        Description:
-            Test the constructor of a Penalty event.
+        Test the constructor of a Penalty event.
         """
         data = {
             "players": [
@@ -368,6 +365,7 @@ class TestEvents(unittest.TestCase):
             },
             "about": {
                 "eventIdx": 77,
+                "eventId": 0,
                 "period": 1,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "08:13",
@@ -388,8 +386,7 @@ class TestEvents(unittest.TestCase):
 
     def test_penalty_shot(self):
         """
-        Description:
-            Test the constructor of a Penalty Shot event.
+        Test the constructor of a Penalty Shot event.
         """
         data = {
             "players": [
@@ -406,6 +403,7 @@ class TestEvents(unittest.TestCase):
             },
             "about": {
                 "eventIdx": 212,
+                "eventId": 0,
                 "period": 2,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "02:42",
@@ -426,13 +424,13 @@ class TestEvents(unittest.TestCase):
 
     def test_period_ready(self):
         """
-        Description:
-            Test the constructor of a Period Ready event.
+        Test the constructor of a Period Ready event.
         """
         data = {
             "result": {"description": "Period Ready"},
             "about": {
                 "eventIdx": 1,
+                "eventId": 0,
                 "period": 1,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "20:00",
@@ -450,13 +448,13 @@ class TestEvents(unittest.TestCase):
 
     def test_period_start(self):
         """
-        Description:
-            Test the constructor of a Period Start event.
+        Test the constructor of a Period Start event.
         """
         data = {
             "result": {"description": "Period Start"},
             "about": {
                 "eventIdx": 124,
+                "eventId": 0,
                 "period": 2,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "20:00",
@@ -474,13 +472,13 @@ class TestEvents(unittest.TestCase):
 
     def test_period_end(self):
         """
-        Description:
-            Test the constructor of a Period End event.
+        Test the constructor of a Period End event.
         """
         data = {
             "result": {"description": "End of 1st Period"},
             "about": {
                 "eventIdx": 121,
+                "eventId": 0,
                 "period": 1,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "00:00",
@@ -498,13 +496,13 @@ class TestEvents(unittest.TestCase):
 
     def test_period_official(self):
         """
-        Description:
-            Test the constructor of a Period Official event.
+        Test the constructor of a Period Official event.
         """
         data = {
             "result": {"description": "Period Official"},
             "about": {
                 "eventIdx": 122,
+                "eventId": 0,
                 "period": 1,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "00:00",
@@ -522,13 +520,13 @@ class TestEvents(unittest.TestCase):
 
     def test_shootout_end(self):
         """
-        Description:
-            Test the constructor of a Shootout End event.
+        Test the constructor of a Shootout End event.
         """
         data = {
             "result": {"description": "Shootout Complete"},
             "about": {
                 "eventIdx": 122,
+                "eventId": 0,
                 "period": 5,
                 "periodType": "SHOOTOUT",
                 "periodTimeRemaining": "00:00",
@@ -546,8 +544,7 @@ class TestEvents(unittest.TestCase):
 
     def test_goal(self):
         """
-        Description:
-            Test the constructor of a Goal event.
+        Test the constructor of a Goal event.
         """
         data = {
             "players": [
@@ -602,8 +599,7 @@ class TestEvents(unittest.TestCase):
 
     def test_shootout_goal(self):
         """
-        Description:
-            Test the constructor of a Goal event for a shootout goal.
+        Test the constructor of a Goal event for a shootout goal.
         """
         data = {
             "players" : [ {
@@ -653,13 +649,13 @@ class TestEvents(unittest.TestCase):
 
     def test_challenge(self):
         """
-        Description:
-            Test the constructor of a challenge event.
+        Test the constructor of a challenge event.
         """
         data = {
             "result": {"description": "Coach's Challenge"},
             "about": {
                 "eventIdx": 105,
+                "eventId": 0,
                 "period": 2,
                 "periodType": "REGULAR",
                 "periodTimeRemaining": "18:06",
@@ -683,8 +679,7 @@ class TestEvents(unittest.TestCase):
 
     def test_game_scheduled_post(self):
         """
-        Description:
-            Test the expected output of a game scheduled event.
+        Test the expected output of a game scheduled event.
         """
         event     = event_factory.create(game_events.game_scheduled_data)
         game_data = GameData(game_events.game_data)
@@ -695,8 +690,7 @@ class TestEvents(unittest.TestCase):
 
     def test_game_end_post(self):
         """
-        Description:
-            Test the expected output of a game end event.
+        Test the expected output of a game end event.
         """
         event     = event_factory.create(game_events.game_end_data)
         game_data = GameData(game_events.game_data)
@@ -707,8 +701,7 @@ class TestEvents(unittest.TestCase):
 
     def test_game_official_post(self):
         """
-        Description:
-            Test the expected output of a game official event.
+        Test the expected output of a game official event.
         """
         event     = event_factory.create(game_events.game_official_data)
         game_data = GameData(game_events.game_data)
@@ -719,8 +712,7 @@ class TestEvents(unittest.TestCase):
 
     def test_faceoff_post(self):
         """
-        Description:
-            Test the expected output of a faceoff event.
+        Test the expected output of a faceoff event.
         """
         event     = event_factory.create(miscellaneous_events.faceoff_data)
         game_data = GameData(game_events.game_data)
@@ -731,8 +723,7 @@ class TestEvents(unittest.TestCase):
 
     def test_stoppage_post(self):
         """
-        Description:
-            Test the expected output of a stoppage event.
+        Test the expected output of a stoppage event.
         """
         event     = event_factory.create(miscellaneous_events.stoppage_data)
         game_data = GameData(game_events.game_data)
@@ -743,8 +734,7 @@ class TestEvents(unittest.TestCase):
 
     def test_shot_post(self):
         """
-        Description:
-            Test the expected output of a shot event.
+        Test the expected output of a shot event.
         """
         event     = event_factory.create(miscellaneous_events.shot_data)
         game_data = GameData(game_events.game_data)
@@ -755,8 +745,7 @@ class TestEvents(unittest.TestCase):
 
     def test_hit_post(self):
         """
-        Description:
-            Test the expected output of a hit event.
+        Test the expected output of a hit event.
         """
         event     = event_factory.create(miscellaneous_events.hit_data)
         game_data = GameData(game_events.game_data)
@@ -767,8 +756,7 @@ class TestEvents(unittest.TestCase):
 
     def test_blocked_shot_post(self):
         """
-        Description:
-            Test the expected output of a blocked shot event.
+        Test the expected output of a blocked shot event.
         """
         event     = event_factory.create(miscellaneous_events.blocked_shot_data)
         game_data = GameData(game_events.game_data)
@@ -779,8 +767,7 @@ class TestEvents(unittest.TestCase):
 
     def test_giveaway_post(self):
         """
-        Description:
-            Test the expected output of a giveaway event.
+        Test the expected output of a giveaway event.
         """
         event     = event_factory.create(miscellaneous_events.giveaway_data)
         game_data = GameData(game_events.game_data)
@@ -791,8 +778,7 @@ class TestEvents(unittest.TestCase):
 
     def test_takeaway_post(self):
         """
-        Description:
-            Test the expected output of a takeaway event.
+        Test the expected output of a takeaway event.
         """
         event     = event_factory.create(miscellaneous_events.takeaway_data)
         game_data = GameData(game_events.game_data)
@@ -803,8 +789,7 @@ class TestEvents(unittest.TestCase):
 
     def test_missed_shot_post(self):
         """
-        Description:
-            Test the expected output of a missed shot event.
+        Test the expected output of a missed shot event.
         """
         event     = event_factory.create(miscellaneous_events.missed_shot_data)
         game_data = GameData(game_events.game_data)
@@ -815,8 +800,7 @@ class TestEvents(unittest.TestCase):
 
     def test_penalty_post(self):
         """
-        Description:
-            Test the expected output of a penalty event.
+        Test the expected output of a penalty event.
         """
         event     = event_factory.create(penalty_events.penalty_data)
         game_data = GameData(game_events.game_data)
@@ -827,8 +811,7 @@ class TestEvents(unittest.TestCase):
 
     def test_penalty_no_taker_post(self):
         """
-        Description:
-            Test the expected output of a penalty event when no
+        Test the expected output of a penalty event when no
             penalty taker is present in the event data.
         """
         event     = event_factory.create(penalty_events.penalty_data_no_taker)
@@ -838,8 +821,7 @@ class TestEvents(unittest.TestCase):
 
     def test_penalty_shot_post(self):
         """
-        Description:
-            Test the expected output of a penalty shot event.
+        Test the expected output of a penalty shot event.
         """
         event     = event_factory.create(penalty_events.penalty_shot_data)
         game_data = GameData(game_events.game_data)
@@ -850,8 +832,7 @@ class TestEvents(unittest.TestCase):
 
     def test_period_ready_post(self):
         """
-        Description:
-            Test the expected output of a period ready event.
+        Test the expected output of a period ready event.
         """
         event     = event_factory.create(period_events.period_ready_data)
         game_data = GameData(game_events.game_data)
@@ -862,8 +843,7 @@ class TestEvents(unittest.TestCase):
 
     def test_period_start_post(self):
         """
-        Description:
-            Test the expected output of a period start event.
+        Test the expected output of a period start event.
         """
         event     = event_factory.create(period_events.period_start_data)
         game_data = GameData(game_events.game_data)
@@ -874,8 +854,7 @@ class TestEvents(unittest.TestCase):
 
     def test_period_end_post(self):
         """
-        Description:
-            Test the expected output of a period end event.
+        Test the expected output of a period end event.
         """
         event     = event_factory.create(period_events.period_end_data)
         game_data = GameData(game_events.game_data)
@@ -886,8 +865,7 @@ class TestEvents(unittest.TestCase):
 
     def test_period_official_post(self):
         """
-        Description:
-            Test the expected output of a period official event.
+        Test the expected output of a period official event.
         """
         event     = event_factory.create(period_events.period_official_data)
         game_data = GameData(game_events.game_data)
@@ -898,8 +876,7 @@ class TestEvents(unittest.TestCase):
 
     def test_shootout_end_post(self):
         """
-        Description:
-            Test the expected output of a shootout end event.
+        Test the expected output of a shootout end event.
         """
         event     = event_factory.create(period_events.shootout_end_data)
         game_data = GameData(game_events.game_data)
@@ -910,8 +887,7 @@ class TestEvents(unittest.TestCase):
 
     def test_goal_post(self):
         """
-        Description:
-            Test the expected output of a goal event.
+        Test the expected output of a goal event.
         """
         event     = event_factory.create(goal_events.goal_data)
         game_data = GameData(game_events.game_data)
@@ -922,8 +898,7 @@ class TestEvents(unittest.TestCase):
 
     def test_goal_no_scorer_post(self):
         """
-        Description:
-            Test the expected output of a goal event when no scorer is present
+        Test the expected output of a goal event when no scorer is present
             in the event data.
         """
         event    = event_factory.create(goal_events.goal_data_no_scorer)
@@ -933,8 +908,7 @@ class TestEvents(unittest.TestCase):
 
     def test_power_play_goal_post(self):
         """
-        Description:
-            Test the expected output of a power play goal event.
+        Test the expected output of a power play goal event.
         """
         event     = event_factory.create(goal_events.power_play_goal_data)
         game_data = GameData(game_events.game_data)
@@ -945,8 +919,7 @@ class TestEvents(unittest.TestCase):
 
     def test_short_handed_goal_post(self):
         """
-        Description:
-            Test the expected output of a short-handed goal event.
+        Test the expected output of a short-handed goal event.
         """
         event     = event_factory.create(goal_events.short_handed_goal_data)
         game_data = GameData(game_events.game_data)
@@ -957,8 +930,7 @@ class TestEvents(unittest.TestCase):
 
     def test_empty_net_goal_post(self):
         """
-        Description:
-            Test the expected output of an empty net goal event.
+        Test the expected output of an empty net goal event.
         """
         event     = event_factory.create(goal_events.empty_net_goal_data)
         game_data = GameData(game_events.game_data)
@@ -969,8 +941,7 @@ class TestEvents(unittest.TestCase):
 
     def test_challenge_post(self):
         """
-        Description:
-            Test the expected output of a coach's challenge event.
+        Test the expected output of a coach's challenge event.
         """
         event     = event_factory.create(miscellaneous_events.challenge_data)
         game_data = GameData(game_events.game_data)
@@ -981,8 +952,7 @@ class TestEvents(unittest.TestCase):
 
     def test_goalpost_post(self):
         """
-        Description:
-            Test the expected output of a ping event.
+        Test the expected output of a ping event.
         """
         event     = event_factory.create(miscellaneous_events.goalpost_data)
         game_data = GameData(game_events.game_data)
@@ -993,8 +963,7 @@ class TestEvents(unittest.TestCase):
 
     def test_crossbar_post(self):
         """
-        Description:
-            Test the expected output of a ping event.
+        Test the expected output of a ping event.
         """
         event     = event_factory.create(miscellaneous_events.crossbar_data)
         game_data = GameData(game_events.game_data)
@@ -1005,8 +974,7 @@ class TestEvents(unittest.TestCase):
 
     def test_shootout_goal_post(self):
         """
-        Description:
-            Test the expected output of a shootout goal event.
+        Test the expected output of a shootout goal event.
         """
         event     = event_factory.create(goal_events.goal_data_shootout)
         game_data = GameData(game_events.game_data)
@@ -1017,8 +985,7 @@ class TestEvents(unittest.TestCase):
 
     def test_shootout_miss_post(self):
         """
-        Description:
-            Test the expected output of a shootout miss event.
+        Test the expected output of a shootout miss event.
         """
         event     = event_factory.create(shot_events.shootout_miss_data)
         game_data = GameData(game_events.game_data)
@@ -1029,8 +996,7 @@ class TestEvents(unittest.TestCase):
 
     def test_shootout_save_post(self):
         """
-        Description:
-            Test the expected output of a shootout save event.
+        Test the expected output of a shootout save event.
         """
         event     = event_factory.create(shot_events.shootout_save_data)
         game_data = GameData(game_events.game_data)

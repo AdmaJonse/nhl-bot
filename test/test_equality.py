@@ -49,12 +49,13 @@ from src.events.takeaway import Takeaway
 
 class TestEquality(unittest.TestCase):
     """
-    Description:
-        This class provides unit tests for determining equality of events and their ID property.
+    This class provides unit tests for determining equality of events and their ID property.
     """
 
     def test_blocked_shot_equality(self):
-        """Test the equality operator for a BlockedShot event."""
+        """
+        Test the equality operator for a BlockedShot event.
+        """
         parent = Event(blocked_shot_events.blocked_shot_1)
         child1 = BlockedShot(blocked_shot_events.blocked_shot_1)
         child2 = BlockedShot(blocked_shot_events.blocked_shot_2)
@@ -119,7 +120,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_blocked_shot_id(self):
-        """Test the ID property for a BlockedShot event."""
+        """
+        Test the ID property for a BlockedShot event.
+        """
         parent = Event(blocked_shot_events.blocked_shot_1)
         child1 = BlockedShot(blocked_shot_events.blocked_shot_1)
         child2 = BlockedShot(blocked_shot_events.blocked_shot_2)
@@ -184,7 +187,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_challenge_equality(self):
-        """Test the equality operator for a Challenge event."""
+        """
+        Test the equality operator for a Challenge event.
+        """
         parent = Event(challenge_events.challenge_1)
         child1 = Challenge(challenge_events.challenge_1)
         child2 = Challenge(challenge_events.challenge_2)
@@ -233,7 +238,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_challenge_id(self):
-        """Test the ID property for a Challenge event."""
+        """
+        Test the ID property for a Challenge event.
+        """
         parent = Event(challenge_events.challenge_1)
         child1 = Challenge(challenge_events.challenge_1)
         child2 = Challenge(challenge_events.challenge_2)
@@ -282,7 +289,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_faceoff_equality(self):
-        """Test the equality operator for a Faceoff event."""
+        """
+        Test the equality operator for a Faceoff event.
+        """
         parent = Event(faceoff_events.faceoff_1)
         child1 = Faceoff(faceoff_events.faceoff_1)
         child2 = Faceoff(faceoff_events.faceoff_2)
@@ -347,7 +356,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_faceoff_id(self):
-        """Test the ID property for a Faceoff event."""
+        """
+        Test the ID property for a Faceoff event.
+        """
         parent = Event(faceoff_events.faceoff_1)
         child1 = Faceoff(faceoff_events.faceoff_1)
         child2 = Faceoff(faceoff_events.faceoff_2)
@@ -412,7 +423,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_game_end_equality(self):
-        """Test the equality operator for a GameEnd event."""
+        """
+        Test the equality operator for a GameEnd event.
+        """
         parent = Event(faceoff_events.faceoff_1)
         child1 = GameEnd(game_end_events.game_end_1)
         child2 = GameEnd(game_end_events.game_end_2)
@@ -463,7 +476,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_game_end_id(self):
-        """Test the ID property for a GameEnd event."""
+        """
+        Test the ID property for a GameEnd event.
+        """
 
         parent = Event(faceoff_events.faceoff_1)
         child1 = GameEnd(game_end_events.game_end_1)
@@ -515,7 +530,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_game_official_equality(self):
-        """Test the equality operator for a GameOfficial event."""
+        """
+        Test the equality operator for a GameOfficial event.
+        """
         parent = Event(faceoff_events.faceoff_1)
         child1 = GameOfficial(game_official_events.game_official_1)
         child2 = GameOfficial(game_official_events.game_official_2)
@@ -566,7 +583,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_game_official_id(self):
-        """Test the ID property for a GameOfficial event."""
+        """
+        Test the ID property for a GameOfficial event.
+        """
 
         parent = Event(faceoff_events.faceoff_1)
         child1 = GameOfficial(game_official_events.game_official_1)
@@ -618,7 +637,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_game_scheduled_equality(self):
-        """Test the equality operator for a GameScheduled event."""
+        """
+        Test the equality operator for a GameScheduled event.
+        """
         parent = Event(faceoff_events.faceoff_1)
         child1 = GameScheduled(game_scheduled_events.game_scheduled_1)
         child2 = GameScheduled(game_scheduled_events.game_scheduled_2)
@@ -669,7 +690,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_game_scheduled_id(self):
-        """Test the ID property for a GameOfficial event."""
+        """
+        Test the ID property for a GameOfficial event.
+        """
 
         parent = Event(faceoff_events.faceoff_1)
         child1 = GameScheduled(game_scheduled_events.game_scheduled_1)
@@ -721,7 +744,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_giveaway_equality(self):
-        """Test the equality operator for a Giveaway event."""
+        """
+        Test the equality operator for a Giveaway event.
+        """
         parent = Event(giveaway_events.giveaway_1)
         child1 = Giveaway(giveaway_events.giveaway_1)
         child2 = Giveaway(giveaway_events.giveaway_2)
@@ -782,7 +807,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_giveaway_id(self):
-        """Test the ID property for a Giveaway event."""
+        """
+        Test the ID property for a Giveaway event.
+        """
         parent = Event(giveaway_events.giveaway_1)
         child1 = Giveaway(giveaway_events.giveaway_1)
         child2 = Giveaway(giveaway_events.giveaway_2)
@@ -843,7 +870,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_goal_equality(self):
-        """Test the equality operator for a Goal event."""
+        """
+        Test the equality operator for a Goal event.
+        """
         parent = Event(giveaway_events.giveaway_1)
         child1 = Goal(goal_events.goal_1)
         child2 = Goal(goal_events.goal_2)
@@ -928,7 +957,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_goal_id(self):
-        """Test the ID property for a Goal event."""
+        """
+        Test the ID property for a Goal event.
+        """
         parent = Event(giveaway_events.giveaway_1)
         child1 = Goal(goal_events.goal_1)
         child2 = Goal(goal_events.goal_2)
@@ -1013,7 +1044,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_hit_equality(self):
-        """Test the equality operator for a Hit event."""
+        """
+        Test the equality operator for a Hit event.
+        """
         parent = Event(hit_events.hit_1)
         child1 = Hit(hit_events.hit_1)
         child2 = Hit(hit_events.hit_2)
@@ -1078,7 +1111,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_hit_id(self):
-        """Test the property ID for a Hit event."""
+        """
+        Test the property ID for a Hit event.
+        """
         parent = Event(hit_events.hit_1)
         child1 = Hit(hit_events.hit_1)
         child2 = Hit(hit_events.hit_2)
@@ -1143,7 +1178,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_missed_shot_equality(self):
-        """Test the equality operator for a MissedShot event."""
+        """
+        Test the equality operator for a MissedShot event.
+        """
         parent = Event(missed_shot_events.missed_shot_1)
         child1 = MissedShot(missed_shot_events.missed_shot_1)
         child2 = MissedShot(missed_shot_events.missed_shot_2)
@@ -1208,7 +1245,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_missed_shot_id(self):
-        """Test the ID property for a MissedShot event."""
+        """
+        Test the ID property for a MissedShot event.
+        """
         parent = Event(missed_shot_events.missed_shot_1)
         child1 = MissedShot(missed_shot_events.missed_shot_1)
         child2 = MissedShot(missed_shot_events.missed_shot_2)
@@ -1273,7 +1312,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_penalty_shot_equality(self):
-        """Test the equality operator for a PenaltyShot event."""
+        """
+        Test the equality operator for a PenaltyShot event.
+        """
         parent = Event(penalty_shot_events.penalty_shot_1)
         child1 = PenaltyShot(penalty_shot_events.penalty_shot_1)
         child2 = PenaltyShot(penalty_shot_events.penalty_shot_2)
@@ -1342,7 +1383,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_penalty_shot_id(self):
-        """Test the ID property for a PenaltyShot event."""
+        """
+        Test the ID property for a PenaltyShot event.
+        """
         parent = Event(penalty_shot_events.penalty_shot_1)
         child1 = PenaltyShot(penalty_shot_events.penalty_shot_1)
         child2 = PenaltyShot(penalty_shot_events.penalty_shot_2)
@@ -1407,7 +1450,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_penalty_equality(self):
-        """Test the equality operator for a Penalty event."""
+        """
+        Test the equality operator for a Penalty event.
+        """
         parent = Event(penalty_events.penalty_1)
         child1 = Penalty(penalty_events.penalty_1)
         child2 = Penalty(penalty_events.penalty_2)
@@ -1484,7 +1529,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_penalty_id(self):
-        """Test the ID property for a Penalty event."""
+        """
+        Test the ID property for a Penalty event.
+        """
         parent = Event(penalty_events.penalty_1)
         child1 = Penalty(penalty_events.penalty_1)
         child2 = Penalty(penalty_events.penalty_2)
@@ -1561,7 +1608,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_period_end_equality(self):
-        """Test the equality operator for a PeriodEnd event."""
+        """
+        Test the equality operator for a PeriodEnd event.
+        """
         parent = Event(period_end_events.period_end_1)
         child1 = PeriodEnd(period_end_events.period_end_1)
         child2 = PeriodEnd(period_end_events.period_end_2)
@@ -1618,7 +1667,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_period_end_id(self):
-        """Test the ID property for a PeriodEnd event."""
+        """
+        Test the ID property for a PeriodEnd event.
+        """
         parent = Event(period_end_events.period_end_1)
         child1 = PeriodEnd(period_end_events.period_end_1)
         child2 = PeriodEnd(period_end_events.period_end_2)
@@ -1675,7 +1726,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_period_official_equality(self):
-        """Test the equality operator for a PeriodOfficial event."""
+        """
+        Test the equality operator for a PeriodOfficial event.
+        """
         parent = Event(period_official_events.period_official_1)
         child1 = PeriodOfficial(period_official_events.period_official_1)
         child2 = PeriodOfficial(period_official_events.period_official_2)
@@ -1732,7 +1785,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_period_official_id(self):
-        """Test the ID property for a PeriodOfficial event."""
+        """
+        Test the ID property for a PeriodOfficial event.
+        """
         parent = Event(period_official_events.period_official_1)
         child1 = PeriodOfficial(period_official_events.period_official_1)
         child2 = PeriodOfficial(period_official_events.period_official_2)
@@ -1789,7 +1844,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_period_ready_equality(self):
-        """Test the equality operator for a PeriodReady event."""
+        """
+        Test the equality operator for a PeriodReady event.
+        """
         parent = Event(period_ready_events.period_ready_1)
         child1 = PeriodReady(period_ready_events.period_ready_1)
         child2 = PeriodReady(period_ready_events.period_ready_2)
@@ -1846,7 +1903,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_period_ready_id(self):
-        """Test the ID property for a PeriodReady event."""
+        """
+        Test the ID property for a PeriodReady event.
+        """
         parent = Event(period_ready_events.period_ready_1)
         child1 = PeriodReady(period_ready_events.period_ready_1)
         child2 = PeriodReady(period_ready_events.period_ready_2)
@@ -1903,7 +1962,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_period_start_equality(self):
-        """Test the equality operator for a PeriodStart event."""
+        """
+        Test the equality operator for a PeriodStart event.
+        """
         parent = Event(period_start_events.period_start_1)
         child1 = PeriodStart(period_start_events.period_start_1)
         child2 = PeriodStart(period_start_events.period_start_2)
@@ -1960,7 +2021,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_period_start_id(self):
-        """Test the ID property for a PeriodStart event."""
+        """
+        Test the ID property for a PeriodStart event.
+        """
         parent = Event(period_start_events.period_start_1)
         child1 = PeriodStart(period_start_events.period_start_1)
         child2 = PeriodStart(period_start_events.period_start_2)
@@ -2017,7 +2080,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_ping_equality(self):
-        """Test the equality operator for a Ping event."""
+        """
+        Test the equality operator for a Ping event.
+        """
         parent = Event(ping_events.ping_1)
         child1 = Ping(ping_events.ping_1)
         child2 = Ping(ping_events.ping_2)
@@ -2086,7 +2151,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_ping_id(self):
-        """Test the ID property for a Ping event."""
+        """
+        Test the ID property for a Ping event.
+        """
         parent = Event(ping_events.ping_1)
         child1 = Ping(ping_events.ping_1)
         child2 = Ping(ping_events.ping_2)
@@ -2155,7 +2222,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_shot_equality(self):
-        """Test the equality operator for a Shot event."""
+        """
+        Test the equality operator for a Shot event.
+        """
         parent = Event(shot_events.shot_1)
         child1 = Shot(shot_events.shot_1)
         child2 = Shot(shot_events.shot_2)
@@ -2220,7 +2289,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_shot_id(self):
-        """Test the ID property for a Shot event."""
+        """
+        Test the ID property for a Shot event.
+        """
         parent = Event(shot_events.shot_1)
         child1 = Shot(shot_events.shot_1)
         child2 = Shot(shot_events.shot_2)
@@ -2285,7 +2356,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_stoppage_equality(self):
-        """Test the equality operator for a Stoppage event."""
+        """
+        Test the equality operator for a Stoppage event.
+        """
         parent = Event(stoppage_events.stoppage_1)
         child1 = Stoppage(stoppage_events.stoppage_1)
         child2 = Stoppage(stoppage_events.stoppage_2)
@@ -2342,7 +2415,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_stoppage_id(self):
-        """Test the ID property for a Stoppage event."""
+        """
+        Test the ID property for a Stoppage event.
+        """
         parent = Event(stoppage_events.stoppage_1)
         child1 = Stoppage(stoppage_events.stoppage_1)
         child2 = Stoppage(stoppage_events.stoppage_2)
@@ -2399,7 +2474,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_takeaway_equality(self):
-        """Test the equality operator for a Takeaway event."""
+        """
+        Test the equality operator for a Takeaway event.
+        """
         parent = Event(takeaway_events.takeaway_1)
         child1 = Takeaway(takeaway_events.takeaway_1)
         child2 = Takeaway(takeaway_events.takeaway_2)
@@ -2460,7 +2537,9 @@ class TestEquality(unittest.TestCase):
 
 
     def test_takeaway_id(self):
-        """Test the ID property for a Takeaway event."""
+        """
+        Test the ID property for a Takeaway event.
+        """
         parent = Event(takeaway_events.takeaway_1)
         child1 = Takeaway(takeaway_events.takeaway_1)
         child2 = Takeaway(takeaway_events.takeaway_2)

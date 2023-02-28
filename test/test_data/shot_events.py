@@ -1,6 +1,5 @@
 """
-Description:
-    Shot event test data.
+Shot event test data.
 """
 
 shot_1 = {

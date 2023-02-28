@@ -1,6 +1,5 @@
 """
-Description:
-    This module defines the Stoppage event.
+This module defines the Stoppage event.
 """
 
 from src.events.event import Event
@@ -8,8 +7,7 @@ from src.utils import pad_blob, pad_code
 
 class Stoppage(Event):
     """
-    Description:
-        The Stoppage event.
+    The Stoppage event.
     """
 
     def __str__(self):

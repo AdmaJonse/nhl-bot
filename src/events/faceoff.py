@@ -1,6 +1,5 @@
 """
-Description:
-    This module defines the Faceoff event.
+This module defines the Faceoff event.
 """
 
 from typing import Any, Optional
@@ -11,8 +10,7 @@ from src.utils import initials, pad_blob, pad_code
 
 class Faceoff(Event):
     """
-    Description:
-        The Faceoff event.
+    The Faceoff event.
     """
 
     def __init__(self, data : Any):
@@ -57,20 +55,28 @@ class Faceoff(Event):
 
     @property
     def winner(self) -> Optional[str]:
-        """Getter for the winner."""
+        """
+        Getter for the winner.
+        """
         return self._winner
 
     @winner.setter
     def winner(self, winner : str):
-        """Setter for the winner."""
+        """
+        Setter for the winner.
+        """
         self._winner = winner
 
     @property
     def loser(self) -> Optional[str]:
-        """Getter for the loser."""
+        """
+        Getter for the loser.
+        """
         return self._loser
 
     @loser.setter
     def loser(self, loser : str):
-        """Setter for the loser."""
+        """
+        Setter for the loser.
+        """
         self._loser = loser

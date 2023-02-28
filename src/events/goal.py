@@ -1,21 +1,19 @@
 """
-Description:
-    This module defines the Goal event.
+This module defines the Goal event.
 """
 
 from typing import Optional
 
 from src import logger
-from src import templates
+from src.output import templates
 from src.events.event import Event, get_player_name, get_team, get_value
 from src.exceptions import InsufficientData
-from src.game_data import GameData
+from src.data.game_data import GameData
 from src.utils import initials, pad_blob, pad_code
 
 class Goal(Event):
     """
-    Description:
-        The Goal event.
+    The Goal event.
     """
 
     def __init__(self, data):
@@ -70,8 +68,8 @@ class Goal(Event):
         # avoid using player names in the blob. We'll just use the score here
         # since it should theoretically always be the same for a specific goal.
 
-        home : str = str(self.home_goals)
-        away : str = str(self.away_goals)
+        home : str = str(self.score.home_goals)
+        away : str = str(self.score.away_goals)
         blob : str = home + "TO" + away
 
         # Shootout goals are special because the score doesn't change. Need to
@@ -86,78 +84,105 @@ class Goal(Event):
 
     @property
     def team(self) -> Optional[str]:
-        """Getter for the team."""
+        """
+        Getter for the team.
+        """
         return self._team
 
     @team.setter
     def team(self, team : str):
-        """Setter for the team."""
+        """
+        Setter for the team.
+        """
         self._team = team
 
     @property
     def scorer(self) -> Optional[str]:
-        """Getter for the scorer."""
+        """
+        Getter for the scorer.
+        """
         return self._scorer
 
     @scorer.setter
     def scorer(self, scorer : str):
-        """Setter for the scorer."""
+        """
+        Setter for the scorer.
+        """
         self._scorer = scorer
 
     @property
     def primary_assist(self) -> Optional[str]:
-        """Getter for the primary assist."""
+        """
+        Getter for the primary assist.
+        """
         return self._primary_assist
 
     @primary_assist.setter
     def primary_assist(self, primary_assist : str):
-        """Setter for the primary assist."""
+        """
+        Setter for the primary assist.
+        """
         self._primary_assist = primary_assist
 
     @property
     def secondary_assist(self) -> Optional[str]:
-        """Getter for the secondary assist."""
+        """
+        Getter for the secondary assist.
+        """
         return self._secondary_assist
 
     @secondary_assist.setter
     def secondary_assist(self, secondary_assist : str):
-        """Setter for the secondary assist."""
+        """
+        Setter for the secondary assist.
+        """
         self._secondary_assist = secondary_assist
 
     @property
     def goalie(self) -> Optional[str]:
-        """Getter for the goalie."""
+        """
+        Getter for the goalie.
+        """
         return self._goalie
 
     @goalie.setter
     def goalie(self, goalie : str):
-        """Setter for the goalie."""
+        """
+        Setter for the goalie.
+        """
         self._goalie = goalie
 
     @property
     def strength(self) -> Optional[str]:
-        """Getter for the strength."""
+        """
+        Getter for the strength.
+        """
         return self._strength
 
     @strength.setter
     def strength(self, strength : str):
-        """Setter for the strength."""
+        """
+        Setter for the strength.
+        """
         self._strength = strength
 
     @property
     def is_empty_net(self) -> bool:
-        """Getter for the is_empty_net property."""
+        """
+        Getter for the is_empty_net property.
+        """
         return self._is_empty_net
 
     @is_empty_net.setter
     def is_empty_net(self, is_empty_net : bool):
-        """Setter for the is_empty_net property."""
+        """
+        Setter for the is_empty_net property.
+        """
         self._is_empty_net = is_empty_net
 
     def get_post(self, game_data : GameData) -> Optional[str]:
         """
-        Description:
-            Return the event string for a goal event.
+        Return the event string for a goal event.
         """
 
         if self.scorer is None:
@@ -179,8 +204,8 @@ class Goal(Event):
             "period":           self.period.ordinal,
             "home_team":        game_data.home.location,
             "away_team":        game_data.away.location,
-            "home_goals":       self.home_goals,
-            "away_goals":       self.away_goals,
+            "home_goals":       self.score.home_goals,
+            "away_goals":       self.score.away_goals,
             "hashtags":         game_data.hashtags
         }
 
@@ -208,8 +233,7 @@ class Goal(Event):
 
     def get_reply(self, game_data : GameData, previous) -> Optional[str]:
         """
-        Description:
-            Return the reply string for a goal event.
+        Return the reply string for a goal event.
         """
 
         if previous.__class__ != Goal:
@@ -231,8 +255,8 @@ class Goal(Event):
             "period":           self.period.ordinal,
             "home_team":        game_data.home.location,
             "away_team":        game_data.away.location,
-            "home_goals":       self.home_goals,
-            "away_goals":       self.away_goals,
+            "home_goals":       self.score.home_goals,
+            "away_goals":       self.score.away_goals,
             "hashtags":         game_data.hashtags
         }
 

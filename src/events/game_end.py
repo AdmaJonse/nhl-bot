@@ -1,19 +1,17 @@
 """
-Description:
-    This module defines the Game End event.
+This module defines the Game End event.
 """
 
 from typing import Optional
 
-from src import templates
+from src.output import templates
 from src.events.event import Event
-from src.game_data import GameData
+from src.data.game_data import GameData
 from src.utils import pad_code
 
 class GameEnd(Event):
     """
-    Description:
-        The Game End event.
+    The Game End event.
     """
 
     def __str__(self):
@@ -37,8 +35,7 @@ class GameEnd(Event):
 
     def get_post(self, game_data : GameData) -> Optional[str]:
         """
-        Description:
-            Return the event string for a game end event.
+        Return the event string for a game end event.
         """
         output : str = ""
         event_values = {

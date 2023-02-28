@@ -1,6 +1,5 @@
 """
-Description:
-    This module defines the Period Official event.
+This module defines the Period Official event.
 """
 
 from src.events.event import Event
@@ -8,8 +7,7 @@ from src.utils import pad_code
 
 class PeriodOfficial(Event):
     """
-    Description:
-        The Period Official event.
+    The Period Official event.
     """
 
     def __str__(self):

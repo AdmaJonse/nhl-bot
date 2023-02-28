@@ -1,6 +1,5 @@
 """
-Description:
-    This module defines the Game Official event.
+This module defines the Game Official event.
 """
 
 from src.events.event import Event
@@ -8,8 +7,7 @@ from src.utils import pad_code
 
 class GameOfficial(Event):
     """
-    Description:
-        The Game Official event.
+    The Game Official event.
     """
 
     def __str__(self):

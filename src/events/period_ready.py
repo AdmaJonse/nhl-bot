@@ -1,6 +1,5 @@
 """
-Description:
-    This module defines the Period Ready event.
+This module defines the Period Ready event.
 """
 
 from src.events.event import Event
@@ -8,8 +7,7 @@ from src.utils import pad_code
 
 class PeriodReady(Event):
     """
-    Description:
-        The Period Ready event.
+    The Period Ready event.
     """
 
     def __str__(self):

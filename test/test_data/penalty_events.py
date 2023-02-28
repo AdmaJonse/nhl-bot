@@ -1,6 +1,5 @@
 """
-Description:
-    Test data for unit tests describing penalty events.
+Test data for unit tests describing penalty events.
 """
 
 penalty_data = {

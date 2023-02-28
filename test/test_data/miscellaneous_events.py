@@ -1,6 +1,5 @@
 """
-Description:
-    Test data for unit tests describing miscellaneous game events.
+Test data for unit tests describing miscellaneous game events.
 """
 
 null_event = {
@@ -42,6 +41,7 @@ null_event = {
     },
     "about": {
         "eventIdx": 3,
+        "eventId": 0,
         "period": 1,
         "periodType": "REGULAR",
         "periodTimeRemaining": "20:00",

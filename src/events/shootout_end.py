@@ -1,6 +1,5 @@
 """
-Description:
-    This module defines the Shootout End event.
+This module defines the Shootout End event.
 """
 
 from src.events.event import Event
@@ -8,8 +7,7 @@ from src.utils import pad_code
 
 class ShootoutEnd(Event):
     """
-    Description:
-        The Shootout End event.
+    The Shootout End event.
     """
 
     def __str__(self):

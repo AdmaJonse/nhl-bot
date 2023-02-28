@@ -1,6 +1,5 @@
 """
-Description:
-    This module defines the Hit event.
+This module defines the Hit event.
 """
 
 from typing import Optional
@@ -11,8 +10,7 @@ from src.utils import initials, pad_blob, pad_code
 
 class Hit(Event):
     """
-    Description:
-        The Hit event.
+    The Hit event.
     """
 
     def __init__(self, data):
@@ -57,20 +55,28 @@ class Hit(Event):
 
     @property
     def hitter(self) -> Optional[str]:
-        """Getter for the hitter."""
+        """
+        Getter for the hitter.
+        """
         return self._hitter
 
     @hitter.setter
     def hitter(self, hitter : str):
-        """Setter for the hitter."""
+        """
+        Setter for the hitter.
+        """
         self._hitter = hitter
 
     @property
     def hittee(self) -> Optional[str]:
-        """Getter for the hittee."""
+        """
+        Getter for the hittee.
+        """
         return self._hittee
 
     @hittee.setter
     def hittee(self, hittee : str):
-        """Setter for the hittee."""
+        """
+        Setter for the hittee.
+        """
         self._hittee = hittee

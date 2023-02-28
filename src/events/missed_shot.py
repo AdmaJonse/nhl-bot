@@ -1,6 +1,5 @@
 """
-Description:
-    This module defines the Missed Shot event.
+This module defines the Missed Shot event.
 """
 
 from typing import Optional
@@ -11,8 +10,7 @@ from src.utils import initials, pad_blob, pad_code
 
 class MissedShot(Event):
     """
-    Description:
-        The Missed Shot event.
+    The Missed Shot event.
     """
 
     def __init__(self, data):
@@ -57,20 +55,28 @@ class MissedShot(Event):
 
     @property
     def shooter(self) -> Optional[str]:
-        """Getter for the shooter."""
+        """
+        Getter for the shooter.
+        """
         return self._shooter
 
     @shooter.setter
     def shooter(self, shooter : str):
-        """Setter for the shooter."""
+        """
+        Setter for the shooter.
+        """
         self._shooter = shooter
 
     @property
     def goalie(self) -> Optional[str]:
-        """Getter for the goalie."""
+        """
+        Getter for the goalie.
+        """
         return self._goalie
 
     @goalie.setter
     def goalie(self, goalie : str):
-        """Setter for the goalie."""
+        """
+        Setter for the goalie.
+        """
         self._goalie = goalie

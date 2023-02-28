@@ -1,20 +1,18 @@
 """
-Description:
-    This module contains the Challenge event.
+This module contains the Challenge event.
 """
 
 from typing import Any, Optional
 
-from src import templates
+from src.output import templates
 from src.events.event import Event, get_team
 from src.exceptions import InsufficientData
-from src.game_data import GameData
+from src.data.game_data import GameData
 from src.utils import pad_blob, pad_code
 
 class Challenge(Event):
     """
-    Description:
-        The Challenge event.
+    The Challenge event.
     """
 
     def __init__(self, data : Any):
@@ -50,18 +48,21 @@ class Challenge(Event):
 
     @property
     def team(self) -> Optional[str]:
-        """Getter for the team."""
+        """
+        Getter for the team.
+        """
         return self._team
 
     @team.setter
     def team(self, team : str):
-        """Setter for the team."""
+        """
+        Setter for the team.
+        """
         self._team = team
 
     def get_post(self, game_data : GameData) -> Optional[str]:
         """
-        Description:
-            Return the event string for a challenge event.
+        Return the event string for a challenge event.
         """
         event_values = {
             "team":     game_data.get_team_string(self.team),

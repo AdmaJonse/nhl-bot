@@ -1,6 +1,5 @@
 """
-Description:
-    Unit tests for the generator class.
+Unit tests for the generator class.
 """
 
 import unittest
@@ -10,9 +9,9 @@ from test.test_data import miscellaneous_events
 from test.test_data import penalty_events
 from test.test_data import period_events
 
-from src import game_data
 from src import generator
 from src import event_factory
+from src.data import game_data
 
 from src.events.blocked_shot import BlockedShot
 from src.events.challenge import Challenge
@@ -37,8 +36,7 @@ from src.events.takeaway import Takeaway
 
 class TestGenerator(unittest.TestCase):
     """
-    Description:
-        Unit tests for the generator class.
+    Unit tests for the generator class.
     """
 
     @classmethod
@@ -51,8 +49,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_game_scheduled(self):
         """
-        Description:
-            Test the expected output of a game scheduled event.
+        Test the expected output of a game scheduled event.
         """
         event    = event_factory.create(game_events.game_scheduled_data)
         actual   = self.generator.get_event_string(event)
@@ -62,8 +59,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_game_end_regulation(self):
         """
-        Description:
-            Test the expected output of a game end event.
+        Test the expected output of a game end event.
         """
         self.generator.game_data = game_data.GameData(game_events.game_data)
         event    = event_factory.create(game_events.game_end_data)
@@ -74,8 +70,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_game_end_overtime(self):
         """
-        Description:
-            Test the expected output of a game end event.
+        Test the expected output of a game end event.
         """
         self.generator.game_data = game_data.GameData(game_events.game_data_overtime)
         event    = event_factory.create(game_events.game_end_overtime_data)
@@ -86,8 +81,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_game_end_shootout(self):
         """
-        Description:
-            Test the expected output of a game end event.
+        Test the expected output of a game end event.
         """
         self.generator.game_data = game_data.GameData(game_events.game_data_shootout)
         event    = event_factory.create(game_events.game_end_shootout_data)
@@ -98,8 +92,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_game_official(self):
         """
-        Description:
-            Test the expected output of a game official event.
+        Test the expected output of a game official event.
         """
         event    = event_factory.create(game_events.game_official_data)
         actual   = self.generator.get_event_string(event)
@@ -109,8 +102,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_faceoff(self):
         """
-        Description:
-            Test the expected output of a faceoff event.
+        Test the expected output of a faceoff event.
         """
         event    = event_factory.create(miscellaneous_events.faceoff_data)
         actual   = self.generator.get_event_string(event)
@@ -120,8 +112,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_stoppage(self):
         """
-        Description:
-            Test the expected output of a stoppage event.
+        Test the expected output of a stoppage event.
         """
         event    = event_factory.create(miscellaneous_events.stoppage_data)
         actual   = self.generator.get_event_string(event)
@@ -131,8 +122,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_shot(self):
         """
-        Description:
-            Test the expected output of a shot event.
+        Test the expected output of a shot event.
         """
         event    = event_factory.create(miscellaneous_events.shot_data)
         actual   = self.generator.get_event_string(event)
@@ -142,8 +132,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_hit(self):
         """
-        Description:
-            Test the expected output of a hit event.
+        Test the expected output of a hit event.
         """
         event    = event_factory.create(miscellaneous_events.hit_data)
         actual   = self.generator.get_event_string(event)
@@ -153,8 +142,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_blocked_shot(self):
         """
-        Description:
-            Test the expected output of a blocked shot event.
+        Test the expected output of a blocked shot event.
         """
         event    = event_factory.create(miscellaneous_events.blocked_shot_data)
         actual   = self.generator.get_event_string(event)
@@ -164,8 +152,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_giveaway(self):
         """
-        Description:
-            Test the expected output of a giveaway event.
+        Test the expected output of a giveaway event.
         """
         event    = event_factory.create(miscellaneous_events.giveaway_data)
         actual   = self.generator.get_event_string(event)
@@ -175,8 +162,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_takeaway(self):
         """
-        Description:
-            Test the expected output of a takeaway event.
+        Test the expected output of a takeaway event.
         """
         event    = event_factory.create(miscellaneous_events.takeaway_data)
         actual   = self.generator.get_event_string(event)
@@ -186,8 +172,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_missed_shot(self):
         """
-        Description:
-            Test the expected output of a missed shot event.
+        Test the expected output of a missed shot event.
         """
         event    = event_factory.create(miscellaneous_events.missed_shot_data)
         actual   = self.generator.get_event_string(event)
@@ -197,8 +182,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_penalty(self):
         """
-        Description:
-            Test the expected output of a penalty event.
+        Test the expected output of a penalty event.
         """
         event    = event_factory.create(penalty_events.penalty_data)
         actual   = self.generator.get_event_string(event)
@@ -208,8 +192,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_penalty_no_taker(self):
         """
-        Description:
-            Test the expected output of a penalty event when no
+        Test the expected output of a penalty event when no
             penalty taker is present in the event data.
         """
         event    = event_factory.create(penalty_events.penalty_data_no_taker)
@@ -219,8 +202,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_penalty_shot(self):
         """
-        Description:
-            Test the expected output of a penalty shot event.
+        Test the expected output of a penalty shot event.
         """
         event    = event_factory.create(penalty_events.penalty_shot_data)
         actual   = self.generator.get_event_string(event)
@@ -230,8 +212,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_period_ready(self):
         """
-        Description:
-            Test the expected output of a period ready event.
+        Test the expected output of a period ready event.
         """
         event    = event_factory.create(period_events.period_ready_data)
         actual   = self.generator.get_event_string(event)
@@ -241,8 +222,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_period_start(self):
         """
-        Description:
-            Test the expected output of a period start event.
+        Test the expected output of a period start event.
         """
         event    = event_factory.create(period_events.period_start_data)
         actual   = self.generator.get_event_string(event)
@@ -252,8 +232,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_period_end(self):
         """
-        Description:
-            Test the expected output of a period end event.
+        Test the expected output of a period end event.
         """
         event    = event_factory.create(period_events.period_end_data)
         actual   = self.generator.get_event_string(event)
@@ -263,8 +242,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_period_official(self):
         """
-        Description:
-            Test the expected output of a period official event.
+        Test the expected output of a period official event.
         """
         event    = event_factory.create(period_events.period_official_data)
         actual   = self.generator.get_event_string(event)
@@ -274,8 +252,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_goal(self):
         """
-        Description:
-            Test the expected output of a goal event.
+        Test the expected output of a goal event.
         """
         event    = event_factory.create(goal_events.goal_data)
         actual   = self.generator.get_event_string(event)
@@ -285,8 +262,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_goal_no_scorer(self):
         """
-        Description:
-            Test the expected output of a goal event when no scorer is present
+        Test the expected output of a goal event when no scorer is present
             in the event data.
         """
         event    = event_factory.create(goal_events.goal_data_no_scorer)
@@ -296,8 +272,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_challenge(self):
         """
-        Description:
-            Test the expected output of a coach's challenge event.
+        Test the expected output of a coach's challenge event.
         """
         event    = event_factory.create(miscellaneous_events.challenge_data)
         actual   = self.generator.get_event_string(event)
@@ -307,8 +282,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_goalpost(self):
         """
-        Description:
-            Test the expected output of a ping event.
+        Test the expected output of a ping event.
         """
         event    = event_factory.create(miscellaneous_events.goalpost_data)
         actual   = self.generator.get_event_string(event)
@@ -318,8 +292,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_crossbar(self):
         """
-        Description:
-            Test the expected output of a ping event.
+        Test the expected output of a ping event.
         """
         event    = event_factory.create(miscellaneous_events.crossbar_data)
         actual   = self.generator.get_event_string(event)
@@ -333,8 +306,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_game_scheduled_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a game scheduled event.
+        Test the expected output of a reply to a game scheduled event.
         """
         previous = GameScheduled(miscellaneous_events.null_event)
         event    = event_factory.create(game_events.game_scheduled_data)
@@ -345,8 +317,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_game_end_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a game end event.
+        Test the expected output of a reply to a game end event.
         """
         previous = GameEnd(miscellaneous_events.null_event)
         event    = event_factory.create(game_events.game_end_data)
@@ -357,8 +328,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_game_official_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a game official event.
+        Test the expected output of a reply to a game official event.
         """
         previous = GameOfficial(miscellaneous_events.null_event)
         event    = event_factory.create(game_events.game_official_data)
@@ -369,8 +339,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_faceoff_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a faceoff event.
+        Test the expected output of a reply to a faceoff event.
         """
         previous = Faceoff(miscellaneous_events.null_event)
         event    = event_factory.create(miscellaneous_events.faceoff_data)
@@ -381,8 +350,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_stoppage_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a stoppage event.
+        Test the expected output of a reply to a stoppage event.
         """
         previous = Stoppage(miscellaneous_events.null_event)
         event    = event_factory.create(miscellaneous_events.stoppage_data)
@@ -393,8 +361,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_shot_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a shot event.
+        Test the expected output of a reply to a shot event.
         """
         previous = Shot(miscellaneous_events.null_event)
         event    = event_factory.create(miscellaneous_events.shot_data)
@@ -405,8 +372,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_hit_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a hit event.
+        Test the expected output of a reply to a hit event.
         """
         previous = Hit(miscellaneous_events.null_event)
         event    = event_factory.create(miscellaneous_events.hit_data)
@@ -417,8 +383,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_blocked_shot_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a blocked shot event.
+        Test the expected output of a reply to a blocked shot event.
         """
         previous = BlockedShot(miscellaneous_events.null_event)
         event    = event_factory.create(miscellaneous_events.blocked_shot_data)
@@ -429,8 +394,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_giveaway_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a giveaway event.
+        Test the expected output of a reply to a giveaway event.
         """
         previous = Giveaway(miscellaneous_events.null_event)
         event    = event_factory.create(miscellaneous_events.giveaway_data)
@@ -441,8 +405,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_takeaway_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a takeaway event.
+        Test the expected output of a reply to a takeaway event.
         """
         previous = Takeaway(miscellaneous_events.null_event)
         event    = event_factory.create(miscellaneous_events.takeaway_data)
@@ -453,8 +416,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_missed_shot_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a missed shot event.
+        Test the expected output of a reply to a missed shot event.
         """
         previous = MissedShot(miscellaneous_events.null_event)
         event    = event_factory.create(miscellaneous_events.missed_shot_data)
@@ -465,8 +427,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_penalty_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a penalty event.
+        Test the expected output of a reply to a penalty event.
         """
         previous = Penalty(miscellaneous_events.null_event)
         event    = event_factory.create(penalty_events.penalty_data)
@@ -477,8 +438,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_penalty_shot_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a penalty event.
+        Test the expected output of a reply to a penalty event.
         """
         previous = PenaltyShot(miscellaneous_events.null_event)
         event    = event_factory.create(penalty_events.penalty_shot_data)
@@ -489,8 +449,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_period_ready_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a period ready event.
+        Test the expected output of a reply to a period ready event.
         """
         previous = PeriodReady(miscellaneous_events.null_event)
         event    = event_factory.create(period_events.period_ready_data)
@@ -501,8 +460,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_period_start_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a period start event.
+        Test the expected output of a reply to a period start event.
         """
         previous = PeriodStart(miscellaneous_events.null_event)
         event    = event_factory.create(period_events.period_start_data)
@@ -513,8 +471,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_period_end_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a period end event.
+        Test the expected output of a reply to a period end event.
         """
         previous = PeriodEnd(miscellaneous_events.null_event)
         event    = event_factory.create(period_events.period_end_data)
@@ -525,8 +482,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_period_official_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a period official event.
+        Test the expected output of a reply to a period official event.
         """
         previous = PeriodOfficial(miscellaneous_events.null_event)
         event    = event_factory.create(period_events.period_official_data)
@@ -537,8 +493,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_goal_reply_scorer_change(self):
         """
-        Description:
-            Test the expected output of a reply to a goal event where
+        Test the expected output of a reply to a goal event where
             the goal scorer has changed.
         """
         previous = Goal(goal_events.goal_data_scorer_change)
@@ -550,8 +505,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_goal_reply_primary_assist_change(self):
         """
-        Description:
-            Test the expected output of a reply to a goal event where
+        Test the expected output of a reply to a goal event where
             the primary assist has chnaged.
         """
         previous = Goal(goal_events.goal_data_two_assists)
@@ -563,8 +517,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_goal_reply_secondary_assist_change(self):
         """
-        Description:
-            Test the expected output of a reply to a goal event where
+        Test the expected output of a reply to a goal event where
             the secondary assist has changed.
         """
         previous = Goal(goal_events.goal_data_two_assists)
@@ -576,8 +529,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_goal_reply_time_change(self):
         """
-        Description:
-            Test the expected output of a reply to a goal event where
+        Test the expected output of a reply to a goal event where
             the time of the goal has changed.
         """
         previous = Goal(goal_events.goal_data)
@@ -589,8 +541,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_goal_reply_primary_assist_added(self):
         """
-        Description:
-            Test the expected output of a reply to a goal event where
+        Test the expected output of a reply to a goal event where
             a primary assist has been added.
         """
         previous = Goal(goal_events.goal_data_no_assists)
@@ -602,8 +553,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_goal_reply_secondary_assist_added(self):
         """
-        Description:
-            Test the expected output of a reply to a goal event where
+        Test the expected output of a reply to a goal event where
             a secondary assist has been added.
         """
         previous = Goal(goal_events.goal_data_one_assist)
@@ -615,8 +565,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_goal_reply_both_assists_added(self):
         """
-        Description:
-            Test the expected output of a reply to a goal event where
+        Test the expected output of a reply to a goal event where
             both a primary and a secondary assist have been added.
         """
         previous = Goal(goal_events.goal_data_no_assists)
@@ -628,8 +577,7 @@ class TestGenerator(unittest.TestCase):
 
     def test_challenge_reply(self):
         """
-        Description:
-            Test the expected output of a reply to a coach's challenge event.
+        Test the expected output of a reply to a coach's challenge event.
         """
         previous = Challenge(miscellaneous_events.null_event)
         event    = event_factory.create(miscellaneous_events.challenge_data)

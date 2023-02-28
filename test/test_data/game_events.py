@@ -1,6 +1,5 @@
 """
-Description:
-    Test data for unit tests describing game events.
+Test data for unit tests describing game events.
 """
 
 game_data = {

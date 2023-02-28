@@ -1,21 +1,19 @@
 """
-Description:
-    This module defines the Shot event.
+This module defines the Shot event.
 """
 
 from typing import Optional
 
 from src import logger
-from src import templates
+from src.output import templates
 from src.events.event import Event, get_player_name, get_team
 from src.exceptions import InsufficientData
-from src.game_data import GameData
+from src.data.game_data import GameData
 from src.utils import initials, pad_blob, pad_code
 
 class FailedShot(Event):
     """
-    Description:
-        The Failed Shot event.
+    The Failed Shot event.
     """
 
     def __init__(self, data):
@@ -64,39 +62,50 @@ class FailedShot(Event):
 
     @property
     def shooter(self) -> Optional[str]:
-        """Getter for the shooter."""
+        """
+        Getter for the shooter.
+        """
         return self._shooter
 
     @shooter.setter
     def shooter(self, shooter : str):
-        """Setter for the shooter."""
+        """
+        Setter for the shooter.
+        """
         self._shooter = shooter
 
     @property
     def goalie(self) -> Optional[str]:
-        """Getter for the goalie."""
+        """
+        Getter for the goalie.
+        """
         return self._goalie
 
     @goalie.setter
     def goalie(self, goalie : str):
-        """Setter for the goalie."""
+        """
+        Setter for the goalie.
+        """
         self._goalie = goalie
 
     @property
     def team(self) -> Optional[str]:
-        """Getter for the team."""
+        """
+        Getter for the team.
+        """
         return self._team
 
     @team.setter
     def team(self, team : str):
-        """Setter for the team."""
+        """
+        Setter for the team.
+        """
         self._team = team
 
 
     def get_post(self, game_data : GameData) -> Optional[str]:
         """
-        Description:
-            Return the event string for a failed shot event.
+        Return the event string for a failed shot event.
         """
 
         if self.team is None:
