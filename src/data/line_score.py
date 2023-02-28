@@ -1,147 +1,17 @@
 """
-Description:
-    This module contains classes used to define line score data.
+This module contains classes used to define line score data.
 """
 
-from dataclasses import dataclass
-import time
 from typing import Optional
-
 from src import logger
 
-@dataclass
-class TeamData:
-    """
-    Description:
-        This data class defines data that is specific to one team.
-    """
-    shots          : int  = 0
-    goals          : int  = 0
-    goalie_pulled  : bool = False
-    skater_count   : int  = 0
-    is_power_play  : bool = False
-
-
-@dataclass
-class PowerPlay:
-    """
-    Description:
-        This data class defines a power play.
-    """
-    team           : Optional[str]  = ""
-    home_skaters   : int  = 0
-    away_skaters   : int  = 0
-    strength       : str  = ""
-    time_remaining : str  = "00:00"
-    time_elapsed   : str  = "00:00"
-
-
-def get_power_play(data) -> Optional[PowerPlay]:
-    """
-    Description:
-        Create a power play object using line score data.
-    """
-
-    strength        : str  = data["powerPlayStrength"]
-    home_skaters    : int  = data["teams"]["home"]["numSkaters"]
-    home_power_play : bool = data["teams"]["home"]["powerPlay"]
-    away_skaters    : int  = data["teams"]["away"]["numSkaters"]
-    away_power_play : bool = data["teams"]["away"]["powerPlay"]
-
-    try:
-
-        time_remaining  : int  = data["powerPlayInfo"]["situationtime_remainingaining"]
-        time_elapsed    : int  = data["powerPlayInfo"]["situationTimeElapsed"]
-        in_situation    : bool = data["powerPlayInfo"]["inSituation"]
-
-    except KeyError:
-
-        time_remaining = 0
-        time_elapsed   = 0
-        in_situation   = False
-
-
-    if not in_situation:
-        return None
-
-    if home_power_play:
-
-        if home_skaters <= away_skaters:
-            logger.log_error("Line score indicates home powerplay, but skater counts are wrong.")
-            logger.log_error("  Home: " + str(home_skaters) + ", Away: "+ str(away_skaters))
-
-        team = "home"
-
-    elif away_power_play:
-
-        if home_skaters >= away_skaters:
-            logger.log_error("Line score indicates away powerplay, but skater counts are wrong.")
-            logger.log_error("  Home: " + str(home_skaters) + ", Away: "+ str(away_skaters))
-
-        team = "away"
-
-    else:
-
-        if home_skaters != away_skaters:
-            logger.log_error("Line score indicates even strength, but skater counts are wrong.")
-            logger.log_error("  Home: " + str(home_skaters) + ", Away: "+ str(away_skaters))
-
-        team = "even"
-
-    return PowerPlay (
-        team           = team,
-        home_skaters   = home_skaters,
-        away_skaters   = away_skaters,
-        strength       = strength,
-        time_remaining = time.strftime("%M:%S", time.gmtime(time_remaining)),
-        time_elapsed   = time.strftime("%M:%S", time.gmtime(time_elapsed))
-    )
-
-
-@dataclass
-class ShootoutData:
-    """
-    Description:
-        This data class defines data for a shootout event.
-    """
-    home_goals    : int = 0
-    home_attempts : int = 0
-    away_goals    : int = 0
-    away_attempts : int = 0
-
-
-def get_shootout(data) -> Optional[ShootoutData]:
-    """
-    Description:
-        Create a shootout data object using line score data.
-    """
-
-    home_goals    : int = 0
-    home_attempts : int = 0
-    away_goals    : int = 0
-    away_attempts : int = 0
-
-    if data["hasShootout"]:
-
-        home_goals    = data["shootoutInfo"]["home"]["scores"]
-        home_attempts = data["shootoutInfo"]["home"]["attempts"]
-        away_goals    = data["shootoutInfo"]["away"]["scores"]
-        away_attempts = data["shootoutInfo"]["away"]["attempts"]
-
-        return ShootoutData (
-            home_goals    = home_goals,
-            home_attempts = home_attempts,
-            away_goals    = away_goals,
-            away_attempts = away_attempts
-        )
-
-    return None
-
+from src.data.power_play import PowerPlay, get_power_play
+from src.data.shootout import ShootoutData, get_shootout
+from src.data.team_data import TeamData
 
 class LineScore:
     """
-    Description:
-        This class defines line score data.
+    This class defines line score data.
     """
 
     def __init__(self, data):
@@ -205,8 +75,7 @@ class LineScore:
     @property
     def home_shots(self) -> int:
         """
-        Description:
-            Getter for the home shots value.
+        Getter for the home shots value.
         """
         return self.home.shots
 
@@ -214,8 +83,7 @@ class LineScore:
     @property
     def away_shots(self) -> int:
         """
-        Description:
-            Getter for the away shots value.
+        Getter for the away shots value.
         """
         return self.away.shots
 
@@ -223,8 +91,7 @@ class LineScore:
     @property
     def home_goals(self) -> int:
         """
-        Description:
-            Getter for the home goals value.
+        Getter for the home goals value.
         """
         return self.home.goals
 
@@ -232,8 +99,7 @@ class LineScore:
     @property
     def away_goals(self) -> int:
         """
-        Description:
-            Getter for the away goals value.
+        Getter for the away goals value.
         """
         return self.away.goals
 
@@ -241,8 +107,7 @@ class LineScore:
     @property
     def home_goalie_pulled(self) -> bool:
         """
-        Description:
-            Getter for the home goalie pulled value.
+        Getter for the home goalie pulled value.
         """
         return self.home.goalie_pulled
 
@@ -250,8 +115,7 @@ class LineScore:
     @property
     def away_goalie_pulled(self) -> bool:
         """
-        Description:
-            Getter for the away goalie pulled value.
+        Getter for the away goalie pulled value.
         """
         return self.away.goalie_pulled
 
@@ -259,8 +123,7 @@ class LineScore:
     @property
     def home_shootout_goals(self) -> int:
         """
-        Description:
-            Getter for the home shootout goals value.
+        Getter for the home shootout goals value.
         """
         if self.shootout is None:
             return 0
@@ -270,8 +133,7 @@ class LineScore:
     @property
     def away_shootout_goals(self) -> int:
         """
-        Description:
-            Getter for the away shotoout goals value.
+        Getter for the away shotoout goals value.
         """
         if self.shootout is None:
             return 0
@@ -280,8 +142,7 @@ class LineScore:
 
 def check_for_events(previous : 'LineScore', current : 'LineScore'):
     """
-    Description:
-        Check if an event has occured in the line score data that requires a post.
+    Check if an event has occured in the line score data that requires a post.
     """
 
     if previous.home_goalie_pulled != current.home_goalie_pulled:

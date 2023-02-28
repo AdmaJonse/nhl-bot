@@ -1,20 +1,18 @@
 """
-Description:
-    This module defines the Ping event.
+This module defines the Ping event.
 """
 
 from typing import Optional
 
-from src import templates
+from src.output import templates
 from src.events.event import Event, get_player_name
 from src.exceptions import InsufficientData
-from src.game_data import GameData
+from src.data.game_data import GameData
 from src.utils import initials, pad_blob, pad_code
 
 class Ping(Event):
     """
-    Description:
-        The Ping event.
+    The Ping event.
     """
 
     def __init__(self, data):
@@ -69,38 +67,49 @@ class Ping(Event):
 
     @property
     def shooter(self) -> Optional[str]:
-        """Getter for the shooter."""
+        """
+        Getter for the shooter.
+        """
         return self._shooter
 
     @shooter.setter
     def shooter(self, shooter : str):
-        """Setter for the shooter."""
+        """
+        Setter for the shooter.
+        """
         self._shooter = shooter
 
     @property
     def goalie(self) -> Optional[str]:
-        """Getter for the goalie."""
+        """
+        Getter for the goalie.
+        """
         return self._goalie
 
     @goalie.setter
     def goalie(self, goalie : str):
-        """Setter for the goalie."""
+        """
+        Setter for the goalie.
+        """
         self._goalie = goalie
 
     @property
     def goal_post(self) -> Optional[str]:
-        """Getter for the goal post."""
+        """
+        Getter for the goal post.
+        """
         return self._goal_post
 
     @goal_post.setter
     def goal_post(self, post : str):
-        """Setter for the goal post."""
+        """
+        Setter for the goal post.
+        """
         self._goal_post = post
 
     def get_post(self, game_data : GameData) -> Optional[str]:
         """
-        Description:
-            Return the event string for a ping event.
+        Return the event string for a ping event.
         """
         event_values = {
             "shooter":   self.shooter,

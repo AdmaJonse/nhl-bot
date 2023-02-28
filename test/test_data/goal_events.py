@@ -1,6 +1,5 @@
 """
-Description:
-    Test data for unit tests describing goal events.
+Test data for unit tests describing goal events.
 """
 
 goal_data = {

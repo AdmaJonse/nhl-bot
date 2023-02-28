@@ -1,6 +1,5 @@
 """
-Description:
-    This module defines event classes. Event data is parsed from the
+This module defines event classes. Event data is parsed from the
     NHL API JSON data and converted into Event objects.
 
     The main benefit of an object-based approach rather than simply
@@ -17,15 +16,15 @@ from dateutil import parser
 from src.exceptions import InsufficientData
 
 from src import logger
-from src.game_data import GameData
-from src.period import Period
+from src.data.game_data import GameData
+from src.data.period import Period
+from src.data.score import Score
 from src.utils import pad_blob, pad_code
 
 
 def get_player_name(event : Any, player_type : str, index : int = 1):
     """
-    Description:
-        Return the name of the player with the given type from the event.
+    Return the name of the player with the given type from the event.
     """
     count = 0
     try:
@@ -42,8 +41,7 @@ def get_player_name(event : Any, player_type : str, index : int = 1):
 
 def get_team(event : Any):
     """
-    Description:
-        Return the name of the team in the given event. Log an error
+    Return the name of the team in the given event. Log an error
         and return None if no team was found.
     """
     try:
@@ -55,8 +53,7 @@ def get_team(event : Any):
 
 def get_value(data : Any, *args):
     """
-    Description:
-        Helper function for retrieving values from multi-level dictionaries.
+    Helper function for retrieving values from multi-level dictionaries.
         If the key is not found, return an empty string.
     """
     for key in args:
@@ -74,20 +71,19 @@ def get_value(data : Any, *args):
 
 class Event:
     """
-    Description:
-        The base event class.
+    The base event class.
     """
 
     null_post = None
 
     def __init__(self, data : Any):
         self._tweet_id    : Optional[int] = None
+        self._event_id    : int           = int(data["about"]["eventId"])
         self._description : str           = data["result"]["description"]
         self._period      : Period        = Period(data["about"])
         self._time        : str           = data["about"]["periodTimeRemaining"]
         self._timestamp   : datetime      = parser.parse(data["about"]["dateTime"])
-        self._home_goals  : int           = data["about"]["goals"]["home"]
-        self._away_goals  : int           = data["about"]["goals"]["away"]
+        self._score       : Score         = Score(data["about"])
         self._auto_reply  : bool          = False
 
         if self.description is None:
@@ -139,93 +135,112 @@ class Event:
 
     @property
     def tweet_id(self) -> Optional[int]:
-        """Getter for the tweet ID."""
+        """
+        Getter for the tweet ID.
+        """
         return self._tweet_id
 
     @tweet_id.setter
     def tweet_id(self, tweet_id : Optional[int]):
-        """Setter for the tweet ID."""
+        """
+        Setter for the tweet ID.
+        """
         self._tweet_id = tweet_id
 
     @property
+    def event_id(self) -> Optional[int]:
+        """
+        Getter for the NHL API's Event ID.
+        """
+        return self._event_id
+
+    @property
     def has_tweeted(self) -> bool:
-        """Return a boolean indicating whether or not a tweet has been sent for this event."""
+        """
+        Return a boolean indicating whether or not a tweet has been sent for this event.
+        """
         return self._tweet_id is not None and self._tweet_id > 0
 
     @property
     def description(self) -> Optional[str]:
-        """Getter for the description."""
+        """
+        Getter for the description.
+        """
         return self._description
 
     @description.setter
     def description(self, description : str):
-        """Setter for the description."""
+        """
+        Setter for the description.
+        """
         self._description = description
 
     @property
     def period(self) -> Period:
-        """Getter for the period."""
+        """
+        Getter for the period.
+        """
         return self._period
 
     @period.setter
     def period(self, period : Period):
-        """Setter for the period."""
+        """
+        Setter for the period.
+        """
         self._period = period
 
     @property
     def time(self) -> Optional[str]:
-        """Getter for the time."""
+        """
+        Getter for the time.
+        """
         return self._time
 
     @time.setter
     def time(self, time : str):
-        """Setter for the time."""
+        """
+        Setter for the time.
+        """
         self._time = time
 
     @property
     def timestamp(self) -> datetime:
-        """Getter for the time."""
+        """
+        Getter for the time.
+        """
         return self._timestamp
 
     @timestamp.setter
     def timestamp(self, timestamp : datetime):
-        """Setter for the timestamp."""
+        """
+        Setter for the timestamp.
+        """
         self._timestamp = timestamp
 
     @property
-    def home_goals(self) -> int:
-        """Getter for the home goals."""
-        return self._home_goals
-
-    @home_goals.setter
-    def home_goals(self, home_goals : int):
-        """Setter for the home goals."""
-        self._home_goals = home_goals
-
-    @property
-    def away_goals(self) -> int:
-        """Getter for the away goals."""
-        return self._away_goals
-
-    @away_goals.setter
-    def away_goals(self, away_goals : int):
-        """Setter for the away goals."""
-        self._away_goals = away_goals
+    def score(self) -> Score:
+        """
+        Getter for the score.
+        """
+        return self._score
 
     @property
     def auto_reply(self) -> bool:
-        """Getter for the auto reply field."""
+        """
+        Getter for the auto reply field.
+        """
         return self._auto_reply
 
     @auto_reply.setter
     def auto_reply(self, reply : bool):
-        """Setter for the auto reply field."""
+        """
+        Setter for the auto reply field.
+        """
         self._auto_reply = reply
 
     def get_post(self, _game_data : GameData) -> Optional[str]:
         """
-        Description:
-            The base implementation for returning post text. This implementation simply
+        The base implementation for returning post text. This implementation simply
             returns None and will not result in any tweet being posted.
         """
         return self.null_post
@@ -233,8 +248,7 @@ class Event:
 
     def get_auto_reply(self, _game_data : GameData) -> Optional[str]:
         """
-        Description:
-            The base implementation for returning auto reply text. This implementation simply
+        The base implementation for returning auto reply text. This implementation simply
             returns None and will not result in any tweet being posted.
         """
         return self.null_post
@@ -242,8 +256,7 @@ class Event:
 
     def get_reply(self, _game_data : GameData, _previous : 'Event') -> Optional[str]:
         """
-        Description:
-            The base implementation for returning reply text. This implementation simply
+        The base implementation for returning reply text. This implementation simply
             returns None and will not result in any tweet being posted.
         """
         return self.null_post

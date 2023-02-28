@@ -1,19 +1,17 @@
 """
-Description:
-    This module defines the Period End event.
+This module defines the Period End event.
 """
 
 from typing import Optional
 
-from src import templates
+from src.output import templates
 from src.events.event import Event
-from src.game_data import GameData
+from src.data.game_data import GameData
 from src.utils import pad_code
 
 class PeriodEnd(Event):
     """
-    Description:
-        The Period End event.
+    The Period End event.
     """
 
     def __str__(self):
@@ -38,8 +36,7 @@ class PeriodEnd(Event):
 
     def get_post(self, game_data : GameData) -> Optional[str]:
         """
-        Description:
-            Return the event string for a period end event.
+        Return the event string for a period end event.
         """
 
         event_values = {
@@ -47,8 +44,8 @@ class PeriodEnd(Event):
             "venue":      game_data.venue,
             "home_team":  game_data.home.location,
             "away_team":  game_data.away.location,
-            "home_goals": self.home_goals,
-            "away_goals": self.away_goals,
+            "home_goals": self.score.home_goals,
+            "away_goals": self.score.away_goals,
             "home_shots": game_data.home_shots,
             "away_shots": game_data.away_shots,
             "hashtags":   game_data.hashtags

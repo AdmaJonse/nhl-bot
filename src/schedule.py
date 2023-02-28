@@ -1,6 +1,5 @@
 """
-Description:
-    This module provides an interface for querying the NHL API's schedule data.
+This module provides an interface for querying the NHL API's schedule data.
 """
 
 from typing import Any, Optional
@@ -29,26 +28,23 @@ TIME_ZONE       : tzinfo = pytz.timezone("US/Eastern")
 
 def time_to_string(time : datetime) -> str:
     """
-    Description:
-        Return the given datetime object as a time string formatted
-        using the time format constant.
+    Return the given datetime object as a time string formatted
+    using the time format constant.
     """
     return time.astimezone(TIME_ZONE).strftime(TIME_FORMAT)
 
 
 def date_to_string(date : datetime) -> str:
     """
-    Description:
-        Return the given datetime object as a date string formatted
-        using the time format constant.
+    Return the given datetime object as a date string formatted
+    using the time format constant.
     """
     return date.strftime(DATE_FORMAT)
 
 
 def get_current_time() -> datetime:
     """
-    Description:
-        Return the current time localized using the time zone constant.
+    Return the current time localized using the time zone constant.
     """
     current_time : datetime = datetime.now(TIME_ZONE)
     logger.log_info("current time: " + time_to_string(current_time))
@@ -57,8 +53,7 @@ def get_current_time() -> datetime:
 
 def get_current_date() -> datetime:
     """
-    Description:
-        Return the current date localized using the time zone constant.
+    Return the current date localized using the time zone constant.
     """
     now          : datetime = datetime.now(TIME_ZONE)
     current_date : datetime = now.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -68,8 +63,7 @@ def get_current_date() -> datetime:
 
 def get_tomorrow() -> datetime:
     """
-    Description:
-        Return the tomorrow's date localized using the time zone constant.
+    Return the tomorrow's date localized using the time zone constant.
     """
     tomorrow = get_current_date() + timedelta(days=1)
     logger.log_info("tomorrow's date: " + date_to_string(tomorrow))
@@ -78,8 +72,7 @@ def get_tomorrow() -> datetime:
 
 def get_noon() -> datetime:
     """
-    Description:
-        Return noon for the current date.
+    Return noon for the current date.
     """
     now  : datetime = datetime.now(TIME_ZONE)
     noon : datetime = now.replace(hour=12, minute=0, second=0)
@@ -88,9 +81,8 @@ def get_noon() -> datetime:
 
 def get_schedule_json() -> Any:
     """
-    Description:
-        Return the JSON record describing the team's games that are
-        scheduled today.
+    Return the JSON record describing the team's games that are
+    scheduled today.
     """
 
     date   : datetime = get_current_date()
@@ -104,8 +96,7 @@ def get_schedule_json() -> Any:
 
 def get_game_id() -> Optional[int]:
     """
-    Description:
-        Return the game ID from the given JSON schedule record.
+    Return the game ID from the given JSON schedule record.
     """
     try:
 
@@ -124,8 +115,7 @@ def get_game_id() -> Optional[int]:
 
 def get_start_time() -> Optional[datetime]:
     """
-    Description:
-        Return the game start time from the given JSON schedule record.
+    Return the game start time from the given JSON schedule record.
     """
     try:
 

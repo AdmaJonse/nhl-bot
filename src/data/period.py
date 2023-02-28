@@ -1,6 +1,5 @@
 """
-Description:
-    This module defines the Period class.
+This module defines the Period class.
 """
 
 REGULATION = "REGULAR"
@@ -9,9 +8,8 @@ SHOOTOUT   = "SHOOTOUT"
 
 class Period:
     """
-    Description:
-        The team class. This class contains the various names that can be used for a team and
-        provides methods for querying these names.
+    The team class. This class contains the various names that can be used for a team and
+    provides methods for querying these names.
     """
 
     def __init__(self, data):
@@ -26,8 +24,7 @@ class Period:
 
     def __str__(self):
         """
-        Description:
-            Return a string represenation of the period.
+        Return a string represenation of the period.
         """
 
         # default in case of funky data
@@ -54,44 +51,57 @@ class Period:
 
     @property
     def number(self):
-        """Getter for the period number."""
+        """
+        Getter for the period number.
+        """
         return self._number
 
     @number.setter
     def number(self, number):
-        """Setter for the period number."""
+        """
+        Setter for the period number.
+        """
         self._number = number
 
     @property
     def period_type(self):
-        """Getter for the period type."""
+        """
+        Getter for the period type.
+        """
         return self._period_type
 
     @period_type.setter
     def period_type(self, period_type):
-        """Setter for the period type."""
+        """
+        Setter for the period type.
+        """
         self._period_type = period_type
 
     @property
     def is_regulation(self) -> bool:
-        """Return a boolean indicating whether or not this is a period in regulation."""
+        """
+        Return a boolean indicating whether or not this is a period in regulation.
+        """
         return self.period_type == REGULATION
 
     @property
     def is_overtime(self) -> bool:
-        """Return a boolean indicating whether or not this is a period in overtime."""
+        """
+        Return a boolean indicating whether or not this is a period in overtime.
+        """
         return self.period_type == OVERTIME
 
     @property
     def is_shootout(self) -> bool:
-        """Return a boolean indicating whether or not this is a shootout."""
+        """
+        Return a boolean indicating whether or not this is a shootout.
+        """
         return self.period_type == SHOOTOUT
 
     @property
     def ordinal(self) -> str:
         """
-        Description:
-            Return an ordinal string represenation of the period from the given event.
+        Return an ordinal string represenation of the period from the given event.
         """
         period_string = ""
 

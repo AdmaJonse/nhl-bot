@@ -1,6 +1,5 @@
 """
-Description:
-    This module contains the Blocked Shot event.
+This module contains the Blocked Shot event.
 """
 
 from typing import Any, Optional
@@ -11,8 +10,7 @@ from src.utils import initials, pad_blob, pad_code
 
 class BlockedShot(Event):
     """
-    Description:
-        The Blocked Shot event.
+    The Blocked Shot event.
     """
 
     def __init__(self, data : Any):
@@ -57,20 +55,28 @@ class BlockedShot(Event):
 
     @property
     def shooter(self) -> Optional[str]:
-        """Getter for the shooter."""
+        """
+        Getter for the shooter.
+        """
         return self._shooter
 
     @shooter.setter
     def shooter(self, shooter : str):
-        """Setter for the shooter."""
+        """
+        Setter for the shooter.
+        """
         self._shooter = shooter
 
     @property
     def blocker(self) -> Optional[str]:
-        """Getter for the blocker."""
+        """
+        Getter for the blocker.
+        """
         return self._blocker
 
     @blocker.setter
     def blocker(self, blocker : str):
-        """Setter for the blocker."""
+        """
+        Setter for the blocker.
+        """
         self._blocker = blocker

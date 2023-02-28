@@ -1,6 +1,5 @@
 """
-Description:
-    This module defines the Game Scheduled event.
+This module defines the Game Scheduled event.
 """
 
 from src.events.event import Event
@@ -8,8 +7,7 @@ from src.utils import pad_code
 
 class GameScheduled(Event):
     """
-    Description:
-        The Game Scheduled event.
+    The Game Scheduled event.
     """
 
     def __str__(self):

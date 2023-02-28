@@ -1,6 +1,5 @@
 """
-Description:
-    This module defines logging behaviour for the application.
+This module defines logging behaviour for the application.
 """
 
 import logging
@@ -11,8 +10,7 @@ LOG_FILE = "bot.log"
 
 class Logger:
     """
-    Description:
-        This class defines logging behaviour for the application.
+    This class defines logging behaviour for the application.
     """
 
     def __init__(self):
@@ -37,32 +35,28 @@ class Logger:
 
     def info(self, msg):
         """
-        Description:
-            Log the given message at the info level.
+        Log the given message at the info level.
         """
         self.logger.info(msg)
 
 
     def error(self, msg):
         """
-        Description:
-            Log the given message at the error level.
+        Log the given message at the error level.
         """
         self.logger.error(msg)
 
 
     def verbose(self, msg):
         """
-        Description:
-            Log the given message at the debug level.
+        Log the given message at the debug level.
         """
         self.logger.debug(msg)
 
 
     def flush(self):
         """
-        Description:
-            Delete the current log file.
+        Delete the current log file.
         """
         self.file_handler.doRollover()
 
@@ -72,31 +66,27 @@ log = Logger()
 
 def log_info(msg):
     """
-    Description:
-        Log the given message at the info level.
+    Log the given message at the info level.
     """
     log.info(msg)
 
 
 def log_error(msg):
     """
-    Description:
-        Log the given message at the error level.
+    Log the given message at the error level.
     """
     log.error(msg)
 
 
 def log_verbose(msg):
     """
-    Description:
-        Log the given message at the debug level.
+    Log the given message at the debug level.
     """
     log.verbose(msg)
 
 
 def flush():
     """
-    Description:
-        Delete the existing log file.
+    Delete the existing log file.
     """
     log.flush()

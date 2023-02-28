@@ -1,6 +1,5 @@
 """
-Description:
-    This module defines templates for game event tweets. These templates
+This module defines templates for game event tweets. These templates
     contain placeholders for variables that will be defined in the calling
     code.
 """
@@ -289,6 +288,16 @@ The time of this goal has been changed. The scoresheet now indicates this goal o
 
 CHALLENGE_TEMPLATE = """
 {team} is challenging the ruling on the play.
+
+{hashtags}
+"""
+
+#################################################
+# Highlights
+#################################################
+
+HIGHLIGHT_TEMPLATE = """
+{description}. 
 
 {hashtags}
 """

@@ -1,21 +1,19 @@
 """
-Description:
-    This module defines the Penalty Shot event.
+This module defines the Penalty Shot event.
 """
 
 from typing import Optional
 
 from src import logger
-from src import templates
+from src.output import templates
 from src.events.event import Event, get_player_name, get_team, get_value
 from src.exceptions import InsufficientData
-from src.game_data import GameData
+from src.data.game_data import GameData
 from src.utils import initials, pad_blob, pad_code
 
 class PenaltyShot(Event):
     """
-    Description:
-        The Penalty Shot event.
+    The Penalty Shot event.
     """
 
     def __init__(self, data):
@@ -72,48 +70,63 @@ class PenaltyShot(Event):
 
     @property
     def taker(self) -> Optional[str]:
-        """Getter for the taker."""
+        """
+        Getter for the taker.
+        """
         return self._taker
 
     @taker.setter
     def taker(self, taker : str):
-        """Setter for the taker."""
+        """
+        Setter for the taker.
+        """
         self._taker = taker
 
     @property
     def drawn_by(self) -> Optional[str]:
-        """Getter for the drawn_by property."""
+        """
+        Getter for the drawn_by property.
+        """
         return self._drawn_by
 
     @drawn_by.setter
     def drawn_by(self, drawn_by : str):
-        """Setter for the _drawn_by property."""
+        """
+        Setter for the _drawn_by property.
+        """
         self._taker = drawn_by
 
     @property
     def reason(self) -> Optional[str]:
-        """Getter for the reason."""
+        """
+        Getter for the reason.
+        """
         return self._reason
 
     @reason.setter
     def reason(self, reason : str):
-        """Setter for the reason."""
+        """
+        Setter for the reason.
+        """
         self._reason = reason
 
     @property
     def team(self) -> Optional[str]:
-        """Getter for the team."""
+        """
+        Getter for the team.
+        """
         return self._team
 
     @team.setter
     def team(self, team : str):
-        """Setter for the team."""
+        """
+        Setter for the team.
+        """
         self._team = team
 
     def get_post(self, game_data : GameData) -> Optional[str]:
         """
-        Description:
-            Return the event string for a penalty or penalty shot event.
+        Return the event string for a penalty or penalty shot event.
         """
 
         if self.taker is None:

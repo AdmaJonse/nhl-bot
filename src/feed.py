@@ -1,6 +1,5 @@
 """
-Description:
-    This module handles parsing of the JSON game data.
+This module handles parsing of the JSON live feed data.
 """
 
 from typing import Any, Dict, Optional
@@ -8,20 +7,20 @@ from typing import Any, Dict, Optional
 import json
 import requests
 
-from src.events.game_official import GameOfficial
-from src.events.event import Event
 from src import event_factory
 from src import generator
 from src import logger
-from src import output
+from src.events.game_official import GameOfficial
+from src.events.event import Event
+from src.output import output
 
 
 NHL_API_URL : str = "https://statsapi.web.nhl.com/api/v1/game/"
+FEED_PATH   : str = "/feed/live"
 
 class Parser:
     """
-    Description:
-        This class defines the JSON parser.
+    This class defines the parser for the live feed data.
     """
 
     def __init__(self, game_id : int):
@@ -54,11 +53,10 @@ class Parser:
 
     def get_data(self):
         """
-        Description:
-            This function retrieves the latest JSON data record for the current
-            game from the NHL website.
+        This function retrieves the latest JSON data record for the current
+        game from the NHL website.
         """
-        url       : str = NHL_API_URL + str(self.game_id) + "/feed/live"
+        url       : str = NHL_API_URL + str(self.game_id) + FEED_PATH
         params    : str = ""
         request   : Any = requests.get(url, params)
         self.data = request.json()
@@ -66,9 +64,8 @@ class Parser:
 
     def get_new_records(self):
         """
-        Description:
-            This method applies a filter to game events to ensure that we only
-            parse events that are new or have been updated.
+        This method applies a filter to game events to ensure that we only
+        parse events that are new or have been updated.
         """
 
         # Filter out all play data that has already been processed
@@ -97,8 +94,7 @@ class Parser:
 
     def write_data(self):
         """
-        Description:
-            Write the game data to a JSON file.
+        Write the game data to a JSON file.
         """
         filename : str = "data.json"
         with open(filename, 'w', encoding='utf-8') as file:
@@ -107,8 +103,7 @@ class Parser:
 
     def check_for_game_over(self, event : Optional[Event]):
         """
-        Description:
-            Determine whether the given event indicates that the game is over.
+        Determine whether the given event indicates that the game is over.
         """
         if event is not None:
             self.is_game_over = event.__class__ == GameOfficial
@@ -118,16 +113,14 @@ class Parser:
 
     def update_generator(self):
         """
-        Description:
-            Update the line score data stored by the generator.
+        Update the line score data stored by the generator.
         """
         self.generator.update_line_score(self.data["liveData"]["linescore"])
 
 
     def generate_tweet(self, event : Event):
         """
-        Description:
-            Create and send a tweet based on the given event.
+        Create and send a tweet based on the given event.
         """
 
         tweet_id : Optional[int] = None
@@ -141,36 +134,34 @@ class Parser:
         if event.has_tweeted and event.auto_reply:
             reply_text : Optional[str] = self.generator.get_auto_reply_string(event)
             if reply_text is not None:
-                event.tweet_id = output.reply(reply_text, tweet_id)
+                event.tweet_id = output.reply(tweet_id, reply_text)
 
 
     def generate_reply(self, previous : Event, current : Event):
         """
-        Description:
-            Create and send a reply to the given tweet based on the
-            deltas between the previous and current events.
+        Create and send a reply to the given tweet based on the
+        deltas between the previous and current events.
         """
 
         if previous.__class__ != current.__class__:
-            logger.log_error("Attempted to generated reply between unlike classes")
+            logger.log_error("Attempted to generate reply between unlike classes")
             return
 
         tweet_id : Optional[int] = None
         text     : Optional[str] = self.generator.get_reply_string(previous, current)
 
         if previous.has_tweeted and text is not None:
-            tweet_id = output.reply(text, previous.tweet_id)
+            tweet_id = output.reply(previous.tweet_id, text)
 
         current.tweet_id = tweet_id
 
 
     def post_game_day(self):
         """
-        Description:
-            Create and send a post indicating that today is game day. This should always be the
-            first post of the day. If we have already posted today, it may indicate that we've
-            restarted the application. In this case, we will not post in order to avoid a
-            duplicate.
+        Create and send a post indicating that today is game day. This should always be the
+        first post of the day. If we have already posted today, it may indicate that we've
+        restarted the application. In this case, we will not post in order to avoid a
+        duplicate.
         """
 
         if not output.has_posted_today("game day"):
@@ -179,10 +170,21 @@ class Parser:
                 output.post(text)
 
 
+    def get_event(self, event_id : int) -> Optional[Event]:
+        """
+        Return the event with the given NHL API event ID.
+        """
+        for item in self.events.values():
+            #logger.log_error("event id: " + str(item.event_id))
+            if item.event_id == event_id:
+                return item
+        logger.log_error("Could not find event with ID: " + str(event_id))
+        return None
+
+
     def parse(self):
         """
-        Description:
-            Parse new event records from the game data and handle any new events.
+        Parse new event records from the game data and handle any new events.
         """
 
         self.get_new_records()

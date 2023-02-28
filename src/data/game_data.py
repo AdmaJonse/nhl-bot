@@ -1,27 +1,25 @@
 """
-Description:
-    This module provides clases for storing and querying static game data. This data is
-    initialized once for a particular game and will never change over the course of play.
+This module provides clases for storing and querying static game data. This data is
+initialized once for a particular game and will never change over the course of play.
 """
 
 from typing import Any, Optional
 from datetime import datetime
 from dateutil import parser
 
-from src import line_score
 from src import logger
-from src.line_score import LineScore, PowerPlay
-from src.team import Team
+from src.data import line_score
+from src.data.line_score import LineScore, PowerPlay
+from src.data.team import Team
 
 TEAM_HASHTAG    = "#GoAvsGo"
 PLAYOFF_HASHTAG = "#FindAWay"
 
 class GameData:
     """
-    Description:
-        The GameData calss defines static data about the particular game, such as the teams
-        that are playing and where the game is being played. This data will not change over the
-        course of play.
+    The GameData calss defines static data about the particular game, such as the teams
+    that are playing and where the game is being played. This data will not change over the
+    course of play.
     """
 
     def __init__(self, data):
@@ -37,8 +35,7 @@ class GameData:
 
     def print_constants(self):
         """
-        Description:
-            Log the class constants for the current game.
+        Log the class constants for the current game.
         """
         logger.log_info("Home Location:     " + self.home.location)
         logger.log_info("Home Team:         " + self.home.team_name)
@@ -56,8 +53,7 @@ class GameData:
 
     def get_team_string(self, team : Optional[str]) -> str:
         """
-        Description:
-            Return the name of the team from this event as a location name.
+        Return the name of the team from this event as a location name.
         """
         if team == self.home.full_name:
             team_string = self.home.location
@@ -70,8 +66,7 @@ class GameData:
 
     def get_opposition(self, team : str) -> str:
         """
-        Description:
-            Return the opposing team's location name.
+        Return the opposing team's location name.
         """
         if team == self.home.full_name:
             team_string = self.away.location
@@ -85,8 +80,7 @@ class GameData:
     @property
     def hashtags(self) -> str:
         """
-        Description:
-            Return the hashtags to append to all tweets.
+        Return the hashtags to append to all tweets.
         """
         hashtags = []
         hashtags.append("#" + self.away.abbreviation + "vs" + self.home.abbreviation)
@@ -98,44 +92,55 @@ class GameData:
 
     @property
     def home(self) -> Team:
-        """Getter for the home team field."""
+        """
+        Getter for the home team field.
+        """
         return self._home
 
 
     @property
     def away(self) -> Team:
-        """Getter for the away team field."""
+        """
+        Getter for the away team field.
+        """
         return self._away
 
 
     @property
     def date(self) -> datetime:
-        """Getter for the date field."""
+        """
+        Getter for the date field.
+        """
         return self._date
 
 
     @property
     def venue(self) -> str:
-        """Getter for the venue field."""
+        """
+        Getter for the venue field.
+        """
         return self._venue
 
     @property
     def is_playoffs(self) -> bool:
-        """Getter for the is_playoffs field."""
+        """
+        Getter for the is_playoffs field.
+        """
         return self._is_playoffs
 
 
     @property
     def line_score(self) -> Any:
-        """Getter for the line score."""
+        """
+        Getter for the line score.
+        """
         return self._line_score
 
 
     @line_score.setter
     def line_score(self, data : Any):
         """
-        Description:
-            Update the line score record with the latest game data.
+        Update the line score record with the latest game data.
         """
         previous = self._line_score
         current  = LineScore(data)
@@ -146,8 +151,7 @@ class GameData:
     @property
     def home_shots(self) -> int:
         """
-        Description:
-            Return the number of shots by the home team in the current line score.
+        Return the number of shots by the home team in the current line score.
         """
         return self.line_score.home_shots
 
@@ -155,8 +159,7 @@ class GameData:
     @property
     def away_shots(self) -> int:
         """
-        Description:
-            Return the number of shots by the away team in the current line score.
+        Return the number of shots by the away team in the current line score.
         """
         return self.line_score.away_shots
 
@@ -164,8 +167,7 @@ class GameData:
     @property
     def power_play(self) -> Optional[PowerPlay]:
         """
-        Description:
-            Getter for the power play record.
+        Getter for the power play record.
         """
         return self.line_score.power_play
 
@@ -173,8 +175,7 @@ class GameData:
     @property
     def is_home_winner(self) -> bool:
         """
-        Description:
-            Return a boolean indicating whether or not the home team has won the game.
+        Return a boolean indicating whether or not the home team has won the game.
         """
         is_winner : bool = self.line_score.home_goals > self.line_score.away_goals
 
@@ -187,8 +188,7 @@ class GameData:
     @property
     def is_away_winner(self) -> bool:
         """
-        Description:
-            Return a boolean indicating whether or not the away team has won the game.
+        Return a boolean indicating whether or not the away team has won the game.
         """
         is_winner : bool = self.line_score.away_goals > self.line_score.home_goals
 
@@ -201,8 +201,7 @@ class GameData:
     @property
     def winner(self) -> str:
         """
-        Description:
-            Return the name of the winning team.
+        Return the name of the winning team.
         """
         team : str = "Nobody"
 
@@ -219,9 +218,8 @@ class GameData:
     @property
     def home_score(self) -> int:
         """
-        Description:
-            Slightly different from goals because we'll add the extra goal in
-            the event of a shootout win.
+        Slightly different from goals because we'll add the extra goal in
+        the event of a shootout win.
         """
         score : int = self.line_score.home_goals
         if self.line_score.shootout is not None and self.is_home_winner:
@@ -232,9 +230,8 @@ class GameData:
     @property
     def away_score(self) -> int:
         """
-        Description:
-            Slightly different from goals because we'll add the extra goal in
-            the event of a shootout win.
+        Slightly different from goals because we'll add the extra goal in
+        the event of a shootout win.
         """
         score : int = self.line_score.away_goals
         if self.line_score.shootout is not None and self.is_away_winner:

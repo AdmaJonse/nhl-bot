@@ -1,5 +1,7 @@
-"""This module defines the factory for Event objects. Given JSON data defining the event, we will
-determine the event type and dispatch to constructor of the expected Event subclass."""
+"""
+This module defines the factory for Event objects. Given JSON data defining the event, we will
+determine the event type and dispatch to constructor of the expected Event subclass.
+"""
 
 from typing import Dict, Optional, Type
 from enum import Enum
@@ -32,8 +34,7 @@ from src.exceptions import InsufficientData
 
 class Events(Enum):
     """
-    Description:
-        The event type enumeration.
+    The event type enumeration.
     """
     BLOCKED_SHOT_EVENT    = "Blocked Shot"
     CHALLENGE_EVENT       = "Official Challenge"
@@ -85,8 +86,7 @@ event_constructors : Dict[Events, Type[Event]] = {
 
 def create(data) -> Optional[Event]:
     """
-    Description:
-        This function is used to construct events from JSON data.
+    This function is used to construct events from JSON data.
     """
     try:
 

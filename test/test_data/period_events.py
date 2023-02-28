@@ -1,6 +1,5 @@
 """
-Description:
-    Test data for unit tests describing period events.
+Test data for unit tests describing period events.
 """
 
 period_ready_data = {

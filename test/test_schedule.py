@@ -1,6 +1,5 @@
 """
-Description:
-    Unit tests for the Schedule class.
+Unit tests for the Schedule class.
 """
 
 import unittest
@@ -16,14 +15,12 @@ TIME_ZONE = pytz.timezone("US/Eastern")
 
 class TestSchedule(unittest.TestCase):
     """
-    Description:
-        Unit tests for the Schedule class.
+    Unit tests for the Schedule class.
     """
 
     def test_get_schedule_gameday(self):
         """
-        Description:
-            Test to determine if we are getting the expected schedule data on
+        Test to determine if we are getting the expected schedule data on
             a game day.
         """
         with patch('src.schedule.get_current_date') as mock_schedule:
@@ -39,8 +36,7 @@ class TestSchedule(unittest.TestCase):
 
     def test_get_schedule_offday(self):
         """
-        Description:
-            Test to determine if we are getting the expected schedule data on
+        Test to determine if we are getting the expected schedule data on
             an off day.
         """
         with patch('src.schedule.get_current_date') as mock_schedule:
@@ -55,8 +51,7 @@ class TestSchedule(unittest.TestCase):
 
     def test_valid_game_id(self):
         """
-        Description:
-            Test retrieving the game ID from schedule data when the
+        Test retrieving the game ID from schedule data when the
             ID is valid.
         """
         with patch('src.schedule.get_schedule_json') as mock_schedule:
@@ -68,8 +63,7 @@ class TestSchedule(unittest.TestCase):
 
     def test_invalid_game_id(self):
         """
-        Description:
-            Test retrieving the game ID from schedule data when the
+        Test retrieving the game ID from schedule data when the
             ID is not valid.
         """
         with patch('src.schedule.get_schedule_json') as mock_schedule:
@@ -81,8 +75,7 @@ class TestSchedule(unittest.TestCase):
 
     def test_valid_start_time(self):
         """
-        Description:
-            Test retrieving the game start time from schedule data when the
+        Test retrieving the game start time from schedule data when the
             start time is valid.
         """
         with patch('src.schedule.get_schedule_json') as mock_schedule:
@@ -94,8 +87,7 @@ class TestSchedule(unittest.TestCase):
 
     def test_invalid_start_time(self):
         """
-        Description:
-            Test retrieving the game start time from schedule data when the
+        Test retrieving the game start time from schedule data when the
             start time is invalid.
         """
         with patch('src.schedule.get_schedule_json') as mock_schedule:

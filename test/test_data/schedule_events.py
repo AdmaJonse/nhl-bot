@@ -1,6 +1,5 @@
 """
-Description:
-    Test data for unit tests describing the NHL schedule.
+Test data for unit tests describing the NHL schedule.
 """
 
 valid_schedule_data = {
