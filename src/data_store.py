@@ -31,6 +31,13 @@ class DataStore(Generic[T], Subject):
             self.notify()
 
 
+    def get_data(self) -> Optional[T]:
+        """
+        Return the data from the data store.
+        """
+        return self._data
+
+
     def subscribe(self, observer : Observer) -> None:
         """
         Subscribe to updates to the data.

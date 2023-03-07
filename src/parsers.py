@@ -6,7 +6,6 @@ from typing import List
 
 from src.parser.content import ContentParser
 from src.parser.feed import FeedParser
-from src.parser.game_data import GameDataParser
 from src.parser.line_score import LineScoreParser
 from src.parser.parser import Parser
 
@@ -18,6 +17,7 @@ class Parsers:
 
     def __init__(self):
         self._parsers: List[Parser] = []
+
 
     def set_game(self, game_id: int) -> None:
         """
@@ -35,8 +35,6 @@ class Parsers:
             LineScoreParser(game_id)
         ]
 
-        # Game data is static and should not require updates. Parse game data only once on start
-        GameDataParser(game_id).parse()
 
     def parse(self) -> None:
         """
@@ -44,6 +42,7 @@ class Parsers:
         """
         for parser in self._parsers:
             parser.parse()
+
 
     def clear(self) -> None:
         """
