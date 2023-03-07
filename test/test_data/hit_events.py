@@ -1,5 +1,5 @@
 """
-TODO
+Test events for hits.
 """
 
 hit_1 = {

@@ -1,5 +1,5 @@
 """
-TODO
+Test events for period ready.
 """
 
 period_ready_1 = {

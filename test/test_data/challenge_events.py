@@ -1,5 +1,5 @@
 """
-TODO
+Test events for coach's challenge.
 """
 
 challenge_1 = {

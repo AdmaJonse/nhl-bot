@@ -4,11 +4,12 @@ This module defines the Shot event.
 
 from typing import Optional
 
-from src import logger
+from src.logger import log
 from src.output import templates
 from src.events.event import Event, get_player_name, get_team
 from src.exceptions import InsufficientData
 from src.data.game_data import GameData
+from src.data.line_score import LineScore
 from src.utils import initials, pad_blob, pad_code
 
 class Shot(Event):
@@ -103,7 +104,7 @@ class Shot(Event):
         """
         self._team = team
 
-    def get_post(self, game_data : GameData) -> Optional[str]:
+    def get_post(self, game_data : GameData, _line_score : LineScore) -> Optional[str]:
         """
         Return the event string for a penalty or penalty shot event.
         """
@@ -113,15 +114,15 @@ class Shot(Event):
             return None
 
         if self.shooter is None:
-            logger.log_error("Could not determine shooter. Delaying tweet.")
+            log.error("Could not determine shooter. Delaying tweet.")
             return None
 
         if self.goalie is None:
-            logger.log_error("Could not determine goalie. Delaying tweet.")
+            log.error("Could not determine goalie. Delaying tweet.")
             return None
 
         if self.team is None:
-            logger.log_error("Could not determine shooter's team. Delaying tweet.")
+            log.error("Could not determine shooter's team. Delaying tweet.")
             return None
 
         event_values = {

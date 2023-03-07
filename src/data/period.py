@@ -3,8 +3,9 @@ This module defines the Period class.
 """
 
 REGULATION = "REGULAR"
-OVERTIME   = "OVERTIME"
-SHOOTOUT   = "SHOOTOUT"
+OVERTIME = "OVERTIME"
+SHOOTOUT = "SHOOTOUT"
+
 
 class Period:
     """
@@ -13,8 +14,8 @@ class Period:
     """
 
     def __init__(self, data):
-        self._number      : int = data["period"]
-        self._period_type : str = data["periodType"]
+        self._number: int = data["period"]
+        self._period_type: str = data["periodType"]
 
     def __eq__(self, other):
         return (isinstance(self, Period) and
@@ -24,7 +25,7 @@ class Period:
 
     def __str__(self):
         """
-        Return a string represenation of the period.
+        Return a string representation of the period.
         """
 
         # default in case of funky data

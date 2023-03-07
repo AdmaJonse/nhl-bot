@@ -6,7 +6,7 @@ This is an output interface intended for dry runs. Rather than tweeting, it will
 import uuid
 from typing import Optional
 
-from src import logger
+from src.logger import log
 from src.output.outputter import Outputter
 
 class Printer(Outputter):
@@ -20,7 +20,7 @@ class Printer(Outputter):
         Print the specified text.
         """
         tweet_id : Optional[int] = uuid.uuid1().int
-        logger.log_info("Tweet:\n" + text)
+        log.info("Tweet:\n" + text)
         return tweet_id
 
 
@@ -30,7 +30,7 @@ class Printer(Outputter):
         """
         reply_id : Optional[int] = uuid.uuid1().int
         if parent is not None and parent > 0:
-            logger.log_info("Reply to parent " + str(parent) + ":\n" + text)
+            log.info("Reply to parent " + str(parent) + ":\n" + text)
         return reply_id
 
 
@@ -39,7 +39,7 @@ class Printer(Outputter):
         Print the specified text.
         """
         tweet_id : Optional[int] = uuid.uuid1().int
-        logger.log_info("Tweet:\n" + text)
+        log.info("Tweet:\n" + text)
         return tweet_id
 
 
@@ -49,7 +49,7 @@ class Printer(Outputter):
         """
         reply_id : Optional[int] = uuid.uuid1().int
         if parent is not None and parent > 0:
-            logger.log_info("Reply to parent " + str(parent) + ":\n" + text)
+            log.info("Reply to parent " + str(parent) + ":\n" + text)
         return reply_id
 
 

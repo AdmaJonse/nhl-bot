@@ -1,5 +1,5 @@
 """
-TODO
+Test events for period official.
 """
 
 period_official_1 = {

@@ -1,5 +1,5 @@
 """
-TODO
+Test events for period ends.
 """
 
 period_end_1 = {

@@ -11,7 +11,7 @@ from dateutil import parser
 import pytz
 import requests
 
-from src import logger
+from src.logger import log
 
 # Colorado Avalanche team ID in the NHL API
 TEAM_ID : int = 21
@@ -47,7 +47,7 @@ def get_current_time() -> datetime:
     Return the current time localized using the time zone constant.
     """
     current_time : datetime = datetime.now(TIME_ZONE)
-    logger.log_info("current time: " + time_to_string(current_time))
+    log.info("current time: " + time_to_string(current_time))
     return current_time
 
 
@@ -57,7 +57,7 @@ def get_current_date() -> datetime:
     """
     now          : datetime = datetime.now(TIME_ZONE)
     current_date : datetime = now.replace(hour=0, minute=0, second=0, microsecond=0)
-    logger.log_info("current date: " + date_to_string(current_date))
+    log.info("current date: " + date_to_string(current_date))
     return current_date
 
 
@@ -66,7 +66,7 @@ def get_tomorrow() -> datetime:
     Return the tomorrow's date localized using the time zone constant.
     """
     tomorrow = get_current_date() + timedelta(days=1)
-    logger.log_info("tomorrow's date: " + date_to_string(tomorrow))
+    log.info("tomorrow's date: " + date_to_string(tomorrow))
     return tomorrow
 
 
@@ -89,7 +89,7 @@ def get_schedule_json() -> Any:
     url    : str      = SCHEDULE_API + "?teamId=" + str(TEAM_ID) + "&date=" + date_to_string(date)
     params : str      = ""
 
-    logger.log_info("getting schedule JSON from: " + url)
+    log.info("getting schedule JSON from: " + url)
     request = requests.get(url, params)
     return request.json()
 
@@ -103,7 +103,7 @@ def get_game_id() -> Optional[int]:
         data    : Any = get_schedule_json()
         game_id : int = data["dates"][0]["games"][0]["gamePk"]
 
-        logger.log_info("game id: " + str(game_id))
+        log.info("game id: " + str(game_id))
         return game_id
 
     except IndexError:
@@ -122,7 +122,7 @@ def get_start_time() -> Optional[datetime]:
         data       : Any      = get_schedule_json()
         start_time : datetime = parser.parse(data["dates"][0]["games"][0]["gameDate"])
 
-        logger.log_info("game start time: " + time_to_string(start_time))
+        log.info("game start time: " + time_to_string(start_time))
         return start_time
 
     except IndexError:

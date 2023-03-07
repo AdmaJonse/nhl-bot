@@ -8,6 +8,7 @@ from src.output import templates
 from src.events.event import Event, get_team
 from src.exceptions import InsufficientData
 from src.data.game_data import GameData
+from src.data.line_score import LineScore
 from src.utils import pad_blob, pad_code
 
 class Challenge(Event):
@@ -60,7 +61,7 @@ class Challenge(Event):
         """
         self._team = team
 
-    def get_post(self, game_data : GameData) -> Optional[str]:
+    def get_post(self, game_data : GameData, _line_score : LineScore) -> Optional[str]:
         """
         Return the event string for a challenge event.
         """

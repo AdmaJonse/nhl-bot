@@ -1,5 +1,5 @@
 """
-TODO
+Test events for takeaways.
 """
 
 takeaway_1 = {

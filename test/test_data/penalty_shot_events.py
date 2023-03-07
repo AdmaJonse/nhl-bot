@@ -1,5 +1,5 @@
 """
-TODO
+Test events for penalty shots.
 """
 
 penalty_shot_1 = {

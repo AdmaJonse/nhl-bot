@@ -1,5 +1,5 @@
 """
-TODO
+Test events for game ends.
 """
 
 game_end_1 = {

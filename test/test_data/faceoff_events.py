@@ -1,5 +1,5 @@
 """
-TODO
+Test events for faceoffs.
 """
 
 faceoff_1 = {

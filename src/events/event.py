@@ -1,24 +1,25 @@
 """
 This module defines event classes. Event data is parsed from the
-    NHL API JSON data and converted into Event objects.
+NHL API JSON data and converted into Event objects.
 
-    The main benefit of an object-based approach rather than simply
-    comparing the JSON data itself, is that it makes comparisons
-    between events far simpler. We have more control over the
-    comparisons themselves and we're no longer going to trigger event
-    update processing when minor JSON fields change as opposed to
-    relevant event data.
+The main benefit of an object-based approach rather than simply
+comparing the JSON data itself, is that it makes comparisons
+between events far simpler. We have more control over the
+comparisons themselves and we're no longer going to trigger event
+update processing when minor JSON fields change as opposed to
+relevant event data.
 """
 
 from datetime import datetime
 from typing import Any, Optional
 from dateutil import parser
-from src.exceptions import InsufficientData
 
-from src import logger
+from src.exceptions import InsufficientData
+from src.logger import log
 from src.data.game_data import GameData
 from src.data.period import Period
 from src.data.score import Score
+from src.data.line_score import LineScore
 from src.utils import pad_blob, pad_code
 
 
@@ -42,29 +43,29 @@ def get_player_name(event : Any, player_type : str, index : int = 1):
 def get_team(event : Any):
     """
     Return the name of the team in the given event. Log an error
-        and return None if no team was found.
+    and return None if no team was found.
     """
     try:
         return event["team"]["name"]
     except KeyError:
-        logger.log_info("Could not find team.")
+        log.info("Could not find team.")
         return None
 
 
 def get_value(data : Any, *args):
     """
     Helper function for retrieving values from multi-level dictionaries.
-        If the key is not found, return an empty string.
+    If the key is not found, return an empty string.
     """
     for key in args:
         try:
             value = data.get(key)
             data = value
         except KeyError:
-            logger.log_error("Could not find key: " + key)
+            log.error("Could not find key: " + key)
             return None
         except AttributeError:
-            logger.log_error("Could not find key: " + key)
+            log.error("Could not find key: " + key)
             return None
     return value
 
@@ -98,6 +99,7 @@ class Event:
         if self.timestamp is None:
             raise InsufficientData
 
+
     def __eq__(self, other):
         return (self.__class__ == other.__class__ and
                 self.period.number == other.period.number and
@@ -111,6 +113,7 @@ class Event:
         code : str = "EVENT"
         return pad_code(code)
 
+
     @property
     def blob(self) -> str:
         """
@@ -120,6 +123,7 @@ class Event:
 
         blob : str = "######"
         return pad_blob(blob)
+
 
     @property
     def id(self) -> str:
@@ -133,12 +137,14 @@ class Event:
         description : str = self.blob
         return name + "-" + time + "-" + description
 
+
     @property
     def tweet_id(self) -> Optional[int]:
         """
         Getter for the tweet ID.
         """
         return self._tweet_id
+
 
     @tweet_id.setter
     def tweet_id(self, tweet_id : Optional[int]):
@@ -147,12 +153,14 @@ class Event:
         """
         self._tweet_id = tweet_id
 
+
     @property
     def event_id(self) -> Optional[int]:
         """
         Getter for the NHL API's Event ID.
         """
         return self._event_id
+
 
     @property
     def has_tweeted(self) -> bool:
@@ -161,12 +169,14 @@ class Event:
         """
         return self._tweet_id is not None and self._tweet_id > 0
 
+
     @property
     def description(self) -> Optional[str]:
         """
         Getter for the description.
         """
         return self._description
+
 
     @description.setter
     def description(self, description : str):
@@ -175,12 +185,14 @@ class Event:
         """
         self._description = description
 
+
     @property
     def period(self) -> Period:
         """
         Getter for the period.
         """
         return self._period
+
 
     @period.setter
     def period(self, period : Period):
@@ -189,12 +201,14 @@ class Event:
         """
         self._period = period
 
+
     @property
     def time(self) -> Optional[str]:
         """
         Getter for the time.
         """
         return self._time
+
 
     @time.setter
     def time(self, time : str):
@@ -203,12 +217,14 @@ class Event:
         """
         self._time = time
 
+
     @property
     def timestamp(self) -> datetime:
         """
         Getter for the time.
         """
         return self._timestamp
+
 
     @timestamp.setter
     def timestamp(self, timestamp : datetime):
@@ -217,6 +233,7 @@ class Event:
         """
         self._timestamp = timestamp
 
+
     @property
     def score(self) -> Score:
         """
@@ -224,39 +241,18 @@ class Event:
         """
         return self._score
 
-    @property
-    def auto_reply(self) -> bool:
-        """
-        Getter for the auto reply field.
-        """
-        return self._auto_reply
 
-    @auto_reply.setter
-    def auto_reply(self, reply : bool):
-        """
-        Setter for the auto reply field.
-        """
-        self._auto_reply = reply
-
-    def get_post(self, _game_data : GameData) -> Optional[str]:
+    def get_post(self, _game_data : GameData, _line_score : LineScore) -> Optional[str]:
         """
         The base implementation for returning post text. This implementation simply
-            returns None and will not result in any tweet being posted.
+        returns None and will not result in any tweet being posted.
         """
         return self.null_post
 
 
-    def get_auto_reply(self, _game_data : GameData) -> Optional[str]:
-        """
-        The base implementation for returning auto reply text. This implementation simply
-            returns None and will not result in any tweet being posted.
-        """
-        return self.null_post
-
-
-    def get_reply(self, _game_data : GameData, _previous : 'Event') -> Optional[str]:
+    def get_reply(self, _game : GameData, _line : LineScore, _previous : 'Event') -> Optional[str]:
         """
         The base implementation for returning reply text. This implementation simply
-            returns None and will not result in any tweet being posted.
+        returns None and will not result in any tweet being posted.
         """
         return self.null_post
