@@ -21,7 +21,7 @@ class GameDay(Command):
     """
 
     def __init__(self):
-        self.game_data : GameData = game_data.get_data()
+        self.game_data : Optional[GameData] = game_data.get_data()
         super().__init__("Game Day", Priority.NORMAL)
 
     def execute(self) -> None:
@@ -29,7 +29,7 @@ class GameDay(Command):
         Execute the command.
         """
 
-        if not output.has_posted_today("game day"):
+        if self.game_data is not None and not output.has_posted_today("game day"):
             text : Optional[str] = None
             time : datetime      = self.game_data.date.astimezone(pytz.timezone("America/Denver"))
 

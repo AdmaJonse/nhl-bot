@@ -4,10 +4,11 @@ This module defines a list of Events that have been processed.
 
 from typing import Dict, Optional
 
+from src.command.command_queue import command_queue
+from src.command.post import Post
+from src.command.reply import Reply
 from src.events.event import Event
 from src.logger import log
-
-import src.generator
 
 
 class EventList:
@@ -27,9 +28,9 @@ class EventList:
         if self.exists(event.id):
             previous: Optional[Event] = self.get(event.id)
             if previous is not None:
-                src.generator.generator.create_reply(event, previous)
+                command_queue.enqueue(Reply(event, previous))
         else:
-            src.generator.generator.create_post(event)
+            command_queue.enqueue(Post(event))
 
         self._events[event.id] = event
 
@@ -50,7 +51,7 @@ class EventList:
         return None
 
 
-    def get_from_api_id(self, event_id: int) -> Optional[Event]:
+    def get_from_api_id(self, event_id : int) -> Optional[Event]:
         """
         Return the event with the given NHL API event ID.
         """

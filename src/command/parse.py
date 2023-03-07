@@ -15,6 +15,7 @@ class Parse(Command):
     def __init__(self):
         super().__init__("Parse", Priority.NORMAL)
 
+
     def execute(self) -> None:
         """
         Trigger a parse from all registered parsers.
