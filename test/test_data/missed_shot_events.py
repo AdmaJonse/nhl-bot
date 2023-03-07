@@ -1,5 +1,5 @@
 """
-TODO
+Test events for missed shots.
 """
 
 missed_shot_1 = {

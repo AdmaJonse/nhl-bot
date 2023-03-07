@@ -1596,7 +1596,7 @@ class TestEquality(unittest.TestCase):
 
         # Test Case 13 - different reason
         diff = Penalty(penalty_events.penalty_different_reason)
-        self.assertEqual(child1.id, diff.id)
+        self.assertNotEqual(child1.id, diff.id)
 
         # Test Case 14 - different severity
         diff = Penalty(penalty_events.penalty_different_severity)

@@ -7,6 +7,7 @@ from typing import Optional
 from src.output import templates
 from src.events.event import Event
 from src.data.game_data import GameData
+from src.data.line_score import LineScore
 from src.utils import pad_code
 
 class PeriodStart(Event):
@@ -34,7 +35,7 @@ class PeriodStart(Event):
     def id(self) -> str:
         return "PER" + str(self.period.number) + "-START"
 
-    def get_post(self, game_data : GameData) -> Optional[str]:
+    def get_post(self, game_data : GameData, _line_score : LineScore) -> Optional[str]:
         """
         Return the event string for a period start event.
         """

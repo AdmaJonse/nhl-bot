@@ -13,6 +13,7 @@ from test.test_data import shot_events
 
 from src import event_factory
 from src.data.game_data import GameData
+from src.data.line_score import LineScore
 
 from src.events.blocked_shot import BlockedShot
 from src.events.challenge import Challenge
@@ -681,10 +682,11 @@ class TestEvents(unittest.TestCase):
         """
         Test the expected output of a game scheduled event.
         """
-        event     = event_factory.create(game_events.game_scheduled_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = None
+        event      = event_factory.create(game_events.game_scheduled_data)
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected   = None
         self.assertEqual(expected, actual)
 
 
@@ -692,10 +694,11 @@ class TestEvents(unittest.TestCase):
         """
         Test the expected output of a game end event.
         """
-        event     = event_factory.create(game_events.game_end_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = "\nThe game is over. Washington wins!\n\nFinal:\nWashington: 4\nBoston: 2\n\n#BOSvsWSH #GoAvsGo\n"
+        event      = event_factory.create(game_events.game_end_data)
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected   = "\nThe game is over. Washington wins!\n\nFinal:\nWashington: 4\nBoston: 2\n\n#BOSvsWSH #ALLCAPS #NHLBruins\n"
         self.assertEqual(expected, actual)
 
 
@@ -703,10 +706,11 @@ class TestEvents(unittest.TestCase):
         """
         Test the expected output of a game official event.
         """
-        event     = event_factory.create(game_events.game_official_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = None
+        event      = event_factory.create(game_events.game_official_data)
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected   = None
         self.assertEqual(expected, actual)
 
 
@@ -714,10 +718,11 @@ class TestEvents(unittest.TestCase):
         """
         Test the expected output of a faceoff event.
         """
-        event     = event_factory.create(miscellaneous_events.faceoff_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = None
+        event      = event_factory.create(miscellaneous_events.faceoff_data)
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected   = None
         self.assertEqual(expected, actual)
 
 
@@ -725,10 +730,11 @@ class TestEvents(unittest.TestCase):
         """
         Test the expected output of a stoppage event.
         """
-        event     = event_factory.create(miscellaneous_events.stoppage_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = None
+        event      = event_factory.create(miscellaneous_events.stoppage_data)
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected   = None
         self.assertEqual(expected, actual)
 
 
@@ -736,10 +742,11 @@ class TestEvents(unittest.TestCase):
         """
         Test the expected output of a shot event.
         """
-        event     = event_factory.create(miscellaneous_events.shot_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = None
+        event      = event_factory.create(miscellaneous_events.shot_data)
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected   = None
         self.assertEqual(expected, actual)
 
 
@@ -747,10 +754,11 @@ class TestEvents(unittest.TestCase):
         """
         Test the expected output of a hit event.
         """
-        event     = event_factory.create(miscellaneous_events.hit_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = None
+        event      = event_factory.create(miscellaneous_events.hit_data)
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected   = None
         self.assertEqual(expected, actual)
 
 
@@ -758,10 +766,11 @@ class TestEvents(unittest.TestCase):
         """
         Test the expected output of a blocked shot event.
         """
-        event     = event_factory.create(miscellaneous_events.blocked_shot_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = None
+        event      = event_factory.create(miscellaneous_events.blocked_shot_data)
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected   = None
         self.assertEqual(expected, actual)
 
 
@@ -769,10 +778,11 @@ class TestEvents(unittest.TestCase):
         """
         Test the expected output of a giveaway event.
         """
-        event     = event_factory.create(miscellaneous_events.giveaway_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = None
+        event      = event_factory.create(miscellaneous_events.giveaway_data)
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected   = None
         self.assertEqual(expected, actual)
 
 
@@ -780,10 +790,11 @@ class TestEvents(unittest.TestCase):
         """
         Test the expected output of a takeaway event.
         """
-        event     = event_factory.create(miscellaneous_events.takeaway_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = None
+        event      = event_factory.create(miscellaneous_events.takeaway_data)
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected   = None
         self.assertEqual(expected, actual)
 
 
@@ -791,10 +802,11 @@ class TestEvents(unittest.TestCase):
         """
         Test the expected output of a missed shot event.
         """
-        event     = event_factory.create(miscellaneous_events.missed_shot_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = None
+        event      = event_factory.create(miscellaneous_events.missed_shot_data)
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected   = None
         self.assertEqual(expected, actual)
 
 
@@ -802,17 +814,18 @@ class TestEvents(unittest.TestCase):
         """
         Test the expected output of a penalty event.
         """
-        event     = event_factory.create(penalty_events.penalty_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = "\nThere is a penalty on Washington.\n\nNic Dowd will serve a 2 minute minor for hi-sticking.\n\n#BOSvsWSH #GoAvsGo\n"
+        event      = event_factory.create(penalty_events.penalty_data)
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected   = "\nThere is a penalty on Washington.\n\nNic Dowd will serve a 2 minute minor for hi-sticking.\n\n#BOSvsWSH #ALLCAPS #NHLBruins\n"
         self.assertEqual(expected, actual)
 
 
     def test_penalty_no_taker_post(self):
         """
-        Test the expected output of a penalty event when no
-            penalty taker is present in the event data.
+        Test the expected output of a penalty event when no penalty taker is present in the
+        event data.
         """
         event     = event_factory.create(penalty_events.penalty_data_no_taker)
         expected  = None
@@ -823,10 +836,11 @@ class TestEvents(unittest.TestCase):
         """
         Test the expected output of a penalty shot event.
         """
-        event     = event_factory.create(penalty_events.penalty_shot_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = "\nThat's a penalty shot for Washington!\n\nThe infraction is against Brenden Dillon for hooking on breakaway.\n\n#BOSvsWSH #GoAvsGo\n"
+        event      = event_factory.create(penalty_events.penalty_shot_data)
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected   = "\nThat's a penalty shot for Washington!\n\nThe infraction is against Brenden Dillon for hooking on breakaway.\n\n#BOSvsWSH #ALLCAPS #NHLBruins\n"
         self.assertEqual(expected, actual)
 
 
@@ -834,10 +848,11 @@ class TestEvents(unittest.TestCase):
         """
         Test the expected output of a period ready event.
         """
-        event     = event_factory.create(period_events.period_ready_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = None
+        event      = event_factory.create(period_events.period_ready_data)
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected   = None
         self.assertEqual(expected, actual)
 
 
@@ -845,10 +860,11 @@ class TestEvents(unittest.TestCase):
         """
         Test the expected output of a period start event.
         """
-        event     = event_factory.create(period_events.period_start_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = "\nThe second period is starting at Capital One Arena.\n\n#BOSvsWSH #GoAvsGo\n"
+        event      = event_factory.create(period_events.period_start_data)
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected   = "\nThe second period is starting at Capital One Arena.\n\n#BOSvsWSH #ALLCAPS #NHLBruins\n"
         self.assertEqual(expected, actual)
 
 
@@ -857,9 +873,10 @@ class TestEvents(unittest.TestCase):
         Test the expected output of a period end event.
         """
         event     = event_factory.create(period_events.period_end_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = "\nThe first period is over at Capital One Arena.\n\nGoals\nWashington: 0\nBoston: 0\n\nShots on Goal\nWashington: 33\nBoston: 30\n\n#BOSvsWSH #GoAvsGo\n"
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected  = "\nThe first period is over at Capital One Arena.\n\nGoals\nWashington: 0\nBoston: 0\n\nShots on Goal\nWashington: 33\nBoston: 30\n\n#BOSvsWSH #ALLCAPS #NHLBruins\n"
         self.assertEqual(expected, actual)
 
 
@@ -868,8 +885,9 @@ class TestEvents(unittest.TestCase):
         Test the expected output of a period official event.
         """
         event     = event_factory.create(period_events.period_official_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
         expected  = None
         self.assertEqual(expected, actual)
 
@@ -880,7 +898,8 @@ class TestEvents(unittest.TestCase):
         """
         event     = event_factory.create(period_events.shootout_end_data)
         game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
         expected  = None
         self.assertEqual(expected, actual)
 
@@ -890,9 +909,10 @@ class TestEvents(unittest.TestCase):
         Test the expected output of a goal event.
         """
         event     = event_factory.create(goal_events.goal_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = "\nWashington goal!\n\nScored by John Carlson with 15:49 remaining in the 2nd period.\n\nAssisted by Conor Sheary.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #GoAvsGo\n"
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected  = "\nWashington goal!\n\nScored by John Carlson with 15:49 remaining in the 2nd period.\n\nAssisted by Conor Sheary.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #ALLCAPS #NHLBruins\n"
         self.assertEqual(expected, actual)
 
 
@@ -911,9 +931,10 @@ class TestEvents(unittest.TestCase):
         Test the expected output of a power play goal event.
         """
         event     = event_factory.create(goal_events.power_play_goal_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = "\nPower play goal for Boston!\n\nScored by J.T. Miller with 18:05 remaining in the 1st period.\n\nAssisted by Quinn Hughes.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #GoAvsGo\n"
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected  = "\nPower play goal for Boston!\n\nScored by J.T. Miller with 18:05 remaining in the 1st period.\n\nAssisted by Quinn Hughes.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #ALLCAPS #NHLBruins\n"
         self.assertEqual(expected, actual)
 
 
@@ -922,9 +943,10 @@ class TestEvents(unittest.TestCase):
         Test the expected output of a short-handed goal event.
         """
         event     = event_factory.create(goal_events.short_handed_goal_data)
-        game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = "\nShort-handed goal for Boston!\n\nScored by J.T. Miller with 18:05 remaining in the 1st period.\n\nAssisted by Quinn Hughes.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #GoAvsGo\n"
+        game_data  = GameData(game_events.game_data)
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected  = "\nShort-handed goal for Boston!\n\nScored by J.T. Miller with 18:05 remaining in the 1st period.\n\nAssisted by Quinn Hughes.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #ALLCAPS #NHLBruins\n"
         self.assertEqual(expected, actual)
 
 
@@ -934,8 +956,9 @@ class TestEvents(unittest.TestCase):
         """
         event     = event_factory.create(goal_events.empty_net_goal_data)
         game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = "\nEmpty net goal for Boston!\n\nScored by J.T. Miller with 18:05 remaining in the 1st period.\n\nAssisted by Quinn Hughes.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #GoAvsGo\n"
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected  = "\nEmpty net goal for Boston!\n\nScored by J.T. Miller with 18:05 remaining in the 1st period.\n\nAssisted by Quinn Hughes.\n\nWashington: 1\nBoston: 0\n\n#BOSvsWSH #ALLCAPS #NHLBruins\n"
         self.assertEqual(expected, actual)
 
 
@@ -945,8 +968,9 @@ class TestEvents(unittest.TestCase):
         """
         event     = event_factory.create(miscellaneous_events.challenge_data)
         game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = "\nBoston is challenging the ruling on the play.\n\n#BOSvsWSH #GoAvsGo\n"
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected  = "\nBoston is challenging the ruling on the play.\n\n#BOSvsWSH #ALLCAPS #NHLBruins\n"
         self.assertEqual(expected, actual)
 
 
@@ -956,8 +980,9 @@ class TestEvents(unittest.TestCase):
         """
         event     = event_factory.create(miscellaneous_events.goalpost_data)
         game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = "\nPing!\n\nAndrew Cogliano's shot on Jordan Binnington hit the post.\n\n#BOSvsWSH #GoAvsGo\n"
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected  = "\nPing!\n\nAndrew Cogliano's shot on Jordan Binnington hit the post.\n\n#BOSvsWSH #ALLCAPS #NHLBruins\n"
         self.assertEqual(expected, actual)
 
 
@@ -967,8 +992,9 @@ class TestEvents(unittest.TestCase):
         """
         event     = event_factory.create(miscellaneous_events.crossbar_data)
         game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = "\nPing!\n\nNazem Kadri's shot on Jordan Binnington hit the crossbar.\n\n#BOSvsWSH #GoAvsGo\n"
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected  = "\nPing!\n\nNazem Kadri's shot on Jordan Binnington hit the crossbar.\n\n#BOSvsWSH #ALLCAPS #NHLBruins\n"
         self.assertEqual(expected, actual)
 
 
@@ -978,8 +1004,9 @@ class TestEvents(unittest.TestCase):
         """
         event     = event_factory.create(goal_events.goal_data_shootout)
         game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = "\nWashington goal!\n\nEvan Rodrigues scores against Ilya Sorokin in the shootout.\n\n#BOSvsWSH #GoAvsGo\n"
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected  = "\nWashington goal!\n\nEvan Rodrigues scores against Ilya Sorokin in the shootout.\n\n#BOSvsWSH #ALLCAPS #NHLBruins\n"
         self.assertEqual(expected, actual)
 
 
@@ -989,8 +1016,9 @@ class TestEvents(unittest.TestCase):
         """
         event     = event_factory.create(shot_events.shootout_miss_data)
         game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = "\nWashington miss.\n\nThe shootout attempt by Simon Holmstrom failed.\n\n#BOSvsWSH #GoAvsGo\n"
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected  = "\nWashington miss.\n\nThe shootout attempt by Simon Holmstrom failed.\n\n#BOSvsWSH #ALLCAPS #NHLBruins\n"
         self.assertEqual(expected, actual)
 
 
@@ -1000,6 +1028,7 @@ class TestEvents(unittest.TestCase):
         """
         event     = event_factory.create(shot_events.shootout_save_data)
         game_data = GameData(game_events.game_data)
-        actual    = event.get_post(game_data)
-        expected  = "\nWashington miss.\n\nAlexandar Georgiev stopped the shootout attempt by Mathew Barzal.\n\n#BOSvsWSH #GoAvsGo\n"
+        line_score = LineScore(game_events.game_data["liveData"]["linescore"])
+        actual     = event.get_post(game_data, line_score)
+        expected  = "\nWashington miss.\n\nAlexandar Georgiev stopped the shootout attempt by Mathew Barzal.\n\n#BOSvsWSH #ALLCAPS #NHLBruins\n"
         self.assertEqual(expected, actual)

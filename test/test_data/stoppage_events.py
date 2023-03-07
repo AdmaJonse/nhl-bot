@@ -1,5 +1,5 @@
 """
-TODO
+Test events for stoppages.
 """
 
 stoppage_1 = {

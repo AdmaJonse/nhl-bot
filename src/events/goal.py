@@ -4,11 +4,12 @@ This module defines the Goal event.
 
 from typing import Optional
 
-from src import logger
+from src.logger import log
 from src.output import templates
 from src.events.event import Event, get_player_name, get_team, get_value
 from src.exceptions import InsufficientData
 from src.data.game_data import GameData
+from src.data.line_score import LineScore
 from src.utils import initials, pad_blob, pad_code
 
 class Goal(Event):
@@ -180,13 +181,13 @@ class Goal(Event):
         """
         self._is_empty_net = is_empty_net
 
-    def get_post(self, game_data : GameData) -> Optional[str]:
+    def get_post(self : 'Goal', game_data : GameData, _line_score : LineScore) -> Optional[str]:
         """
         Return the event string for a goal event.
         """
 
         if self.scorer is None:
-            logger.log_error("Could not determine goal scorer. Delaying tweet.")
+            log.error("Could not determine goal scorer. Delaying tweet.")
             return None
 
         goal_string   : str = ""
@@ -231,13 +232,27 @@ class Goal(Event):
         return goal_string + assist_string + footer
 
 
-    def get_reply(self, game_data : GameData, previous) -> Optional[str]:
+    def is_scorer_modified(self, other : 'Goal') -> bool:
+        """
+        Return a boolean indicating whether the scorer is different in the given goal events.
+        """
+        return self.scorer is not None and other.scorer != self.scorer
+
+
+    def is_primary_assist_added(self, other : 'Goal') -> bool:
+        """
+        Return a boolean indicating whether a primary assist has been added between goal events.
+        """
+        return other.primary_assist is None and self.primary_assist is not None
+
+
+    def get_reply(self, game : GameData, _line : LineScore, previous : Event) -> Optional[str]:
         """
         Return the reply string for a goal event.
         """
 
-        if previous.__class__ != Goal:
-            logger.log_error("Attempted to call Goal reply with type: " + str(previous.__class__))
+        if not isinstance(previous, Goal):
+            log.error("Attempted to call Goal reply with type: " + str(previous.__class__))
             return None
 
         # Sometimes the NHL will remove all the data from a goal event after it's been posted.
@@ -246,29 +261,22 @@ class Goal(Event):
             return None
 
         event_values = {
-            "team":             game_data.get_team_string(self.team),
+            "team":             game.get_team_string(self.team),
             "scorer":           self.scorer,
             "primary_assist":   self.primary_assist,
             "secondary_assist": self.secondary_assist,
             "description":      self.description,
             "time":             self.time,
             "period":           self.period.ordinal,
-            "home_team":        game_data.home.location,
-            "away_team":        game_data.away.location,
+            "home_team":        game.home.location,
+            "away_team":        game.away.location,
             "home_goals":       self.score.home_goals,
             "away_goals":       self.score.away_goals,
-            "hashtags":         game_data.hashtags
+            "hashtags":         game.hashtags
         }
 
-        scorer_modified : bool = (
-            previous.scorer != self.scorer and
-            self.scorer is not None
-        )
-
-        primary_assist_added : bool = (
-            previous.primary_assist is None and
-            self.primary_assist is not None
-        )
+        scorer_modified      : bool = self.is_scorer_modified(previous)
+        primary_assist_added : bool = self.is_primary_assist_added(previous)
 
         secondary_assist_added : bool = (
             previous.secondary_assist is None and

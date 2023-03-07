@@ -1,5 +1,5 @@
 """
-TODO
+Test events for game scheduled.
 """
 
 game_scheduled_1 = {

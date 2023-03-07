@@ -1,5 +1,5 @@
 """
-TODO
+Test events for Blocked Shots.
 """
 
 blocked_shot_1 = {

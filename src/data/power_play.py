@@ -6,7 +6,7 @@ from dataclasses import dataclass
 import time
 from typing import Optional
 
-from src import logger
+from src.logger import log
 
 @dataclass
 class PowerPlay:
@@ -34,7 +34,7 @@ def get_power_play(data) -> Optional[PowerPlay]:
 
     try:
 
-        time_remaining  : int  = data["powerPlayInfo"]["situationtime_remainingaining"]
+        time_remaining  : int  = data["powerPlayInfo"]["situationTimeRemaining"]
         time_elapsed    : int  = data["powerPlayInfo"]["situationTimeElapsed"]
         in_situation    : bool = data["powerPlayInfo"]["inSituation"]
 
@@ -51,24 +51,24 @@ def get_power_play(data) -> Optional[PowerPlay]:
     if home_power_play:
 
         if home_skaters <= away_skaters:
-            logger.log_error("Line score indicates home powerplay, but skater counts are wrong.")
-            logger.log_error("  Home: " + str(home_skaters) + ", Away: "+ str(away_skaters))
+            log.error("Line score indicates home powerplay, but skater counts are wrong.")
+            log.error("  Home: " + str(home_skaters) + ", Away: "+ str(away_skaters))
 
         team = "home"
 
     elif away_power_play:
 
         if home_skaters >= away_skaters:
-            logger.log_error("Line score indicates away powerplay, but skater counts are wrong.")
-            logger.log_error("  Home: " + str(home_skaters) + ", Away: "+ str(away_skaters))
+            log.error("Line score indicates away powerplay, but skater counts are wrong.")
+            log.error("  Home: " + str(home_skaters) + ", Away: "+ str(away_skaters))
 
         team = "away"
 
     else:
 
         if home_skaters != away_skaters:
-            logger.log_error("Line score indicates even strength, but skater counts are wrong.")
-            logger.log_error("  Home: " + str(home_skaters) + ", Away: "+ str(away_skaters))
+            log.error("Line score indicates even strength, but skater counts are wrong.")
+            log.error("  Home: " + str(home_skaters) + ", Away: "+ str(away_skaters))
 
         team = "even"
 

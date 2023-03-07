@@ -4,11 +4,12 @@ This module defines the Penalty Shot event.
 
 from typing import Optional
 
-from src import logger
+from src.logger import log
 from src.output import templates
 from src.events.event import Event, get_player_name, get_team, get_value
 from src.exceptions import InsufficientData
 from src.data.game_data import GameData
+from src.data.line_score import LineScore
 from src.utils import initials, pad_blob, pad_code
 
 class PenaltyShot(Event):
@@ -124,21 +125,21 @@ class PenaltyShot(Event):
         """
         self._team = team
 
-    def get_post(self, game_data : GameData) -> Optional[str]:
+    def get_post(self, game_data : GameData, _line_score : LineScore) -> Optional[str]:
         """
         Return the event string for a penalty or penalty shot event.
         """
 
         if self.taker is None:
-            logger.log_error("Could not determine penalty taker. Delaying tweet.")
+            log.error("Could not determine penalty taker. Delaying tweet.")
             return None
 
         if self.reason is None:
-            logger.log_error("Could not determine penalty. Delaying tweet.")
+            log.error("Could not determine penalty. Delaying tweet.")
             return None
 
         if self.team is None:
-            logger.log_error("Could not determine penalized team. Delaying tweet.")
+            log.error("Could not determine penalized team. Delaying tweet.")
             return None
 
         event_values = {

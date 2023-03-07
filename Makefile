@@ -29,11 +29,9 @@ run: build
 
 .PHONY: clean
 clean:
-	rm -rf src/__pycache__
-	rm -rf src/events/__pycache__
-	rm -rf test/__pycache__
-	rm -rf test/test_data/__pycache__
+	python -m pyclean .
 	rm -rf .mypy_cache
 	rm -rf .pytest_cache
 	rm -f data.json
 	rm -f results.xml
+	rm -f bot.log*

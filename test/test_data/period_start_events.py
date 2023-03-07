@@ -1,5 +1,5 @@
 """
-TODO
+Test events for period start.
 """
 
 period_start_1 = {

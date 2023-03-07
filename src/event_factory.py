@@ -6,7 +6,7 @@ determine the event type and dispatch to constructor of the expected Event subcl
 from typing import Dict, Optional, Type
 from enum import Enum
 
-from src import logger
+from src.logger import log
 from src.events.event import Event
 from src.events.blocked_shot import BlockedShot
 from src.events.challenge import Challenge
@@ -103,7 +103,7 @@ def create(data) -> Optional[Event]:
             event_type = Events(data["result"]["event"])
 
     except ValueError:
-        logger.log_error("An unknown event type was processed: " + data["result"]["event"])
+        log.error("An unknown event type was processed: " + data["result"]["event"])
 
     try:
         return event_constructors[event_type](data)

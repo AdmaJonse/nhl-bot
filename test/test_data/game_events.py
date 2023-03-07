@@ -18,13 +18,21 @@ game_data = {
                 "name": "Boston Bruins",
                 "abbreviation": "BOS",
                 "teamName": "Bruins",
-                "locationName": "Boston"
+                "locationName": "Boston",
+                "venue": {
+                    "timeZone": {
+                        "id": "America/Denver"
+                    }
+                }
             },
             "home": {
                 "name": "Washington Capitals",
                 "venue": {
                     "name": "Capital One Arena",
-                    "city" : "Washington"
+                    "city" : "Washington",
+                    "timeZone": {
+                        "id": "America/Denver"
+                    }
                 },
                 "abbreviation": "WSH",
                 "teamName": "Capitals",
@@ -99,13 +107,21 @@ game_data_overtime = {
                 "name": "Boston Bruins",
                 "abbreviation": "BOS",
                 "teamName": "Bruins",
-                "locationName": "Boston"
+                "locationName": "Boston",
+                "venue": {
+                    "timeZone": {
+                        "id": "America/Denver"
+                    }
+                }
             },
             "home": {
                 "name": "Washington Capitals",
                 "venue": {
                     "name": "Capital One Arena",
-                    "city" : "Washington"
+                    "city" : "Washington",
+                    "timeZone": {
+                        "id": "America/Denver"
+                    }
                 },
                 "abbreviation": "WSH",
                 "teamName": "Capitals",
@@ -180,13 +196,21 @@ game_data_shootout = {
                 "name": "Boston Bruins",
                 "abbreviation": "BOS",
                 "teamName": "Bruins",
-                "locationName": "Boston"
+                "locationName": "Boston",
+                "venue": {
+                    "timeZone": {
+                        "id": "America/Denver"
+                    }
+                }
             },
             "home": {
                 "name": "Washington Capitals",
                 "venue": {
                     "name": "Capital One Arena",
-                    "city" : "Washington"
+                    "city" : "Washington",
+                    "timeZone": {
+                        "id": "America/Denver"
+                    }
                 },
                 "abbreviation": "WSH",
                 "teamName": "Capitals",
@@ -272,12 +296,20 @@ playoff_game_data = {
                 "name": "Boston Bruins",
                 "abbreviation": "BOS",
                 "teamName": "Bruins",
-                "locationName": "Boston"
+                "locationName": "Boston",
+                "venue": {
+                    "timeZone": {
+                        "id": "America/Denver"
+                    }
+                }
             },
             "home": {
                 "name": "Washington Capitals",
                 "venue": {
-                    "name": "Capital One Arena"
+                    "name": "Capital One Arena",
+                    "timeZone": {
+                        "id": "America/Denver"
+                    }
                 },
                 "abbreviation": "WSH",
                 "teamName": "Capitals",

@@ -1,5 +1,5 @@
 """
-TODO
+Test events for ping.
 """
 
 ping_1 = {

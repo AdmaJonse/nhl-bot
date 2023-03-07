@@ -1,5 +1,5 @@
 """
-TODO
+Test events for game official.
 """
 
 game_official_1 = {

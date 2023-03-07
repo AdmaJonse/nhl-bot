@@ -8,6 +8,7 @@ from src.output import templates
 from src.events.event import Event, get_player_name
 from src.exceptions import InsufficientData
 from src.data.game_data import GameData
+from src.data.line_score import LineScore
 from src.utils import initials, pad_blob, pad_code
 
 class Ping(Event):
@@ -107,7 +108,7 @@ class Ping(Event):
         """
         self._goal_post = post
 
-    def get_post(self, game_data : GameData) -> Optional[str]:
+    def get_post(self, game_data : GameData, _line_score : LineScore) -> Optional[str]:
         """
         Return the event string for a ping event.
         """

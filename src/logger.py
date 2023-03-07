@@ -24,8 +24,8 @@ class Logger:
         self.stdout_handler.setFormatter(formatter)
 
         self.file_handler = logging.handlers.RotatingFileHandler(LOG_FILE,
-                                                            maxBytes=1000000,
-                                                            backupCount=1)
+                                                                 maxBytes=1000000,
+                                                                 backupCount=1)
         self.file_handler.setLevel(logging.INFO)
         self.file_handler.setFormatter(formatter)
 
@@ -62,31 +62,3 @@ class Logger:
 
 
 log = Logger()
-
-
-def log_info(msg):
-    """
-    Log the given message at the info level.
-    """
-    log.info(msg)
-
-
-def log_error(msg):
-    """
-    Log the given message at the error level.
-    """
-    log.error(msg)
-
-
-def log_verbose(msg):
-    """
-    Log the given message at the debug level.
-    """
-    log.verbose(msg)
-
-
-def flush():
-    """
-    Delete the existing log file.
-    """
-    log.flush()

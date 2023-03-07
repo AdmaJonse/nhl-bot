@@ -1,5 +1,5 @@
 """
-TODO
+Test events for giveaways.
 """
 
 giveaway_1 = {

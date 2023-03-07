@@ -12,7 +12,7 @@ import tweepy
 import pytz
 import requests
 
-from src import logger
+from src.logger import log
 from src.output.outputter import Outputter
 
 # maximum tweet length
@@ -61,16 +61,16 @@ class Tweeter(Outputter):
 
         if len(text) <= MAX_LENGTH:
 
-            logger.log_info("Tweet:\n" + text)
+            log.info("Tweet:\n" + text)
 
             try:
                 status   = self.api.update_status(text)
                 tweet_id = status.id
             except tweepy.TweepyException:
-                logger.log_error("error - could not send tweet.")
+                log.error("error - could not send tweet.")
 
         else:
-            logger.log_error("error - tweet is longer than the maximum length")
+            log.error("error - tweet is longer than the maximum length")
 
         return tweet_id
 
@@ -85,18 +85,18 @@ class Tweeter(Outputter):
         if parent is not None and parent > 0:
             if len(text) <= MAX_LENGTH:
 
-                logger.log_info("Reply to tweet " + str(parent) + ":\n" + text)
+                log.info("Reply to tweet " + str(parent) + ":\n" + text)
 
                 try:
                     status   = self.api.update_status(status=text, in_reply_to_status_id=parent)
                     reply_id = status.id
                 except tweepy.TweepyException:
-                    logger.log_error("error - could not send reply")
+                    log.error("error - could not send reply")
 
             else:
-                logger.log_error("error - tweet is longer than the maximum length")
+                log.error("error - tweet is longer than the maximum length")
         else:
-            logger.log_error("error - could not reply to tweet with invalid ID: " + str(parent))
+            log.error("error - could not reply to tweet with invalid ID: " + str(parent))
 
         return reply_id
 
@@ -112,15 +112,15 @@ class Tweeter(Outputter):
             with open(filename, 'wb') as file:
                 file.write(response.content)
 
-            logger.log_info("Performing media upload of " + filename)
+            log.info("Performing media upload of " + filename)
             media = self.api.media_upload(filename, media_category="tweet_video")
 
-            logger.log_info("Deleting " + filename)
+            log.info("Deleting " + filename)
             os.remove(filename)
-            logger.log_info("return media ID string: " + media.media_id_string)
+            log.info("return media ID string: " + media.media_id_string)
             return media.media_id_string
 
-        logger.log_error("Could not download video: " + url)
+        log.error("Could not download video: " + url)
         return None
 
 
@@ -133,7 +133,7 @@ class Tweeter(Outputter):
 
         if len(text) <= MAX_LENGTH:
 
-            logger.log_info("Tweet:\n" + text)
+            log.info("Tweet:\n" + text)
 
             try:
                 # For now we only support media uploads for video
@@ -142,12 +142,12 @@ class Tweeter(Outputter):
                     status   = self.api.update_status(text, media_ids=[video_id])
                     tweet_id = status.id
                 else:
-                    logger.log_error("error - the video upload failed.")
+                    log.error("error - the video upload failed.")
             except tweepy.TweepyException as error:
-                logger.log_error("error - could not send tweet: " + str(error))
+                log.error("error - could not send tweet: " + str(error))
 
         else:
-            logger.log_error("error - tweet is longer than the maximum length")
+            log.error("error - tweet is longer than the maximum length")
 
         return tweet_id
 
@@ -162,7 +162,7 @@ class Tweeter(Outputter):
         if parent is not None and parent > 0:
             if len(text) <= MAX_LENGTH:
 
-                logger.log_info("Reply to tweet " + str(parent) + ":\n" + text)
+                log.info("Reply to tweet " + str(parent) + ":\n" + text)
 
                 try:
                     # For now we only support media uploads for video
@@ -173,15 +173,15 @@ class Tweeter(Outputter):
                                                           media_ids=[video_id])
                         reply_id = status.id
                     else:
-                        logger.log_error("error - the video upload failed.")
+                        log.error("error - the video upload failed.")
 
                 except tweepy.TweepyException:
-                    logger.log_error("error - could not send reply")
+                    log.error("error - could not send reply")
 
             else:
-                logger.log_error("error - tweet is longer than the maximum length")
+                log.error("error - tweet is longer than the maximum length")
         else:
-            logger.log_error("error - could not reply to tweet with invalid ID: " + str(parent))
+            log.error("error - could not reply to tweet with invalid ID: " + str(parent))
 
         return reply_id
 

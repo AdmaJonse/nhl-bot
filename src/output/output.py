@@ -8,6 +8,7 @@ from src.output.outputter import Outputter
 from src.output.printer import Printer
 from src.output.tweeter import Tweeter
 
+
 class Output:
     """
     This class defines the output method to be used and any internal state of the
@@ -15,14 +16,13 @@ class Output:
     """
 
     def __init__(self):
-        self._dry_run   : bool      = False
+        self._dry_run   : bool = False
         self._outputter : Outputter = Tweeter()
 
         if self.dry_run:
             self._outputter = Printer()
         else:
             self._outputter = Tweeter()
-
 
     @property
     def dry_run(self) -> bool:
@@ -31,9 +31,8 @@ class Output:
         """
         return self._dry_run
 
-
     @dry_run.setter
-    def dry_run(self, flag : bool):
+    def dry_run(self, flag: bool):
         """
         Set the dry run flag.
         """
@@ -43,7 +42,6 @@ class Output:
             self._outputter = Printer()
         else:
             self._outputter = Tweeter()
-
 
     @property
     def outputter(self) -> Outputter:
@@ -56,14 +54,14 @@ class Output:
 output = Output()
 
 
-def post(text : str) -> Optional[int]:
+def post(text: str) -> Optional[int]:
     """
     Public function that will send a tweet with the specified text.
     """
     return output.outputter.post(text)
 
 
-def reply(parent : Optional[int], text : str) -> Optional[int]:
+def reply(parent: Optional[int], text: str) -> Optional[int]:
     """
     Public function that will send a reply with the specified text to the
     tweet with the given parent.
@@ -71,21 +69,21 @@ def reply(parent : Optional[int], text : str) -> Optional[int]:
     return output.outputter.reply(parent, text)
 
 
-def post_with_media(text : str, media : str) -> Optional[int]:
+def post_with_media(text: str, media: str) -> Optional[int]:
     """
     Send a tweet with the specified text.
     """
     return output.outputter.post_with_media(text, media)
 
 
-def reply_with_media(parent : Optional[int], text : str, media : str) -> Optional[int]:
+def reply_with_media(parent: Optional[int], text: str, media: str) -> Optional[int]:
     """
     Send a reply to the given parent tweet with the specified text.
     """
     return output.outputter.reply_with_media(parent, text, media)
 
 
-def has_posted_today(query : str = "") -> bool:
+def has_posted_today(query: str = "") -> bool:
     """
     Return a boolean indicating whether or not we've posted today.
     """
