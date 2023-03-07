@@ -14,7 +14,7 @@ import requests
 from src.logger import log
 
 # Colorado Avalanche team ID in the NHL API
-TEAM_ID : int = 22
+TEAM_ID : int = 21
 
 # NHL API URL
 SCHEDULE_API : str = "https://statsapi.web.nhl.com/api/v1/schedule"
