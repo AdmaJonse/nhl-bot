@@ -4,8 +4,10 @@ This module defines a list of all highlights that have been processed.
 
 from typing import Dict, Optional
 
-from src.generator import generator
+from src.command.command_queue import command_queue
+from src.command.post_highlight import PostHighlight
 from src.data.highlight import Highlight
+from src.events.event import Event
 from src.event_list import event_list
 
 class HighlightList:
@@ -23,9 +25,9 @@ class HighlightList:
         """
         if highlight.id not in self.highlights:
             self.highlights[highlight.id] = highlight
-            event = event_list.get_from_api_id(highlight.event_id)
+            event : Optional[Event] = event_list.get_from_api_id(highlight.event_id)
             if event is not None:
-                generator.create_highlight(highlight, event)
+                command_queue.enqueue(PostHighlight(highlight, event))
 
 
     def exists(self, highlight_id : int) -> bool:

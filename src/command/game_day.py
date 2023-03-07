@@ -10,6 +10,7 @@ import pytz
 
 from src.command.command import Command, Priority
 from src.data.game_data import GameData
+from src.stores import game_data
 from src.output import output, templates
 
 
@@ -19,8 +20,8 @@ class GameDay(Command):
     that the game is scheduled to start.
     """
 
-    def __init__(self, data: GameData):
-        self.game_data : GameData = data
+    def __init__(self):
+        self.game_data : Optional[GameData] = game_data.get_data()
         super().__init__("Game Day", Priority.NORMAL)
 
     def execute(self) -> None:
@@ -28,7 +29,7 @@ class GameDay(Command):
         Execute the command.
         """
 
-        if not output.has_posted_today("game day"):
+        if self.game_data is not None and not output.has_posted_today("game day"):
             text : Optional[str] = None
             time : datetime      = self.game_data.date.astimezone(pytz.timezone("America/Denver"))
 

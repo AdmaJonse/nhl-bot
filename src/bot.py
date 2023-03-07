@@ -9,10 +9,12 @@ import pause
 
 from src import schedule
 from src.command.command_queue import command_queue
+from src.command.game_day import GameDay
 from src.command.parse import Parse
 from src.event_list import event_list
 from src.highlight_list import highlight_list
 from src.logger import log
+from src.parser.game_data import GameDataParser
 from src.parsers import parsers
 
 
@@ -70,9 +72,11 @@ def check_for_updates():
         if game_id is not None and game_id >= 0:
 
             log.info("There is a game today: " + str(game_id))
+            GameDataParser(game_id).parse()
+            GameDay().execute()
             wait_until_game_start()
 
-            # Setup for the current
+            # Setup for the current game
             parsers.set_game(game_id)
             parse_thread: Thread = Thread(target=scheduled_parsing)
             parse_thread.start()

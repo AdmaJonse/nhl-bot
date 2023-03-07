@@ -8,6 +8,7 @@ from queue import PriorityQueue
 from src.command.command import Command, Priority
 from src.logger import log
 
+
 class State(Enum):
     """
     The state of the command queue.
@@ -16,10 +17,12 @@ class State(Enum):
     RUNNING  = 2
     STOPPING = 3
 
+
 class ShutdownException(Exception):
     """
     Exception used to shutdown the command queue.
     """
+
 
 class Shutdown(Command):
     """
@@ -41,11 +44,13 @@ class CommandQueue:
         self.queue : PriorityQueue = PriorityQueue()
         self.state : State         = State.STOPPED
 
+
     def enqueue(self, command : Command):
         """
         Enqueue the given Command in the command queue.
         """
         self.queue.put(command)
+
 
     def start(self):
         """
@@ -62,11 +67,13 @@ class CommandQueue:
                     self.state = State.STOPPED
                     break
 
+
     def stop(self):
         """
         Stop processing commands from the queue.
         """
         self.state = State.STOPPING
         self.enqueue(Shutdown())
+
 
 command_queue = CommandQueue()
