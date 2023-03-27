@@ -698,7 +698,7 @@ class TestEvents(unittest.TestCase):
         game_data  = GameData(game_events.game_data)
         line_score = LineScore(game_events.game_data["liveData"]["linescore"])
         actual     = event.get_post(game_data, line_score)
-        expected   = "\nThe game is over. Washington wins!\n\nFinal:\nWashington: 4\nBoston: 2\n\n#BOSvsWSH #ALLCAPS #NHLBruins\n"
+        expected   = None
         self.assertEqual(expected, actual)
 
 
@@ -710,7 +710,7 @@ class TestEvents(unittest.TestCase):
         game_data  = GameData(game_events.game_data)
         line_score = LineScore(game_events.game_data["liveData"]["linescore"])
         actual     = event.get_post(game_data, line_score)
-        expected   = None
+        expected   = "\nThe game is over. Washington wins!\n\nFinal:\nWashington: 4\nBoston: 2\n\n#BOSvsWSH #ALLCAPS #NHLBruins\n"
         self.assertEqual(expected, actual)
 
 
