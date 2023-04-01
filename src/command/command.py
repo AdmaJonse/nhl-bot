@@ -36,4 +36,4 @@ class Command(ABC):
 
 
     def __lt__(self, other) -> bool:
-        return self.priority == Priority.HIGH and other.priority != Priority.HIGH
+        return self.priority == Priority.NORMAL and other.priority != Priority.NORMAL
