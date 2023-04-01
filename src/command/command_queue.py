@@ -3,7 +3,7 @@ This module defines the command queue class.
 """
 
 from enum import Enum
-from queue import PriorityQueue
+from typing import Optional, List
 
 from src.command.command import Command, Priority
 from src.logger import log
@@ -41,15 +41,35 @@ class CommandQueue:
     """
 
     def __init__(self):
-        self.queue : PriorityQueue = PriorityQueue()
-        self.state : State         = State.STOPPED
+        self.queue : List  = []
+        self.state : State = State.STOPPED
 
 
     def enqueue(self, command : Command):
         """
         Enqueue the given Command in the command queue.
         """
-        self.queue.put(command)
+        for index, item in enumerate(self.queue):
+            if command > item:
+                self.queue.insert(index, command)
+                return
+        self.queue.append(command)
+
+
+    def dequeue(self) -> Optional[Command]:
+        """
+        Dequeue the first element from the command queue.
+        """
+        if not self.empty():
+            return self.queue.pop(0)
+        return None
+
+
+    def empty(self) -> bool:
+        """
+        Return a boolean indicating whether or not the queue is empty.
+        """
+        return not self.queue
 
 
     def start(self):
@@ -58,10 +78,11 @@ class CommandQueue:
         """
         self.state = State.RUNNING
         while True:
-            if not self.queue.empty():
+            if not self.empty():
                 try:
-                    command : Command = self.queue.get()
-                    command.execute()
+                    command : Optional[Command] = self.dequeue()
+                    if command is not None:
+                        command.execute()
                 except ShutdownException:
                     log.info("Stopping the command server.")
                     self.state = State.STOPPED
