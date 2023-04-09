@@ -102,7 +102,7 @@ class Period:
     @property
     def ordinal(self) -> str:
         """
-        Return an ordinal string represenation of the period from the given event.
+        Return an ordinal string representation of the period from the given event.
         """
         period_string = ""
 

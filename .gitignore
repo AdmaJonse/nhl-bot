@@ -1,5 +1,6 @@
 config/.env
 config/keys.txt
+.coverage
 .mypy_cache
 __pycache__
 test/test_data/games

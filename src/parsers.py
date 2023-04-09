@@ -51,4 +51,11 @@ class Parsers:
         self._parsers = []
 
 
+    def exist(self) -> bool:
+        """
+        Check if there are any parsers present in the list of parsers.
+        """
+        return bool(self._parsers)
+
+
 parsers: Parsers = Parsers()
