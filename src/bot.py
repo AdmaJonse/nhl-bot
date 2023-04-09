@@ -50,7 +50,7 @@ def scheduled_parsing():
     """
     Enqueue a parse command every five seconds.
     """
-    while True:
+    while parsers.exist():
         command_queue.enqueue(Parse())
         pause.seconds(5)
 

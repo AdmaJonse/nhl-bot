@@ -86,6 +86,7 @@ class CommandQueue:
                 except ShutdownException:
                     log.info("Stopping the command server.")
                     self.state = State.STOPPED
+                    self.queue = []
                     break
 
 
