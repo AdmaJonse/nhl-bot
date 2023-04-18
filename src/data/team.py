@@ -45,7 +45,7 @@ playoff_hashtags = {
     "CGY": "",
     "CAR": "",
     "CHI": "",
-    "COL": "#FindAWay",
+    "COL": "#OneWayOurWay",
     "CBJ": "",
     "DAL": "",
     "DET": "",
