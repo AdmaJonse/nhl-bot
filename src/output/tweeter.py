@@ -42,14 +42,13 @@ class Tweeter(Outputter):
         self.access_token        : str = os.getenv("ACCESS_TOKEN")
         self.access_token_secret : str = os.getenv("ACCESS_TOKEN_SECRET")
 
-
     def __init__(self):
         self.read_config()
-        auth     : tweepy.OAuth1UserHandler = tweepy.OAuth1UserHandler(self.consumer_key,
-                                                                       self.consumer_secret,
-                                                                       self.access_token,
-                                                                       self.access_token_secret)
-        self.api : tweepy.API = tweepy.API(auth)
+        self.client : tweepy.Client = tweepy.Client(bearer_token=self.bearer_token,
+                                                    consumer_key=self.consumer_key,
+                                                    consumer_secret=self.consumer_secret,
+                                                    access_token=self.access_token,
+                                                    access_token_secret=self.access_token_secret)
 
 
     def post(self, text : str) -> Optional[int]:
@@ -64,10 +63,10 @@ class Tweeter(Outputter):
             log.info("Tweet:\n" + text)
 
             try:
-                status   = self.api.update_status(text)
-                tweet_id = status.id
-            except tweepy.TweepyException:
-                log.error("error - could not send tweet.")
+                status   = self.client.create_tweet(text=text)
+                tweet_id = status.data['id']
+            except tweepy.TweepyException as e:
+                log.error("error - could not send tweet: " + str(e))
 
         else:
             log.error("error - tweet is longer than the maximum length")
@@ -88,10 +87,10 @@ class Tweeter(Outputter):
                 log.info("Reply to tweet " + str(parent) + ":\n" + text)
 
                 try:
-                    status   = self.api.update_status(status=text, in_reply_to_status_id=parent)
-                    reply_id = status.id
-                except tweepy.TweepyException:
-                    log.error("error - could not send reply")
+                    status   = self.client.create_tweet(text=text, in_reply_to_tweet_id=parent)
+                    reply_id = status.data['id']
+                except tweepy.TweepyException as e:
+                    log.error("error - could not send reply: " + str(e))
 
             else:
                 log.error("error - tweet is longer than the maximum length")
@@ -101,53 +100,53 @@ class Tweeter(Outputter):
         return reply_id
 
 
-    def upload_video(self, url : str) -> Optional[str]:
+    def upload_video(self, _url : str) -> Optional[str]:
         """
         Download the .mp4 from the given URL, perform a media upload, clean up and then
         return the media ID string.
         """
-        filename : str = "highlight.mp4"
-        response = requests.get(url)
-        if response.status_code == 200:
-            with open(filename, 'wb') as file:
-                file.write(response.content)
+        # filename : str = "highlight.mp4"
+        # response = requests.get(url)
+        # if response.status_code == 200:
+        #     with open(filename, 'wb') as file:
+        #         file.write(response.content)
 
-            log.info("Performing media upload of " + filename)
-            media = self.api.media_upload(filename, media_category="tweet_video")
+        #     log.info("Performing media upload of " + filename)
+        #     media = self.client.media_upload(filename, media_category="tweet_video")
 
-            log.info("Deleting " + filename)
-            os.remove(filename)
-            log.info("return media ID string: " + media.media_id_string)
-            return media.media_id_string
+        #     log.info("Deleting " + filename)
+        #     os.remove(filename)
+        #     log.info("return media ID string: " + media.media_id_string)
+        #     return media.media_id_string
 
-        log.error("Could not download video: " + url)
+        # log.error("Could not download video: " + url)
         return None
 
 
-    def post_with_media(self, text : str, media : str) -> Optional[int]:
+    def post_with_media(self, _text : str, _media : str) -> Optional[int]:
         """
         Send a tweet with the specified text.
         """
 
         tweet_id : Optional[int] = None
 
-        if len(text) <= MAX_LENGTH:
+        # if len(text) <= MAX_LENGTH:
 
-            log.info("Tweet:\n" + text)
+        #     log.info("Tweet:\n" + text)
 
-            try:
-                # For now we only support media uploads for video
-                video_id = self.upload_video(media)
-                if video_id is not None:
-                    status   = self.api.update_status(text, media_ids=[video_id])
-                    tweet_id = status.id
-                else:
-                    log.error("error - the video upload failed.")
-            except tweepy.TweepyException as error:
-                log.error("error - could not send tweet: " + str(error))
+        #     try:
+        #         # For now we only support media uploads for video
+        #         video_id = self.upload_video(media)
+        #         if video_id is not None:
+        #             status   = self.client.create_tweet(text=text, media_ids=[video_id])
+        #             tweet_id = status.id
+        #         else:
+        #             log.error("error - the video upload failed.")
+        #     except tweepy.TweepyException as error:
+        #         log.error("error - could not send tweet: " + str(error))
 
-        else:
-            log.error("error - tweet is longer than the maximum length")
+        # else:
+        #     log.error("error - tweet is longer than the maximum length")
 
         return tweet_id
 
@@ -159,29 +158,29 @@ class Tweeter(Outputter):
 
         reply_id : Optional[int] = None
 
-        if parent is not None and parent > 0:
-            if len(text) <= MAX_LENGTH:
+        # if parent is not None and parent > 0:
+        #     if len(text) <= MAX_LENGTH:
 
-                log.info("Reply to tweet " + str(parent) + ":\n" + text)
+        #         log.info("Reply to tweet " + str(parent) + ":\n" + text)
 
-                try:
-                    # For now we only support media uploads for video
-                    video_id = self.upload_video(media)
-                    if video_id is not None:
-                        status   = self.api.update_status(status=text,
-                                                          in_reply_to_status_id=parent,
-                                                          media_ids=[video_id])
-                        reply_id = status.id
-                    else:
-                        log.error("error - the video upload failed.")
+        #         try:
+        #             # For now we only support media uploads for video
+        #             video_id = self.upload_video(media)
+        #             if video_id is not None:
+        #                 status   = self.api.update_status(status=text,
+        #                                                   in_reply_to_status_id=parent,
+        #                                                   media_ids=[video_id])
+        #                 reply_id = status.id
+        #             else:
+        #                 log.error("error - the video upload failed.")
 
-                except tweepy.TweepyException:
-                    log.error("error - could not send reply")
+        #         except tweepy.TweepyException:
+        #             log.error("error - could not send reply")
 
-            else:
-                log.error("error - tweet is longer than the maximum length")
-        else:
-            log.error("error - could not reply to tweet with invalid ID: " + str(parent))
+        #     else:
+        #         log.error("error - tweet is longer than the maximum length")
+        # else:
+        #     log.error("error - could not reply to tweet with invalid ID: " + str(parent))
 
         return reply_id
 
@@ -191,16 +190,17 @@ class Tweeter(Outputter):
         Return a list of tweets that were created today. If a query is
         provided, return only tweets that include the query as a substring.
         """
-        all_tweets   : List[tweepy.Tweet] = self.api.home_timeline(count=50, exclude_replies=True)
-        today_tweets : List[tweepy.Tweet] = []
-        period       : timedelta          = timedelta(hours=23, minutes=59)
+        # all_tweets   : List[tweepy.Tweet] = self.api.home_timeline(count=50, exclude_replies=True)
+        # today_tweets : List[tweepy.Tweet] = []
+        # period       : timedelta          = timedelta(hours=23, minutes=59)
 
-        for tweet in all_tweets:
-            if ((datetime.now(pytz.utc) - tweet.created_at) < period and
-                query in tweet.text):
-                today_tweets.append(tweet)
+        # for tweet in all_tweets:
+        #     if ((datetime.now(pytz.utc) - tweet.created_at) < period and
+        #         query in tweet.text):
+        #         today_tweets.append(tweet)
 
-        return today_tweets
+        # return today_tweets
+        return []
 
 
     def has_posted_today(self, _query : str = "") -> bool:
