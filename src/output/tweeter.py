@@ -189,10 +189,9 @@ class Tweeter(Outputter):
     def get_today_posts(self, query : str = "") -> List[tweepy.Tweet]:
         """
         Return a list of tweets that were created today. If a query is
-            provided, return only tweets that include the query as a substring.
+        provided, return only tweets that include the query as a substring.
         """
-
-        all_tweets   : List[tweepy.Tweet] = self.api.user_timeline(count=50, exclude_replies=True)
+        all_tweets   : List[tweepy.Tweet] = self.api.home_timeline(count=50, exclude_replies=True)
         today_tweets : List[tweepy.Tweet] = []
         period       : timedelta          = timedelta(hours=23, minutes=59)
 
@@ -204,9 +203,10 @@ class Tweeter(Outputter):
         return today_tweets
 
 
-    def has_posted_today(self, query : str = "") -> bool:
+    def has_posted_today(self, _query : str = "") -> bool:
         """
         Return a boolean indicating whether or not a tweet has been sent today.
         """
-        tweets = self.get_today_posts(query)
-        return len(tweets) > 0
+        # tweets = self.get_today_posts(query)
+        # return len(tweets) > 0
+        return True

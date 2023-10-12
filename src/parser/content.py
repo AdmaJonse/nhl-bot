@@ -21,7 +21,8 @@ class ContentParser(Parser):
         """
 
         self.get_data()
-        for data in self.data["highlights"]["gameCenter"]["items"]:
-            highlight : Highlight = Highlight(data)
-            if not highlight_list.exists(highlight):
-                highlight_list.add(highlight)
+        if "hightlights" in self.data:
+            for data in self.data["highlights"]["gameCenter"]["items"]:
+                highlight : Highlight = Highlight(data)
+                if not highlight_list.exists(highlight):
+                    highlight_list.add(highlight)
