@@ -203,7 +203,7 @@ class Tweeter(Outputter):
         return today_tweets
 
 
-    def has_posted_today(self, query : str = "") -> bool:
+    def has_posted_today(self, _query : str = "") -> bool:
         """
         Return a boolean indicating whether or not a tweet has been sent today.
         """
