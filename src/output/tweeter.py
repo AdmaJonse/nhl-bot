@@ -61,7 +61,7 @@ class Tweeter(Outputter):
 
             try:
                 status   = self.client.create_tweet(text=text)
-                tweet_id = status.data['id']
+                tweet_id = int(status.data['id'])
             except tweepy.TweepyException:
                 log.error("error - could not send tweet")
 
@@ -85,7 +85,7 @@ class Tweeter(Outputter):
 
                 try:
                     status   = self.client.create_tweet(text=text, in_reply_to_tweet_id=parent)
-                    reply_id = status.data['id']
+                    reply_id = int(status.data['id'])
                 except tweepy.TweepyException:
                     log.error("error - could not send reply")
 
