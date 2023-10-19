@@ -8,6 +8,7 @@ import os
 from os.path import join, dirname, abspath
 from dotenv import load_dotenv
 import tweepy
+import requests
 
 from src.logger import log
 from src.output.outputter import Outputter
@@ -64,6 +65,8 @@ class Tweeter(Outputter):
                 tweet_id = int(status.data['id'])
             except tweepy.TweepyException:
                 log.error("error - could not send tweet")
+            except requests.exceptions.ConnectionError:
+                log.error("error - connection error occurred while tweeting.")
 
         else:
             log.error("error - tweet is longer than the maximum length")
@@ -88,6 +91,8 @@ class Tweeter(Outputter):
                     reply_id = int(status.data['id'])
                 except tweepy.TweepyException:
                     log.error("error - could not send reply")
+                except requests.exceptions.ConnectionError:
+                    log.error("error - connection error occurred while replying.")
 
             else:
                 log.error("error - tweet is longer than the maximum length")
