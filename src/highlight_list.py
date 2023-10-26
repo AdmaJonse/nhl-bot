@@ -25,17 +25,17 @@ class HighlightList:
         """
         if highlight.id not in self.highlights:
             self.highlights[highlight.id] = highlight
-            event : Optional[Event] = event_list.get_from_api_id(highlight.event_id)
+            event : Optional[Event] = event_list.get_from_goal_id(highlight.goal_id)
             if event is not None:
                 command_queue.enqueue(PostHighlight(highlight, event))
 
 
-    def exists(self, highlight_id : int) -> bool:
+    def exists(self, highlight : Highlight) -> bool:
         """
-        Return a boolean indicating whether or not this highlight ID exists in the list of
+        Return a boolean indicating whether or not this highlight exists in the list of
         processed highlights.
         """
-        return highlight_id in self.highlights
+        return highlight.id in self.highlights
 
 
     def get(self, highlight_id : int) -> Optional[Highlight]:

@@ -8,6 +8,7 @@ from src.command.command_queue import command_queue
 from src.command.post import Post
 from src.command.reply import Reply
 from src.events.event import Event
+from src.events.goal import Goal
 from src.logger import log
 
 
@@ -48,6 +49,16 @@ class EventList:
         """
         if self.exists(event_id):
             return self._events[event_id]
+        return None
+
+    def get_from_goal_id(self, goal_id : int) -> Optional[Event]:
+        """
+        Return the goal event with the given goal number. If no such event exists, return None.
+        """
+        for item in self._events.values():
+            if isinstance(item, Goal) and item.score.goal_id == goal_id:
+                return item
+        log.error("Could not find event with goal ID: " + str(goal_id))
         return None
 
 

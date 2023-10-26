@@ -41,6 +41,7 @@ class FeedParser(Parser):
                 check_for_game_over(event)
                 event_list.add(event)
 
+
     def get_new_records(self):
         """
         This method applies a filter to game events to ensure that we only
@@ -60,7 +61,7 @@ class FeedParser(Parser):
 
             try:
                 if not is_new_event:
-                    is_updated_event = (event_list.get(event.id) != event)
+                    is_updated_event = event_list.get(event.id) != event
             except KeyError:
                 is_updated_event = False
 
