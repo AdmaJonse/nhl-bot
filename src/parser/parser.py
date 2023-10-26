@@ -3,7 +3,7 @@ This  defines the interface for data parsers.
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, Optional
+from typing import Any
 
 import requests
 import requests.utils
