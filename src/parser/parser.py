@@ -18,8 +18,8 @@ class Parser(ABC):
     This class defines the interface for data parsers.
     """
 
-    def __init__(self, game_id : int, path : str):
-        self.url  : str = NHL_API_URL + str(game_id) + path
+    def __init__(self, game_id : int, path : str, base_url : str = NHL_API_URL):
+        self.url  : str = base_url + str(game_id) + path
         self.data : Any = []
         log.info("Parsing from: " + self.url)
 

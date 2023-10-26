@@ -39,3 +39,10 @@ class Score:
         Setter for the away goals.
         """
         self._away_goals = away_goals
+
+    @property
+    def goal_id(self) -> int:
+        """
+        Getter for the latest goal ID.
+        """
+        return self._home_goals + self._away_goals

@@ -2,10 +2,14 @@
 This module defines a highlight object.
 """
 
+from src.data.abbreviations import to_location
 from src.data.game_data import GameData
 from src.output import templates
 
-VIDEO_FORMAT : str = "FLASH_1800K_896x504"
+BASE_URL      : str = "https://players.brightcove.net/"
+BRIGHTCOVE_ID : str = "6415718365001"
+VIDEO_FORMAT  : str = "EXtG1xJ7H_default"
+VIDEO_URL     : str = BASE_URL + BRIGHTCOVE_ID + "/" + VIDEO_FORMAT + "/index.html?videoId="
 
 class Highlight:
     """
@@ -13,24 +17,25 @@ class Highlight:
     """
 
     def __init__(self, data):
-        self._id          : int = int(data["id"])
-        self._event_id    : int = 0
-        self._description : str = data["description"]
-        self._video       : str = ""
+        self._id          : int = int(data["highlightClip"])
+        self._goal_id     : int = int(data["homeScore"]) + int(data["awayScore"])
+        self._video       : str = VIDEO_URL + str(self._id)
+        self._description : str = ""
 
-        for keyword in data["keywords"]:
-            if keyword["type"] == "statsEventId":
-                self._event_id = int(keyword["value"])
+        # Construct the description
+        player            : str = str(data["firstName"]) + " " + str(data["lastName"])
+        abbreviation      : str = str(data["teamAbbrev"])
+        team              : str = to_location.get(abbreviation, abbreviation)
+        shot_type         : str = str(data["shotType"])
+        self._description = player + " scores on a " + shot_type + " shot for " + team
 
-        for video in data["playbacks"]:
-            if video["name"] == VIDEO_FORMAT:
-                self._video = video["url"]
 
     def __str__(self) -> str:
         """
         Return a string representing the highlight.
         """
         return "Highlight: "  + str(self._id)
+
 
     @property
     def id(self):
@@ -39,12 +44,14 @@ class Highlight:
         """
         return self._id
 
+
     @property
-    def event_id(self):
+    def goal_id(self):
         """
-        Return the event ID for the highlight.
+        Return the goal ID for the highlight.
         """
-        return self._event_id
+        return self._goal_id
+
 
     @property
     def description(self):
@@ -53,12 +60,14 @@ class Highlight:
         """
         return self._description
 
+
     @property
     def video(self):
         """
         Return the video URL for the highlight.
         """
         return self._video
+
 
     def get_post(self, game_data : GameData) -> str:
         """
